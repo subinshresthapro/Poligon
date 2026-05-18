@@ -1,0 +1,98 @@
+import { SampleProfile } from "@/types";
+
+export const SAMPLE_PROFILES: SampleProfile[] = [
+  {
+    id: "candidate-a",
+    name: "Candidate A",
+    title: "Senator, District 4",
+    description: "A center-left senator focused on healthcare reform, climate action, and economic fairness.",
+    scores: {
+      immigration: 0.60,
+      government: 0.65,
+      economy: 0.55,
+      healthcare: 0.80,
+      education: 0.70,
+      environment: 0.85,
+      civilLiberties: 0.60,
+      foreignPolicy: 0.40,
+      technology: 0.55,
+      social: 0.70,
+    },
+  },
+  {
+    id: "candidate-b",
+    name: "Candidate B",
+    title: "Governor, State X",
+    description: "A center-right governor who prioritizes fiscal responsibility, public safety, and limited regulation.",
+    scores: {
+      immigration: -0.40,
+      government: -0.55,
+      economy: -0.45,
+      healthcare: -0.40,
+      education: -0.20,
+      environment: -0.25,
+      civilLiberties: 0.20,
+      foreignPolicy: -0.35,
+      technology: -0.15,
+      social: -0.55,
+    },
+  },
+  {
+    id: "candidate-c",
+    name: "Candidate C",
+    title: "Representative, District 12",
+    description: "A libertarian-leaning representative who champions individual freedom and minimal government.",
+    scores: {
+      immigration: 0.25,
+      government: -0.80,
+      economy: -0.70,
+      healthcare: -0.75,
+      education: -0.50,
+      environment: -0.20,
+      civilLiberties: 0.85,
+      foreignPolicy: 0.45,
+      technology: -0.40,
+      social: 0.10,
+    },
+  },
+  {
+    id: "candidate-d",
+    name: "Candidate D",
+    title: "Mayor, City Y",
+    description: "A populist mayor who focuses on working-class economic protection and institutional reform.",
+    scores: {
+      immigration: -0.50,
+      government: 0.35,
+      economy: 0.60,
+      healthcare: 0.65,
+      education: 0.40,
+      environment: 0.15,
+      civilLiberties: 0.25,
+      foreignPolicy: 0.35,
+      technology: 0.50,
+      social: -0.25,
+    },
+  },
+  {
+    id: "candidate-e",
+    name: "Candidate E",
+    title: "Independent, Senate Candidate",
+    description: "A centrist independent who takes pragmatic, evidence-based positions across the board.",
+    scores: {
+      immigration: 0.15,
+      government: 0.10,
+      economy: 0.20,
+      healthcare: 0.30,
+      education: 0.25,
+      environment: 0.35,
+      civilLiberties: 0.35,
+      foreignPolicy: 0.15,
+      technology: 0.25,
+      social: 0.10,
+    },
+  },
+];
+
+export const PROFILE_MAP: Record<string, SampleProfile> = Object.fromEntries(
+  SAMPLE_PROFILES.map((p) => [p.id, p])
+);
