@@ -32,7 +32,7 @@ export default function PoliticianShapes() {
 
   if (!unlocked) {
     return (
-      <section className="py-16 bg-white border-t border-slate-200">
+      <section id="politicians-section" className="py-16 bg-white border-t border-slate-200">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="text-center">
             <div className="inline-flex items-center justify-center w-16 h-16 bg-slate-100 rounded-2xl text-3xl mb-4">
@@ -73,7 +73,7 @@ export default function PoliticianShapes() {
   }
 
   return (
-    <section className="py-16 bg-white border-t border-slate-200">
+    <section id="politicians-section" className="py-16 bg-white border-t border-slate-200">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="text-center mb-4">
           <h2

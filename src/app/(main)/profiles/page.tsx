@@ -3,6 +3,7 @@ import { SAMPLE_PROFILES } from "@/data/profiles";
 import { shapeScore, scoreLabel } from "@/lib/scoring";
 import PoliticalRadarChart from "@/components/PoliticalRadarChart";
 import PoliticianShapes from "@/components/PoliticianShapes";
+import PoliticianTeaser from "@/components/PoliticianTeaser";
 
 export default function ProfilesPage() {
   return (
@@ -10,7 +11,7 @@ export default function ProfilesPage() {
       {/* Sample profiles section */}
       <div className="py-12 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-10">
+          <div className="text-center mb-6">
             <h1
               className="text-3xl font-bold text-slate-900 mb-2"
               style={{ fontFamily: "var(--font-space-grotesk)" }}
@@ -21,6 +22,11 @@ export default function ProfilesPage() {
               Fictional candidate profiles demonstrating how the political shape system
               captures different viewpoints. Click any profile to explore or embed it.
             </p>
+          </div>
+
+          {/* Teaser for politician section below */}
+          <div className="max-w-xl mx-auto mb-8">
+            <PoliticianTeaser />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
