@@ -22,7 +22,7 @@ export default function AboutPage() {
             Politics is more nuanced<br className="hidden sm:inline" /> than a single line.
           </h1>
           <p className="text-[rgba(241,238,229,0.65)] text-base leading-relaxed max-w-xl mx-auto">
-            Poligon was built to capture that nuance — and to remind us that the people
+            Poligon was built to capture that nuance, and to remind us that the people
             we disagree with are more complex than any label.
           </p>
         </div>
@@ -45,14 +45,14 @@ export default function AboutPage() {
             </h2>
             <p className="text-[rgba(10,10,10,0.70)] leading-relaxed mb-4">
               For more than a century, political thought has been crammed onto a single
-              left-to-right axis. That axis captures some things — attitudes toward economic
-              inequality, the role of markets, state power — but it completely misses others:
+              left-to-right axis. That axis captures some things: attitudes toward economic
+              inequality, the role of markets, state power. But it completely misses others:
               civil liberties, foreign policy, environmental values, how you feel about
               technology, or your views on immigration.
             </p>
             <p className="text-[rgba(10,10,10,0.70)] leading-relaxed">
               Reducing someone&apos;s political identity to a single point on a spectrum
-              doesn&apos;t just oversimplify — it distorts. It forces false solidarity
+              doesn&apos;t just oversimplify. It distorts. It forces false solidarity
               (people who agree on almost nothing end up on the same &quot;team&quot;) and
               false conflict (people who agree on most things are told they&apos;re
               opponents). The line is a tool for organising elections, not for understanding people.
@@ -71,7 +71,7 @@ export default function AboutPage() {
               Nuance is not weakness
             </h2>
             <p className="text-[rgba(10,10,10,0.70)] leading-relaxed mb-4">
-              In public discourse, &quot;nuanced views&quot; has become almost an insult — a sign
+              In public discourse, &quot;nuanced views&quot; has become almost an insult, a sign
               that you&apos;re not committed, not decisive. But holding a mix of views is not the
               same as having no views. It usually means you&apos;ve thought carefully.
             </p>
@@ -80,7 +80,7 @@ export default function AboutPage() {
               Someone can oppose foreign military intervention AND support stricter immigration
               enforcement. Someone can be deeply concerned about climate change AND sceptical
               of the government&apos;s ability to manage the economy well. These combinations
-              exist in real people every day — but our political systems rarely have room for them.
+              exist in real people every day, but our political systems rarely have room for them.
             </p>
             <p className="text-[rgba(10,10,10,0.70)] leading-relaxed">
               Poligon gives those combinations a shape.
@@ -100,14 +100,14 @@ export default function AboutPage() {
             </h2>
             <p className="text-[rgba(10,10,10,0.70)] leading-relaxed mb-4">
               Sports are designed to produce a winner. Two sides enter, one leaves victorious.
-              The goal is domination, not understanding. When we treat politics the same way —
-              tribal, zero-sum, winner-take-all — we drain it of its actual purpose: collective
+              The goal is domination, not understanding. When we treat politics the same way -
+              tribal, zero-sum, winner-take-all - we drain it of its actual purpose: collective
               problem-solving for people who disagree.
             </p>
             <p className="text-[rgba(10,10,10,0.70)] leading-relaxed mb-4">
               Compromise isn&apos;t betrayal. It&apos;s how democratic societies function.
-              Almost every major policy outcome that has improved lives — civil rights legislation,
-              public health systems, environmental protections — was the product of negotiation,
+              Almost every major policy outcome that has improved lives - civil rights legislation,
+              public health systems, environmental protections - was the product of negotiation,
               coalition-building, and meeting people partway.
             </p>
             <p className="text-[rgba(10,10,10,0.70)] leading-relaxed">
@@ -133,12 +133,12 @@ export default function AboutPage() {
               to get sick. Whether the person living next door feels safe.
             </p>
             <p className="text-[rgba(10,10,10,0.70)] leading-relaxed mb-4">
-              Political disengagement is understandable — the system can feel broken,
+              Political disengagement is understandable. The system can feel broken,
               discourse toxic, and choices depressing. But stepping back doesn&apos;t make
               those decisions disappear. It just hands them to others.
             </p>
             <p className="text-[rgba(10,10,10,0.70)] leading-relaxed">
-              Poligon was built for people who want to think about their values — not to
+              Poligon was built for people who want to think about their values, not to
               tell them what to think, but to give them a clearer picture of where they stand
               and why it matters.
             </p>
@@ -162,9 +162,9 @@ export default function AboutPage() {
               some issues. The labels travel badly.
             </p>
             <p className="text-[rgba(10,10,10,0.70)] leading-relaxed mb-4">
-              Poligon&apos;s 10 dimensions — immigration, government role, economy, healthcare,
+              Poligon&apos;s 10 dimensions - immigration, government role, economy, healthcare,
               education, environment, civil liberties, foreign policy, technology governance,
-              and social values — are broadly applicable across political contexts worldwide.
+              and social values - are broadly applicable across political contexts worldwide.
               The tool isn&apos;t calibrated to any single country&apos;s political landscape.
             </p>
             <p className="text-[rgba(10,10,10,0.70)] leading-relaxed">
@@ -187,17 +187,17 @@ export default function AboutPage() {
               Behind every political view is a person with a story. Someone who grew up
               watching their town&apos;s jobs disappear. Someone whose family came here with
               nothing and built something. Someone who has seen firsthand what happens when
-              institutions fail — or when they work exactly as they should.
+              institutions fail, or when they work exactly as they should.
             </p>
             <p className="text-[rgba(10,10,10,0.70)] leading-relaxed mb-4">
               Political disagreement becomes toxic when we forget this. When we argue with
               abstractions (&quot;the left,&quot; &quot;conservatives,&quot; &quot;elites&quot;) instead of with the actual
-              humans who hold those views — who are usually more complicated than the label.
+              humans who hold those views, who are usually more complicated than the label.
             </p>
             <p className="text-[rgba(10,10,10,0.70)] leading-relaxed">
               Poligon won&apos;t fix political polarisation. But if it helps even a few conversations
-              start from &quot;here&apos;s my shape, show me yours&quot; instead of &quot;you&apos;re either with us
-              or against us&quot; — that&apos;s worth doing.
+              start from &quot;here&apos;s my shape, show me yours&quot; instead of
+              &quot;you&apos;re either with us or against us&quot; - that&apos;s worth doing.
             </p>
           </div>
 
@@ -212,10 +212,10 @@ export default function AboutPage() {
               </h3>
               <ul className="space-y-2 text-sm text-[rgba(10,10,10,0.70)]">
                 {[
-                  "Non-partisan — the tool does not favour any political position.",
-                  "No data collection — your answers stay in your browser.",
-                  "Educational, not definitive — scores are approximations, not verdicts.",
-                  "No endorsements — politician profiles are for comparison only.",
+                  "Non-partisan: the tool does not favour any political position.",
+                  "No data collection: your answers stay in your browser.",
+                  "Educational, not definitive: scores are approximations, not verdicts.",
+                  "No endorsements: politician profiles are for comparison only.",
                   "Built to spark conversation, not division.",
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-2">
