@@ -5,6 +5,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   decodeScores,
+  encodeScores,
   shapeScore,
   scoreLabel,
   scoresToCategoryScores,
@@ -25,6 +26,7 @@ function ResultsContent() {
   const [tab, setTab] = useState<"breakdown" | "compare" | "share">("breakdown");
   const [scores, setScores] = useState<Record<string, number> | null>(null);
   const [fromStorage, setFromStorage] = useState(false);
+  const [compareCopied, setCompareCopied] = useState(false);
 
   useEffect(() => {
     const encoded = searchParams.get("scores");
@@ -54,6 +56,14 @@ function ResultsContent() {
       </div>
     );
   }
+
+  const copyCompareLink = async () => {
+    if (!scores) return;
+    const url = `${window.location.origin}/compare?a=${encodeScores(scores)}`;
+    try { await navigator.clipboard.writeText(url); } catch { /* silent */ }
+    setCompareCopied(true);
+    setTimeout(() => setCompareCopied(false), 2500);
+  };
 
   const categoryScores = scoresToCategoryScores(scores);
   const avg = shapeScore(scores);
@@ -151,6 +161,41 @@ function ResultsContent() {
                 );
               })}
             </div>
+          </div>
+        </div>
+
+        {/* ── Compare with a Friend card ──────────────────────────────────── */}
+        <div className="bg-[#0A0A0A] text-white rounded-2xl shadow-sm overflow-hidden mb-6">
+          <div className="flex flex-col sm:flex-row items-center gap-5 px-6 py-5">
+            {/* Two overlapping hex icons */}
+            <div className="flex-shrink-0 flex items-center -space-x-3">
+              <svg width="38" height="38" viewBox="0 0 28 28" aria-hidden="true">
+                <polygon points="14,7 21,10 20,18 13,21 7,17 9,10" fill="#5560C8" fillOpacity="0.9" />
+              </svg>
+              <svg width="38" height="38" viewBox="0 0 28 28" aria-hidden="true">
+                <polygon points="14,7 21,10 20,18 13,21 7,17 9,10" fill="#E8782E" fillOpacity="0.9" />
+              </svg>
+            </div>
+
+            <div className="flex-1 text-center sm:text-left">
+              <p className="text-xs font-semibold text-[#5560C8] uppercase tracking-widest mb-0.5">
+                Killer social feature
+              </p>
+              <p className="font-bold text-base" style={{ fontFamily: "var(--font-outfit)" }}>
+                Compare shapes with a friend
+              </p>
+              <p className="text-[rgba(241,238,229,0.50)] text-xs mt-0.5 leading-relaxed">
+                Send anyone your link. When they take the quiz, both polygons appear side by side.
+                Couples, coworkers, families — political difference as geometry, not warfare.
+              </p>
+            </div>
+
+            <button
+              onClick={copyCompareLink}
+              className="flex-shrink-0 flex items-center gap-2 bg-[#5560C8] hover:bg-[#4450B2] text-white font-semibold px-5 py-2.5 rounded-xl transition-colors text-sm whitespace-nowrap"
+            >
+              {compareCopied ? "✓ Copied!" : "🔗 Copy compare link"}
+            </button>
           </div>
         </div>
 

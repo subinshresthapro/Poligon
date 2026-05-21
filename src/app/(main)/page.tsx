@@ -157,8 +157,8 @@ export default function LandingPage() {
               },
               {
                 icon: "🔗",
-                title: "Share or embed",
-                desc: "Copy a link to your results, embed the chart anywhere with an iframe, or compare your shape to different political archetypes.",
+                title: "Compare with a friend",
+                desc: "Share your compare link. When a friend takes the quiz and opens it, both polygons appear overlaid — political difference as geometry, not warfare.",
               },
             ].map(({ icon, title, desc }) => (
               <div key={title} className="text-center">
@@ -256,6 +256,113 @@ export default function LandingPage() {
                 Reveal My Shape →
               </Link>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Compare feature callout ─────────────────────────────────── */}
+      <section className="py-16 bg-[#0A0A0A] text-white">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+
+            {/* Text */}
+            <div>
+              <p className="text-[#5560C8] text-xs font-semibold uppercase tracking-widest mb-3">
+                The social feature
+              </p>
+              <h2
+                className="text-3xl sm:text-4xl font-bold mb-4 leading-tight"
+                style={{ fontFamily: "var(--font-outfit)", letterSpacing: "-0.025em" }}
+              >
+                Compare shapes<br />with someone you know
+              </h2>
+              <p className="text-[rgba(241,238,229,0.60)] text-base leading-relaxed mb-4">
+                Political disagreement becomes personal when it&apos;s between people who know each other. Poligon turns that into geometry.
+              </p>
+              <p className="text-[rgba(241,238,229,0.50)] text-sm leading-relaxed mb-6">
+                Share your compare link. When your partner, colleague, or friend opens it and takes the quiz, both shapes appear overlaid on the same polygon — where they overlap, you agree. Where they diverge, you don&apos;t. No arguing about labels required.
+              </p>
+              <div className="flex flex-wrap gap-3 text-xs text-[rgba(241,238,229,0.55)]">
+                {["Couples", "Coworkers", "Families", "Friends", "Book clubs"].map((g) => (
+                  <span
+                    key={g}
+                    className="px-3 py-1 rounded-full border border-[rgba(255,255,255,0.12)] bg-[rgba(255,255,255,0.05)]"
+                  >
+                    {g}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Visual */}
+            <div className="bg-[#F1EEE5] rounded-2xl p-6 text-center">
+              {/* Two overlapping polygons preview */}
+              <div className="flex justify-center mb-4">
+                <svg width="200" height="200" viewBox="0 0 200 200" aria-hidden="true">
+                  {[0.25,0.5,0.75,1].map((f) => (
+                    <circle key={f} cx={100} cy={100} r={f*84} fill="none"
+                      stroke="rgba(10,10,10,0.08)" strokeWidth={f===1?1:0.75}
+                      strokeDasharray={f===1?undefined:"2 4"} />
+                  ))}
+                  {[0,1,2,3,4,5,6,7,8,9].map((i) => {
+                    const a = (2*Math.PI*i/10) - Math.PI/2;
+                    return <line key={i} x1={100} y1={100}
+                      x2={100+84*Math.cos(a)} y2={100+84*Math.sin(a)}
+                      stroke="rgba(10,10,10,0.07)" strokeWidth={0.75} />;
+                  })}
+                  {/* Shape A (blue) */}
+                  <polygon
+                    points={[0.9,0.6,0.8,0.4,0.7,0.9,0.5,0.8,0.3,0.7,0.85,0.6,0.75,0.4,0.65,0.9,0.5,0.7,0.9,0.6]
+                      .reduce((pts: string[], v, i, arr) => {
+                        if (i % 2 === 0) {
+                          const angle = (2*Math.PI*(i/2)/10) - Math.PI/2;
+                          const r = v * 84;
+                          pts.push(`${(100+r*Math.cos(angle)).toFixed(1)},${(100+r*Math.sin(angle)).toFixed(1)}`);
+                        }
+                        return pts;
+                      }, []).join(" ")}
+                    fill="#5560C8" fillOpacity={0.30} stroke="#5560C8" strokeWidth={2} strokeLinejoin="round"
+                  />
+                  {/* Shape B (orange) */}
+                  <polygon
+                    points={[0.4,0.8,0.6,0.9,0.5,0.4,0.85,0.3,0.75,0.6,0.4,0.9,0.6,0.7,0.8,0.5,0.35,0.85,0.6,0.4]
+                      .reduce((pts: string[], v, i) => {
+                        if (i % 2 === 0) {
+                          const angle = (2*Math.PI*(i/2)/10) - Math.PI/2;
+                          const r = v * 84;
+                          pts.push(`${(100+r*Math.cos(angle)).toFixed(1)},${(100+r*Math.sin(angle)).toFixed(1)}`);
+                        }
+                        return pts;
+                      }, []).join(" ")}
+                    fill="#E8782E" fillOpacity={0.30} stroke="#E8782E" strokeWidth={2} strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
+
+              {/* Legend */}
+              <div className="flex justify-center gap-6 text-xs mb-4">
+                <span className="flex items-center gap-1.5">
+                  <span className="w-3 h-3 rounded-sm" style={{ background: "#5560C8" }} />
+                  <span className="text-[rgba(10,10,10,0.70)] font-medium">You</span>
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <span className="w-3 h-3 rounded-sm" style={{ background: "#E8782E" }} />
+                  <span className="text-[rgba(10,10,10,0.70)] font-medium">Your friend</span>
+                </span>
+              </div>
+
+              <p className="text-xs text-[rgba(10,10,10,0.45)] italic">
+                &ldquo;Political difference as geometry, not warfare.&rdquo;
+              </p>
+
+              <Link
+                href="/quiz"
+                className="inline-block mt-4 bg-[#5560C8] hover:bg-[#4450B2] text-white text-sm font-semibold px-6 py-2.5 rounded-lg transition-colors"
+              >
+                Take the Quiz to Compare →
+              </Link>
+            </div>
+
           </div>
         </div>
       </section>
