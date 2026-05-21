@@ -1,4 +1,4 @@
-# Your Political Shape
+# Poligon - The Shape Of Your Politics
 
 A non-partisan civic-tech web application that maps political views as a multidimensional radar chart — showing that political positions are nuanced and don't reduce to a simple left–right axis.
 
