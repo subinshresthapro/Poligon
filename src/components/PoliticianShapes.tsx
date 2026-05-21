@@ -5,7 +5,7 @@ import Link from "next/link";
 import { POLITICIANS } from "@/data/politicians";
 import { shapeScore } from "@/lib/scoring";
 import { hasSavedScores } from "@/lib/storage";
-import PoliticalRadarChart from "./PoliticalRadarChart";
+import PoligonShape from "./PoligonShape";
 
 const PARTY_COLOR: Record<string, string> = {
   "Democrat": "#2563eb",
@@ -118,14 +118,9 @@ export default function PoliticianShapes() {
                     {politician.title}
                   </p>
 
-                  {/* Chart */}
-                  <div className="w-full aspect-square overflow-hidden rounded-lg">
-                    <PoliticalRadarChart
-                      scores={politician.scores}
-                      name={politician.name}
-                      compact
-                      height={130}
-                    />
+                  {/* Shape */}
+                  <div className="w-full flex items-center justify-center py-1">
+                    <PoligonShape scores={politician.scores} size={110} />
                   </div>
 
                   {/* Score badge */}

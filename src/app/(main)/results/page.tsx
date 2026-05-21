@@ -10,11 +10,14 @@ import {
   scoresToCategoryScores,
 } from "@/lib/scoring";
 import { saveScores, loadScores } from "@/lib/storage";
+import PoligonShape, { DIMENSION_COLORS } from "@/components/PoligonShape";
 import PoliticalRadarChart from "@/components/PoliticalRadarChart";
 import CategoryBreakdown from "@/components/CategoryBreakdown";
 import IdeologyComparisonPanel from "@/components/IdeologyComparisonPanel";
 import ShareExportPanel from "@/components/ShareExportPanel";
 import ScoreLegend from "@/components/ScoreLegend";
+import { findArchetype } from "@/lib/archetypes";
+import { CATEGORIES } from "@/data/questions";
 
 function ResultsContent() {
   const searchParams = useSearchParams();
@@ -29,12 +32,11 @@ function ResultsContent() {
       const decoded = decodeScores(encoded);
       if (decoded) {
         setScores(decoded);
-        saveScores(decoded); // persist so "My Shape" nav link works
+        saveScores(decoded);
       } else {
         router.replace("/quiz");
       }
     } else {
-      // No URL param — try localStorage
       const saved = loadScores();
       if (saved) {
         setScores(saved);
@@ -56,6 +58,7 @@ function ResultsContent() {
   const categoryScores = scoresToCategoryScores(scores);
   const avg = shapeScore(scores);
   const overallLabel = scoreLabel(avg);
+  const archetype = findArchetype(scores);
 
   const tabs = [
     { id: "breakdown" as const, label: "Category Breakdown" },
@@ -82,32 +85,83 @@ function ResultsContent() {
           </div>
         )}
 
-        {/* Header */}
-        <div className="text-center mb-8">
-          <h1
-            className="text-3xl font-bold text-slate-900 mb-2"
-            style={{ fontFamily: "var(--font-space-grotesk)" }}
-          >
-            Your Political Shape
-          </h1>
-          <p className="text-slate-500 text-sm max-w-xl mx-auto">
-            Each spoke is one dimension. Distance from center shows your level of support.
-            This is <strong>not</strong> a left–right label — it&apos;s a multidimensional map.
-          </p>
-          <div className="mt-3 inline-flex items-center gap-2 bg-indigo-50 border border-indigo-200 text-indigo-700 px-4 py-2 rounded-full text-sm">
-            <span>Shape score:</span>
-            <span className="font-bold font-mono">
-              {avg >= 0 ? "+" : ""}{avg.toFixed(2)}
-            </span>
-            <span className="text-indigo-500">— {overallLabel}</span>
+        {/* ── Archetype Identity Card ─────────────────────────────────────── */}
+        <div className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden mb-6">
+          <div className="flex flex-col sm:flex-row items-center gap-6 p-6">
+            {/* PoligonShape as identity badge */}
+            <div className="flex-shrink-0 bg-slate-50 rounded-xl p-2">
+              <PoligonShape scores={scores} size={140} />
+            </div>
+
+            <div className="flex-1 text-center sm:text-left">
+              <p className="text-xs font-semibold text-indigo-500 uppercase tracking-widest mb-1">
+                Your political archetype
+              </p>
+              <h1
+                className="text-2xl sm:text-3xl font-bold text-slate-900 mb-1"
+                style={{ fontFamily: "var(--font-space-grotesk)" }}
+              >
+                {archetype.emoji} {archetype.name}
+              </h1>
+              <p className="text-slate-500 text-sm leading-relaxed mb-3">
+                {archetype.description}
+              </p>
+              <p className="text-slate-400 text-xs leading-relaxed">
+                {archetype.detail}
+              </p>
+            </div>
+
+            {/* Shape score */}
+            <div className="flex-shrink-0 text-center">
+              <div className="bg-indigo-50 border border-indigo-100 rounded-xl px-5 py-4">
+                <p className="text-xs text-indigo-400 uppercase tracking-widest mb-1">Shape score</p>
+                <p
+                  className="text-2xl font-bold text-indigo-700 font-mono"
+                  style={{ fontFamily: "var(--font-space-grotesk)" }}
+                >
+                  {avg >= 0 ? "+" : ""}{avg.toFixed(2)}
+                </p>
+                <p className="text-xs text-indigo-500 mt-1">{overallLabel}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Dimension colour legend strip */}
+          <div className="px-6 pb-5">
+            <p className="text-xs text-slate-400 uppercase tracking-widest mb-2">Your shape, dimension by dimension</p>
+            <div className="flex flex-wrap gap-2">
+              {CATEGORIES.map((cat) => {
+                const score = scores[cat.id] ?? 0;
+                const color = DIMENSION_COLORS[cat.id] ?? "#6366f1";
+                return (
+                  <div
+                    key={cat.id}
+                    className="flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full border"
+                    style={{ borderColor: color + "40", background: color + "12" }}
+                  >
+                    <span
+                      className="w-2 h-2 rounded-full flex-shrink-0"
+                      style={{ background: color }}
+                    />
+                    <span className="text-slate-600">{cat.emoji} {cat.shortName}</span>
+                    <span className="font-mono font-semibold" style={{ color }}>
+                      {score >= 0 ? "+" : ""}{score.toFixed(2)}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
 
-        {/* Main grid */}
+        {/* ── Main chart + sidebar ─────────────────────────────────────────── */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-          {/* Chart */}
+          {/* Recharts radar for detailed view */}
           <div className="lg:col-span-2 bg-white border border-slate-200 rounded-2xl shadow-sm p-4">
-            <PoliticalRadarChart scores={scores} name="Your Shape" height={460} />
+            <p className="text-xs text-slate-400 text-center mb-2 uppercase tracking-widest">
+              Full radar view
+            </p>
+            <PoliticalRadarChart scores={scores} name="Your Shape" height={440} />
           </div>
 
           {/* Sidebar */}
@@ -116,7 +170,8 @@ function ResultsContent() {
               <h3 className="text-sm font-semibold text-slate-700 mb-4">How to read this</h3>
               <ScoreLegend />
               <p className="text-xs text-slate-400 mt-4 leading-relaxed">
-                The further a point extends from the center, the more you support that dimension&apos;s direction.
+                The further a point extends from the center, the more you support that
+                dimension&apos;s direction.
               </p>
             </div>
 
@@ -151,7 +206,7 @@ function ResultsContent() {
           </div>
         </div>
 
-        {/* Tabs */}
+        {/* ── Tabs ─────────────────────────────────────────────────────────── */}
         <div className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
           <div className="border-b border-slate-200 flex">
             {tabs.map((t) => (

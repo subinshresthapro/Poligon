@@ -5,42 +5,102 @@ import ScoreLegend from "@/components/ScoreLegend";
 export default function LandingPage() {
   return (
     <>
-      {/* Hero */}
-      <section className="bg-slate-900 text-white py-24 px-4 sm:px-6 relative overflow-hidden">
-        {/* Subtle background grid */}
-        <div className="absolute inset-0 opacity-5"
+      {/* ── Hero ──────────────────────────────────────────────────────── */}
+      <section className="bg-slate-900 text-white py-20 sm:py-28 px-4 sm:px-6 relative overflow-hidden">
+        {/* Subtle dot-grid background */}
+        <div
+          className="absolute inset-0 opacity-[0.04]"
           style={{
             backgroundImage: "radial-gradient(circle, #818cf8 1px, transparent 1px)",
             backgroundSize: "32px 32px",
           }}
         />
+
+        {/* Decorative colored polygon illustration — top right */}
+        <div className="absolute right-0 top-0 bottom-0 w-1/2 pointer-events-none hidden lg:block overflow-hidden opacity-20">
+          <svg
+            viewBox="0 0 400 400"
+            className="absolute right-[-60px] top-1/2 -translate-y-1/2 w-[440px] h-[440px]"
+            aria-hidden="true"
+          >
+            {/* Decorative multi-colour polygon */}
+            <polygon points="200,30 335,115 335,285 200,370 65,285 65,115" fill="none" stroke="#6366f1" strokeWidth="1" />
+            <polygon points="200,70 305,135 305,265 200,330 95,265 95,135" fill="none" stroke="#8b5cf6" strokeWidth="0.5" />
+            <polygon points="200,110 275,155 275,245 200,290 125,245 125,155" fill="none" stroke="#06b6d4" strokeWidth="0.5" />
+            {/* Coloured slices */}
+            {[
+              ["200,200","200,30","335,115","#f59e0b"],
+              ["200,200","335,115","335,285","#8b5cf6"],
+              ["200,200","335,285","200,370","#10b981"],
+              ["200,200","200,370","65,285","#ef4444"],
+              ["200,200","65,285","65,115","#3b82f6"],
+              ["200,200","65,115","200,30","#22c55e"],
+            ].map(([origin, p1, p2, color], i) => (
+              <path
+                key={i}
+                d={`M ${origin} L ${p1} L ${p2} Z`}
+                fill={color as string}
+                fillOpacity={0.3}
+              />
+            ))}
+          </svg>
+        </div>
+
         <div className="max-w-4xl mx-auto text-center relative">
-          <p className="text-indigo-400 font-semibold text-sm uppercase tracking-widest mb-4">
-            Your views are not one-dimensional
-          </p>
+          {/* BRAND LABEL */}
+          <div className="inline-flex items-center gap-2 mb-6">
+            <svg width="22" height="22" viewBox="0 0 28 28" aria-hidden="true">
+              <polygon
+                points="14,2 25,8 25,20 14,26 3,20 3,8"
+                fill="url(#hero-grad)"
+              />
+              <defs>
+                <linearGradient id="hero-grad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stopColor="#8b5cf6" />
+                  <stop offset="50%" stopColor="#6366f1" />
+                  <stop offset="100%" stopColor="#06b6d4" />
+                </linearGradient>
+              </defs>
+            </svg>
+            <span className="text-indigo-400 font-semibold text-sm tracking-widest uppercase">
+              Poligon · Polygon for Politics
+            </span>
+          </div>
+
+          {/* THE MAIN MESSAGE — biggest text */}
           <h1
-            className="text-4xl sm:text-6xl font-bold leading-tight mb-6"
+            className="text-4xl sm:text-6xl font-bold leading-tight mb-4"
             style={{ fontFamily: "var(--font-space-grotesk)", letterSpacing: "-0.02em" }}
           >
-            What does your{" "}
-            <span className="text-indigo-400">political shape</span>{" "}
-            look like?
+            Your views are{" "}
+            <span className="text-indigo-400">not</span>{" "}
+            one-dimensional.
           </h1>
-          <p className="text-lg text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed">
-            Most tools put you on a line — left or right. We map your views across{" "}
-            <strong className="text-white">10 different dimensions</strong>, creating a polygon
-            that&apos;s uniquely yours.
+
+          {/* Tagline */}
+          <p className="text-xl sm:text-2xl text-slate-300 font-medium mb-4"
+            style={{ fontFamily: "var(--font-space-grotesk)" }}>
+            The Shape of Your Politics
           </p>
 
-          {/* Stats bar */}
-          <div className="flex flex-wrap justify-center gap-6 mb-10 text-sm">
+          <p className="text-base text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+            Most tools put you on a line — left or right. We map your views across{" "}
+            <strong className="text-white">10 different dimensions</strong>, creating a
+            coloured polygon that&apos;s uniquely yours — your political identity at a glance.
+          </p>
+
+          {/* Stats */}
+          <div className="flex flex-wrap justify-center gap-8 mb-10 text-sm">
             {[
               { value: "10", label: "dimensions" },
               { value: "40", label: "questions" },
               { value: "~5 min", label: "to complete" },
             ].map(({ value, label }) => (
               <div key={label} className="text-center">
-                <div className="text-2xl font-bold text-indigo-400" style={{ fontFamily: "var(--font-space-grotesk)" }}>
+                <div
+                  className="text-2xl font-bold text-indigo-400"
+                  style={{ fontFamily: "var(--font-space-grotesk)" }}
+                >
                   {value}
                 </div>
                 <div className="text-slate-400 text-xs uppercase tracking-wide">{label}</div>
@@ -65,11 +125,13 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* How it works */}
+      {/* ── How it works ─────────────────────────────────────────────── */}
       <section className="py-16 bg-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
-          <h2 className="text-2xl font-bold text-slate-900 text-center mb-10"
-            style={{ fontFamily: "var(--font-space-grotesk)" }}>
+          <h2
+            className="text-2xl font-bold text-slate-900 text-center mb-10"
+            style={{ fontFamily: "var(--font-space-grotesk)" }}
+          >
             How it works
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
@@ -82,12 +144,12 @@ export default function LandingPage() {
               {
                 icon: "⬡",
                 title: "See your unique shape",
-                desc: "Each topic becomes one spoke on a radar chart. Your answers determine how far each point extends from the center.",
+                desc: "Each topic becomes one spoke on a coloured polygon. Your answers determine how far each point extends — creating a shape that's yours alone.",
               },
               {
                 icon: "🔗",
                 title: "Share or embed",
-                desc: "Copy a link to your results, embed the chart anywhere with an iframe, or compare your shape to different political traditions.",
+                desc: "Copy a link to your results, embed the chart anywhere with an iframe, or compare your shape to different political archetypes.",
               },
             ].map(({ icon, title, desc }) => (
               <div key={title} className="text-center">
@@ -102,13 +164,15 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* How to read */}
+      {/* ── How to read your shape ───────────────────────────────────── */}
       <section className="py-16 bg-slate-50">
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
             <div>
-              <h2 className="text-2xl font-bold text-slate-900 mb-4"
-                style={{ fontFamily: "var(--font-space-grotesk)" }}>
+              <h2
+                className="text-2xl font-bold text-slate-900 mb-4"
+                style={{ fontFamily: "var(--font-space-grotesk)" }}
+              >
                 How to read your shape
               </h2>
               <p className="text-slate-500 mb-6 leading-relaxed text-sm">
@@ -117,7 +181,7 @@ export default function LandingPage() {
                 <span className="text-red-600 font-medium">−1 (strongly disagree)</span> at
                 the center to{" "}
                 <span className="text-emerald-600 font-medium">+1 (strongly agree)</span>{" "}
-                at the outer edge. The connected points form your unique shape.
+                at the outer edge. The connected points form your unique coloured polygon.
               </p>
               <ScoreLegend />
               <div className="mt-6 p-4 bg-white border border-slate-200 rounded-xl text-sm text-slate-500">
@@ -131,18 +195,46 @@ export default function LandingPage() {
               <div className="text-slate-400 text-xs font-semibold uppercase tracking-widest mb-4">
                 Your shape will look something like this
               </div>
+              {/* Decorative polygon preview */}
               <div className="flex items-center justify-center" style={{ height: 200 }}>
-                <div className="relative w-44 h-44 flex items-center justify-center">
-                  <div className="absolute inset-0 border-2 border-dashed border-slate-200 rounded-full opacity-50" />
-                  <div className="absolute inset-8 border-2 border-dashed border-slate-200 rounded-full opacity-40" />
-                  <div className="absolute inset-16 border-2 border-dashed border-slate-200 rounded-full opacity-30" />
-                  <div
-                    className="text-indigo-400 text-6xl select-none"
-                    style={{ fontFamily: "system-ui" }}
-                  >
-                    ⬡
-                  </div>
-                </div>
+                <svg width="180" height="180" viewBox="0 0 180 180" aria-hidden="true">
+                  {/* Grid */}
+                  {[0.25, 0.5, 0.75, 1].map((frac) => (
+                    <circle key={frac} cx={90} cy={90} r={frac * 78}
+                      fill="none" stroke={frac === 0.5 ? "#94a3b8" : "#e2e8f0"}
+                      strokeWidth={frac === 0.5 ? 1.25 : 0.75}
+                      strokeDasharray={frac === 0.5 ? "3 3" : undefined}
+                    />
+                  ))}
+                  {/* Decorative coloured slices */}
+                  {[
+                    { angle: -90, score: 0.85, color: "#f59e0b" },
+                    { angle: -18, score: 0.60, color: "#8b5cf6" },
+                    { angle: 54,  score: 0.90, color: "#10b981" },
+                    { angle: 126, score: 0.40, color: "#ef4444" },
+                    { angle: 198, score: 0.70, color: "#3b82f6" },
+                    { angle: 270, score: 0.55, color: "#22c55e" },
+                  ].map(({ angle: a, score: s, color: c }, i, arr) => {
+                    const next = arr[(i + 1) % arr.length];
+                    const r1 = s * 78;
+                    const r2 = next.score * 78;
+                    const toRad = (d: number) => (d * Math.PI) / 180;
+                    const x1 = 90 + r1 * Math.cos(toRad(a));
+                    const y1 = 90 + r1 * Math.sin(toRad(a));
+                    const x2 = 90 + r2 * Math.cos(toRad(next.angle));
+                    const y2 = 90 + r2 * Math.sin(toRad(next.angle));
+                    return (
+                      <path
+                        key={i}
+                        d={`M 90,90 L ${x1},${y1} L ${x2},${y2} Z`}
+                        fill={c}
+                        fillOpacity={0.75}
+                        stroke="white"
+                        strokeWidth={0.75}
+                      />
+                    );
+                  })}
+                </svg>
               </div>
               <p className="text-xs text-slate-400 mt-2 mb-4">
                 Each person&apos;s shape is unique — take the quiz to see yours.
@@ -151,27 +243,30 @@ export default function LandingPage() {
                 href="/quiz"
                 className="inline-block bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-6 py-2.5 rounded-lg transition-colors"
               >
-                Reveal My Shape
+                Reveal My Shape →
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Ideology gallery */}
+      {/* ── Archetype gallery (previously IdeologyGallery) ───────────── */}
       <IdeologyGallery />
 
-      {/* Embed CTA */}
+      {/* ── Embed CTA ────────────────────────────────────────────────── */}
       <section className="py-16 bg-slate-900 text-white">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
-          <h2 className="text-2xl font-bold mb-4"
-            style={{ fontFamily: "var(--font-space-grotesk)" }}>
+          <h2
+            className="text-2xl font-bold mb-4"
+            style={{ fontFamily: "var(--font-space-grotesk)" }}
+          >
             Built for publishers &amp; journalists
           </h2>
           <p className="text-slate-300 text-sm mb-6 leading-relaxed">
             Embed any political shape on your website with one line of code.
             Perfect for candidate profiles, voter guides, or news articles.
             No account required — data is passed as a simple JSON object.
+            Each embed becomes a little colour-pop of political identity.
           </p>
           <pre className="bg-slate-800 border border-slate-700 rounded-xl p-4 text-left text-xs text-emerald-400 overflow-x-auto mb-6 font-mono leading-relaxed">
             {`<iframe

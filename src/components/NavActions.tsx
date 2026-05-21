@@ -33,6 +33,12 @@ export default function NavActions() {
         Profiles
       </Link>
       <Link
+        href="/about"
+        className="hidden sm:block text-sm text-slate-500 hover:text-slate-800 transition-colors"
+      >
+        About
+      </Link>
+      <Link
         href="/quiz"
         className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors"
       >

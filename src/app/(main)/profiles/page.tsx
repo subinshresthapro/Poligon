@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { SAMPLE_PROFILES } from "@/data/profiles";
 import { shapeScore, scoreLabel } from "@/lib/scoring";
-import PoliticalRadarChart from "@/components/PoliticalRadarChart";
+import PoligonShape from "@/components/PoligonShape";
 import PoliticianShapes from "@/components/PoliticianShapes";
 import PoliticianTeaser from "@/components/PoliticianTeaser";
 
@@ -39,16 +39,8 @@ export default function ProfilesPage() {
                   href={`/profiles/${profile.id}`}
                   className="bg-white border border-slate-200 rounded-2xl shadow-sm hover:shadow-md transition-all overflow-hidden group flex flex-col"
                 >
-                  <div
-                    className="w-full overflow-hidden bg-slate-50 rounded-t-2xl"
-                    style={{ height: 220 }}
-                  >
-                    <PoliticalRadarChart
-                      scores={profile.scores}
-                      name={profile.name}
-                      compact
-                      height={220}
-                    />
+                  <div className="w-full bg-slate-50 rounded-t-2xl flex items-center justify-center py-4">
+                    <PoligonShape scores={profile.scores} size={180} />
                   </div>
                   <div className="px-5 py-4 border-t border-slate-100 flex-1">
                     <div className="flex items-start justify-between gap-2 mb-1">

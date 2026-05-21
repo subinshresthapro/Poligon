@@ -9,13 +9,13 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Your Political Shape",
+  title: "Poligon — The Shape of Your Politics",
   description:
-    "Discover your multidimensional political shape — beyond left and right.",
+    "Discover your unique political polygon across 10 dimensions. Beyond left and right.",
   openGraph: {
-    title: "Your Political Shape",
+    title: "Poligon — The Shape of Your Politics",
     description:
-      "A non-partisan tool that maps your political views as a unique radar shape across 10 dimensions.",
+      "A non-partisan tool that maps your political views as a unique coloured polygon across 10 dimensions.",
     type: "website",
   },
 };
