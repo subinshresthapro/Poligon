@@ -23,39 +23,39 @@ export default async function ProfilePage({ params }: Props) {
   const label = scoreLabel(avg);
 
   return (
-    <div className="min-h-screen bg-slate-50 py-8 px-4 sm:px-6">
+    <div className="min-h-screen bg-[#E5E0D2] py-8 px-4 sm:px-6">
       <div className="max-w-5xl mx-auto">
         {/* Breadcrumb */}
         <div className="mb-6 text-sm">
-          <Link href="/profiles" className="text-indigo-600 hover:text-indigo-800">
+          <Link href="/profiles" className="text-[#5560C8] hover:text-[#4450B2]">
             ← All Profiles
           </Link>
         </div>
 
         {/* Header */}
-        <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-6 mb-6">
+        <div className="bg-[#F1EEE5] border border-[rgba(10,10,10,0.12)] rounded-2xl shadow-sm p-6 mb-6">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <h1 className="text-2xl font-bold text-slate-900">{profile.name}</h1>
-              <p className="text-slate-500 text-sm">{profile.title}</p>
-              <p className="text-slate-600 text-sm mt-2 max-w-xl leading-relaxed">
+              <h1 className="text-2xl font-bold text-[#0A0A0A]">{profile.name}</h1>
+              <p className="text-[rgba(10,10,10,0.55)] text-sm">{profile.title}</p>
+              <p className="text-[rgba(10,10,10,0.70)] text-sm mt-2 max-w-xl leading-relaxed">
                 {profile.description}
               </p>
             </div>
             <div className="text-right flex-shrink-0">
-              <div className="text-xs text-slate-400">Shape Score</div>
-              <div className="text-2xl font-bold font-mono text-indigo-600">
+              <div className="text-xs text-[rgba(10,10,10,0.45)]">Shape Score</div>
+              <div className="text-2xl font-bold font-mono text-[#5560C8]">
                 {avg >= 0 ? "+" : ""}
                 {avg.toFixed(2)}
               </div>
-              <div className="text-xs text-slate-500">{label}</div>
+              <div className="text-xs text-[rgba(10,10,10,0.55)]">{label}</div>
             </div>
           </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
           {/* Chart */}
-          <div className="lg:col-span-2 bg-white border border-slate-200 rounded-2xl shadow-sm p-4">
+          <div className="lg:col-span-2 bg-[#F1EEE5] border border-[rgba(10,10,10,0.12)] rounded-2xl shadow-sm p-4">
             <PoliticalRadarChart
               scores={profile.scores}
               name={profile.name}
@@ -64,8 +64,8 @@ export default async function ProfilePage({ params }: Props) {
           </div>
 
           {/* Category scores */}
-          <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-5">
-            <h3 className="text-sm font-semibold text-slate-700 mb-4">
+          <div className="bg-[#F1EEE5] border border-[rgba(10,10,10,0.12)] rounded-2xl shadow-sm p-5">
+            <h3 className="text-sm font-semibold text-[#0A0A0A] mb-4">
               Scores by category
             </h3>
             <div className="space-y-3">
@@ -87,7 +87,7 @@ export default async function ProfilePage({ params }: Props) {
                 return (
                   <div key={cat.id}>
                     <div className="flex items-center justify-between text-xs mb-1">
-                      <span className="text-slate-600 flex items-center gap-1">
+                      <span className="text-[rgba(10,10,10,0.70)] flex items-center gap-1">
                         {cat.emoji} {cat.shortName}
                       </span>
                       <span className={`font-mono font-semibold ${labelColor}`}>
@@ -95,7 +95,7 @@ export default async function ProfilePage({ params }: Props) {
                         {score.toFixed(2)}
                       </span>
                     </div>
-                    <div className="relative h-1.5 rounded-full bg-slate-100 overflow-hidden">
+                    <div className="relative h-1.5 rounded-full bg-[rgba(10,10,10,0.06)] overflow-hidden">
                       <div className="absolute inset-y-0 left-1/2 w-px bg-slate-300 z-10" />
                       <div
                         className={`absolute inset-y-0 rounded-full ${barColor}`}
@@ -113,11 +113,11 @@ export default async function ProfilePage({ params }: Props) {
         </div>
 
         {/* Embed section */}
-        <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-6">
-          <h3 className="text-sm font-semibold text-slate-700 mb-1">
+        <div className="bg-[#F1EEE5] border border-[rgba(10,10,10,0.12)] rounded-2xl shadow-sm p-6">
+          <h3 className="text-sm font-semibold text-[#0A0A0A] mb-1">
             Embed this profile
           </h3>
-          <p className="text-xs text-slate-500 mb-4">
+          <p className="text-xs text-[rgba(10,10,10,0.55)] mb-4">
             Add {profile.name}&apos;s political shape to your website or article.
           </p>
           <ShareExportPanel scores={profile.scores} name={profile.name} />

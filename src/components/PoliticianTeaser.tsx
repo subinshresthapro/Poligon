@@ -42,8 +42,8 @@ export default function PoliticianTeaser() {
     >
       <div className={`rounded-2xl border px-4 py-3.5 flex items-center gap-4 transition-all hover:shadow-md ${
         unlocked
-          ? "bg-indigo-50 border-indigo-200 hover:border-indigo-400"
-          : "bg-slate-50 border-slate-200 hover:border-slate-300"
+          ? "bg-[#E5E0D2] border-[rgba(10,10,10,0.12)] hover:border-indigo-400"
+          : "bg-[#E5E0D2] border-[rgba(10,10,10,0.12)] hover:border-[rgba(10,10,10,0.12)]"
       }`}>
         {/* Avatar row */}
         <div className="flex -space-x-2 flex-shrink-0">
@@ -57,7 +57,7 @@ export default function PoliticianTeaser() {
               {p.name.split(" ").pop()?.charAt(0)}
             </div>
           ))}
-          <div className="w-8 h-8 rounded-full border-2 border-white bg-slate-300 flex items-center justify-center text-slate-600 text-xs font-bold flex-shrink-0">
+          <div className="w-8 h-8 rounded-full border-2 border-white bg-slate-300 flex items-center justify-center text-[rgba(10,10,10,0.70)] text-xs font-bold flex-shrink-0">
             +{POLITICIANS.length - 4}
           </div>
         </div>
@@ -66,19 +66,19 @@ export default function PoliticianTeaser() {
         <div className="flex-1 min-w-0">
           {unlocked ? (
             <>
-              <p className="text-sm font-semibold text-indigo-800 leading-snug">
+              <p className="text-sm font-semibold text-[#4450B2] leading-snug">
                 Real politician shapes are below ↓
               </p>
-              <p className="text-xs text-indigo-500 mt-0.5 truncate">
+              <p className="text-xs text-[#5560C8] mt-0.5 truncate">
                 Sanders · AOC · Obama · Romney · Ron Paul · Trump
               </p>
             </>
           ) : (
             <>
-              <p className="text-sm font-semibold text-slate-700 leading-snug">
+              <p className="text-sm font-semibold text-[#0A0A0A] leading-snug">
                 🔒 Real politician shapes are below — take the quiz to unlock
               </p>
-              <p className="text-xs text-slate-400 mt-0.5 truncate">
+              <p className="text-xs text-[rgba(10,10,10,0.45)] mt-0.5 truncate">
                 Sanders · AOC · Obama · Romney · Ron Paul · Trump
               </p>
             </>
@@ -87,7 +87,7 @@ export default function PoliticianTeaser() {
 
         {/* Arrow */}
         <span className={`text-lg flex-shrink-0 transition-transform group-hover:translate-y-0.5 ${
-          unlocked ? "text-indigo-400" : "text-slate-400"
+          unlocked ? "text-[#5560C8]" : "text-[rgba(10,10,10,0.45)]"
         }`}>
           ↓
         </span>

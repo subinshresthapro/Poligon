@@ -20,7 +20,7 @@ export default function NavActions() {
       {hasSaved && (
         <Link
           href="/results"
-          className="hidden sm:flex items-center gap-1.5 text-sm text-indigo-600 hover:text-indigo-800 font-medium transition-colors"
+          className="hidden sm:flex items-center gap-1.5 text-sm text-[#5560C8] hover:text-[#4450B2] font-medium transition-colors"
         >
           <span className="text-base">⬡</span>
           My Shape
@@ -28,19 +28,19 @@ export default function NavActions() {
       )}
       <Link
         href="/profiles"
-        className="hidden sm:block text-sm text-slate-500 hover:text-slate-800 transition-colors"
+        className="hidden sm:block text-sm text-[rgba(10,10,10,0.55)] hover:text-[#0A0A0A] transition-colors"
       >
         Profiles
       </Link>
       <Link
         href="/about"
-        className="hidden sm:block text-sm text-slate-500 hover:text-slate-800 transition-colors"
+        className="hidden sm:block text-sm text-[rgba(10,10,10,0.55)] hover:text-[#0A0A0A] transition-colors"
       >
         About
       </Link>
       <Link
         href="/quiz"
-        className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors"
+        className="bg-[#5560C8] hover:bg-[#4450B2] text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors"
       >
         {hasSaved ? "Edit My Answers" : "Take the Quiz"}
       </Link>

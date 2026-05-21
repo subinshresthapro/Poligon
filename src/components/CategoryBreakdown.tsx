@@ -22,7 +22,7 @@ function ScoreBar({ score }: { score: number }) {
       : "bg-red-500";
 
   return (
-    <div className="relative h-2 rounded-full bg-slate-100 overflow-hidden">
+    <div className="relative h-2 rounded-full bg-[rgba(10,10,10,0.06)] overflow-hidden">
       <div className="absolute inset-y-0 left-1/2 w-px bg-slate-300 z-10" />
       <div
         className={`absolute inset-y-0 rounded-full transition-all ${barColor}`}
@@ -48,24 +48,24 @@ export default function CategoryBreakdown({ categoryScores }: CategoryBreakdownP
         return (
           <div
             key={cs.categoryId}
-            className="bg-white border border-slate-200 rounded-xl overflow-hidden"
+            className="bg-[#F1EEE5] border border-[rgba(10,10,10,0.12)] rounded-xl overflow-hidden"
           >
             <button
-              className="w-full px-5 py-4 text-left hover:bg-slate-50 transition-colors"
+              className="w-full px-5 py-4 text-left hover:bg-[#E5E0D2] transition-colors"
               onClick={() => setExpanded(isOpen ? null : cs.categoryId)}
             >
               <div className="flex items-center gap-3">
                 <span className="text-xl">{cs.emoji}</span>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between gap-2 mb-2">
-                    <span className="font-semibold text-slate-800 text-sm">
+                    <span className="font-semibold text-[#0A0A0A] text-sm">
                       {cs.name}
                     </span>
                     <div className="flex items-center gap-2 flex-shrink-0">
                       <span className={`text-xs font-medium ${labelColor}`}>
                         {label}
                       </span>
-                      <span className="text-xs text-slate-400 font-mono">
+                      <span className="text-xs text-[rgba(10,10,10,0.45)] font-mono">
                         {cs.score >= 0 ? "+" : ""}
                         {cs.score.toFixed(2)}
                       </span>
@@ -73,15 +73,15 @@ export default function CategoryBreakdown({ categoryScores }: CategoryBreakdownP
                   </div>
                   <ScoreBar score={cs.score} />
                 </div>
-                <span className="text-slate-400 text-xs ml-1">
+                <span className="text-[rgba(10,10,10,0.45)] text-xs ml-1">
                   {isOpen ? "▲" : "▼"}
                 </span>
               </div>
             </button>
 
             {isOpen && (
-              <div className="px-5 pb-4 border-t border-slate-100">
-                <div className="mt-3 flex items-center justify-between text-xs text-slate-500">
+              <div className="px-5 pb-4 border-t border-[rgba(10,10,10,0.08)]">
+                <div className="mt-3 flex items-center justify-between text-xs text-[rgba(10,10,10,0.55)]">
                   <span className="flex items-center gap-1.5">
                     <span className="w-2 h-2 rounded-full bg-red-500 inline-block" />
                     {cs.negativeLabel}
@@ -91,8 +91,8 @@ export default function CategoryBreakdown({ categoryScores }: CategoryBreakdownP
                     <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" />
                   </span>
                 </div>
-                <div className="mt-3 text-xs text-slate-500">
-                  <span className="font-medium text-slate-700">Your position:</span>{" "}
+                <div className="mt-3 text-xs text-[rgba(10,10,10,0.55)]">
+                  <span className="font-medium text-[#0A0A0A]">Your position:</span>{" "}
                   <span className={labelColor}>{label}</span> on this dimension
                   {cs.score >= 0 ? (
                     <span> — aligning more toward <strong>{cs.positiveLabel}</strong></span>
@@ -105,7 +105,7 @@ export default function CategoryBreakdown({ categoryScores }: CategoryBreakdownP
           </div>
         );
       })}
-      <p className="text-xs text-slate-400 text-center pt-1">
+      <p className="text-xs text-[rgba(10,10,10,0.45)] text-center pt-1">
         Click any category to see details
       </p>
     </div>

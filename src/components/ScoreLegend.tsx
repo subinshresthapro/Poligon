@@ -12,8 +12,8 @@ export default function ScoreLegend() {
       {items.map(({ score, label, dot }) => (
         <div key={score} className="flex items-center gap-3">
           <span className={`w-3 h-3 rounded-full flex-shrink-0 ${dot}`} />
-          <span className="text-sm font-semibold text-slate-700 w-10">{score}</span>
-          <span className="text-sm text-slate-500">{label}</span>
+          <span className="text-sm font-semibold text-[#0A0A0A] w-10">{score}</span>
+          <span className="text-sm text-[rgba(10,10,10,0.55)]">{label}</span>
         </div>
       ))}
     </div>

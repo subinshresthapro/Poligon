@@ -1,0 +1,44 @@
+/* Poligon — brand tokens
+ * Drop into your global stylesheet. All values are final, audited.
+ * Direction: Indigo × Wine (v0.3, May 2026)
+ */
+
+:root {
+  /* ── Brand ───────────────────────────────────────────────── */
+  --ink:           #0A0A0A;
+  --bone:          #F1EEE5;
+  --bone-2:        #E5E0D2;
+  --accent:        #5560C8;   /* primary action — CTA, highlight, polygon inner */
+  --accent-deep:   #4450B2;   /* accent hover/press */
+  --secondary:     #6E2226;   /* emphasis — frame, italic, score numbers */
+
+  /* ── Greys / utility ─────────────────────────────────────── */
+  --muted:         rgba(10, 10, 10, 0.55);
+  --muted-2:       rgba(10, 10, 10, 0.35);
+  --rule:          rgba(10, 10, 10, 0.12);
+  --muted-dark:    rgba(241, 238, 229, 0.55);
+
+  /* ── Ten dimensions (data palette) ───────────────────────── */
+  --d-immigration: #E8782E;
+  --d-government:  #8FA82E;
+  --d-economy:     #D4A53C;
+  --d-healthcare:  #B8385E;
+  --d-education:   #8B4FCB;
+  --d-environment: #3AA361;
+  --d-civil:       #4257C9;
+  --d-war:         #2EA39C;
+  --d-tech:        #3A8DD8;
+  --d-social:      #D63D8F;
+
+  /* ── Type ────────────────────────────────────────────────── */
+  --font-display:  'Outfit', system-ui, -apple-system, sans-serif;
+  --font-mono:     'JetBrains Mono', ui-monospace, monospace;
+  --font-serif:    'Instrument Serif', Georgia, serif;
+}
+
+body {
+  background: var(--bone);
+  color: var(--ink);
+  font-family: var(--font-display);
+  -webkit-font-smoothing: antialiased;
+}

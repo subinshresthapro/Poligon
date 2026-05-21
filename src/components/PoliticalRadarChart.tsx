@@ -55,8 +55,8 @@ function CustomAngleAxisTick(props: {
         dominantBaseline={dominantBaseline}
         fontSize={11}
         fontWeight={600}
-        fill="#475569"
-        fontFamily="var(--font-space-grotesk), system-ui, sans-serif"
+        fill="#0A0A0A"
+        fontFamily="var(--font-outfit), system-ui, sans-serif"
       >
         {emoji} {payload.value}
       </text>
@@ -77,7 +77,7 @@ function RadiusAxisTick(props: {
         textAnchor="middle"
         dominantBaseline="middle"
         fontSize={8}
-        fill="#94a3b8"
+        fill="rgba(10,10,10,0.45)"
         fontFamily="system-ui, sans-serif"
       >
         {payload.value === 0 ? "0" : payload.value > 0 ? `+${payload.value}` : payload.value}
@@ -95,7 +95,7 @@ function CustomTooltip({
 }) {
   if (!active || !payload?.length) return null;
   return (
-    <div className="bg-white border border-slate-200 rounded-lg shadow-lg p-3 text-xs z-50">
+    <div className="bg-[#F1EEE5] border border-[rgba(10,10,10,0.12)] rounded-lg shadow-lg p-3 text-xs z-50">
       {payload.map((entry) => {
         const v = entry.value;
         let label = "Neutral";
@@ -110,7 +110,7 @@ function CustomTooltip({
               className="inline-block w-2.5 h-2.5 rounded-full flex-shrink-0"
               style={{ background: entry.color }}
             />
-            <span className="font-medium text-slate-700">{entry.name}:</span>
+            <span className="font-medium text-[#0A0A0A]">{entry.name}:</span>
             <span style={{ color: entry.color }}>
               {v > 0 ? "+" : ""}
               {v.toFixed(2)} — {label}
@@ -146,7 +146,7 @@ export default function PoliticalRadarChart({
       <div style={{ width: "100%", height }}>
         <ResponsiveContainer width="100%" height="100%">
           <RadarChart data={data} margin={{ top: 8, right: 8, bottom: 8, left: 8 }}>
-            <PolarGrid gridType="circle" stroke="#e2e8f0" strokeWidth={1} />
+            <PolarGrid gridType="circle" stroke="rgba(10,10,10,0.12)" strokeWidth={1} />
             <PolarAngleAxis dataKey="category" tick={false} axisLine={false} />
             <PolarRadiusAxis
               domain={[-1, 1]}
@@ -170,11 +170,10 @@ export default function PoliticalRadarChart({
             <Radar
               name={name}
               dataKey={name}
-              stroke="#6366f1"
-              fill="#6366f1"
+              fill="#5560C8"
               fillOpacity={0.28}
-              strokeWidth={2}
-              dot={{ r: 3, fill: "#6366f1", strokeWidth: 0 }}
+              strokeWidth={0}
+              dot={{ r: 3, fill: "#5560C8", strokeWidth: 0 }}
             />
             <Tooltip content={<CustomTooltip />} />
           </RadarChart>
@@ -188,7 +187,7 @@ export default function PoliticalRadarChart({
     <div style={{ width: "100%", height }}>
       <ResponsiveContainer width="100%" height="100%">
         <RadarChart data={data} margin={{ top: 30, right: 65, bottom: 30, left: 65 }}>
-          <PolarGrid gridType="circle" stroke="#e2e8f0" strokeWidth={1} />
+          <PolarGrid gridType="circle" stroke="rgba(10,10,10,0.12)" strokeWidth={1} />
           <PolarAngleAxis
             dataKey="category"
             tick={CustomAngleAxisTick as never}
@@ -217,12 +216,11 @@ export default function PoliticalRadarChart({
           <Radar
             name={name}
             dataKey={name}
-            stroke="#6366f1"
-            fill="#6366f1"
+            fill="#5560C8"
             fillOpacity={0.25}
-            strokeWidth={2.5}
-            dot={{ r: 4, fill: "#6366f1", strokeWidth: 1.5, stroke: "#fff" }}
-            activeDot={{ r: 6, fill: "#6366f1", stroke: "#fff", strokeWidth: 2 }}
+            strokeWidth={0}
+            dot={{ r: 4, fill: "#5560C8", strokeWidth: 1.5, stroke: "rgba(10,10,10,0.25)" }}
+            activeDot={{ r: 6, fill: "#5560C8", stroke: "rgba(10,10,10,0.25)", strokeWidth: 2 }}
           />
           <Tooltip content={<CustomTooltip />} />
           {overlays.length > 0 && (
@@ -230,7 +228,7 @@ export default function PoliticalRadarChart({
               iconType="circle"
               iconSize={10}
               formatter={(value) => (
-                <span className="text-xs text-slate-600 font-medium">{value}</span>
+                <span className="text-xs text-[rgba(10,10,10,0.55)] font-medium">{value}</span>
               )}
             />
           )}

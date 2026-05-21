@@ -27,10 +27,10 @@ export default function IdeologyComparisonPanel({
   return (
     <div className="space-y-5">
       <div>
-        <h3 className="text-sm font-semibold text-slate-700 mb-1">
+        <h3 className="text-sm font-semibold text-[#0A0A0A] mb-1">
           Compare with example traditions
         </h3>
-        <p className="text-xs text-slate-500">
+        <p className="text-xs text-[rgba(10,10,10,0.55)]">
           These are rough archetypes, not rigid labels. Select any to overlay on your chart.
         </p>
       </div>
@@ -56,7 +56,7 @@ export default function IdeologyComparisonPanel({
       </div>
 
       {selected.length > 0 && (
-        <div className="bg-white border border-slate-200 rounded-2xl p-4">
+        <div className="bg-[#F1EEE5] border border-[rgba(10,10,10,0.12)] rounded-2xl p-4">
           <PoliticalRadarChart
             scores={userScores}
             name="Your Shape"
@@ -80,10 +80,10 @@ export default function IdeologyComparisonPanel({
               >
                 {ov.name}
               </div>
-              <p className="text-xs text-slate-500 mb-3">{ov.description}</p>
+              <p className="text-xs text-[rgba(10,10,10,0.55)] mb-3">{ov.description}</p>
               <ul className="space-y-1">
                 {ov.traits.map((t) => (
-                  <li key={t} className="text-xs text-slate-600 flex gap-1.5">
+                  <li key={t} className="text-xs text-[rgba(10,10,10,0.70)] flex gap-1.5">
                     <span style={{ color: ov.color }}>•</span> {t}
                   </li>
                 ))}
@@ -94,7 +94,7 @@ export default function IdeologyComparisonPanel({
       )}
 
       {selected.length === 0 && (
-        <p className="text-sm text-slate-400 text-center py-4">
+        <p className="text-sm text-[rgba(10,10,10,0.45)] text-center py-4">
           Select one or more traditions above to overlay them on your political shape.
         </p>
       )}

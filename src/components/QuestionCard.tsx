@@ -38,8 +38,8 @@ const OPTIONS: {
     value: 0,
     label: "Neutral / Mixed",
     shortLabel: "Neutral /\nMixed",
-    color: "text-slate-500",
-    bg: "border-slate-200 hover:border-slate-400 hover:bg-slate-50",
+    color: "text-[rgba(10,10,10,0.55)]",
+    bg: "border-[rgba(10,10,10,0.12)] hover:border-slate-400 hover:bg-[#E5E0D2]",
     selectedBg: "border-slate-500 bg-slate-500 text-white shadow-md",
   },
   {
@@ -68,9 +68,9 @@ export default function QuestionCard({
   onChange,
 }: QuestionCardProps) {
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
-      <p className="text-sm text-slate-400 font-medium mb-2">Q{index + 1}</p>
-      <p className="text-base font-medium text-slate-800 mb-6 leading-relaxed">
+    <div className="bg-[#F1EEE5] rounded-2xl border border-[rgba(10,10,10,0.12)] p-6 shadow-sm">
+      <p className="text-sm text-[rgba(10,10,10,0.45)] font-medium mb-2">Q{index + 1}</p>
+      <p className="text-base font-medium text-[#0A0A0A] mb-6 leading-relaxed">
         &ldquo;{text}&rdquo;
       </p>
 
@@ -85,7 +85,7 @@ export default function QuestionCard({
               className={`flex flex-col items-center justify-center py-3 px-2 rounded-xl border-2 text-xs font-medium transition-all leading-tight text-center ${
                 isSelected
                   ? opt.selectedBg
-                  : `${opt.bg} ${opt.color} bg-white`
+                  : `${opt.bg} ${opt.color} bg-[#F1EEE5]`
               }`}
             >
               <span className="whitespace-pre-line">{opt.shortLabel}</span>
@@ -105,7 +105,7 @@ export default function QuestionCard({
               className={`flex items-center justify-center py-2.5 px-4 rounded-xl border-2 text-sm font-medium transition-all ${
                 isSelected
                   ? opt.selectedBg
-                  : `${opt.bg} ${opt.color} bg-white`
+                  : `${opt.bg} ${opt.color} bg-[#F1EEE5]`
               }`}
             >
               {opt.label}

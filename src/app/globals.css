@@ -1,21 +1,43 @@
 @import "tailwindcss";
 
+@theme {
+  /* Brand */
+  --color-ink:           #0A0A0A;
+  --color-bone:          #F1EEE5;
+  --color-bone-2:        #E5E0D2;
+  --color-accent:        #5560C8;
+  --color-accent-deep:   #4450B2;
+  --color-secondary:     #6E2226;
+
+  /* Ten dimensions (data palette) */
+  --color-d-immigration: #E8782E;
+  --color-d-government:  #8FA82E;
+  --color-d-economy:     #D4A53C;
+  --color-d-healthcare:  #B8385E;
+  --color-d-education:   #8B4FCB;
+  --color-d-environment: #3AA361;
+  --color-d-civil:       #4257C9;
+  --color-d-war:         #2EA39C;
+  --color-d-tech:        #3A8DD8;
+  --color-d-social:      #D63D8F;
+
+  /* Fonts */
+  --font-display:        "Outfit", system-ui, -apple-system, sans-serif;
+  --font-mono:           "JetBrains Mono", ui-monospace, monospace;
+  --font-serif:          "Instrument Serif", Georgia, serif;
+}
+
 :root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
+  --background: #F1EEE5;
+  --foreground: #0A0A0A;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-space-grotesk), system-ui, -apple-system, sans-serif;
+  font-family: var(--font-outfit), "Outfit", system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
-.recharts-responsive-container {
-  overflow: visible !important;
-}
-
-html {
-  scroll-behavior: smooth;
-}
+.recharts-responsive-container { overflow: visible !important; }
+html { scroll-behavior: smooth; }

@@ -32,26 +32,26 @@ export default function PoliticianShapes() {
 
   if (!unlocked) {
     return (
-      <section id="politicians-section" className="py-16 bg-white border-t border-slate-200">
+      <section id="politicians-section" className="py-16 bg-[#F1EEE5] border-t border-[rgba(10,10,10,0.12)]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="text-center">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-slate-100 rounded-2xl text-3xl mb-4">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-[rgba(10,10,10,0.06)] rounded-2xl text-3xl mb-4">
               🔒
             </div>
             <h2
-              className="text-2xl font-bold text-slate-900 mb-3"
-              style={{ fontFamily: "var(--font-space-grotesk)" }}
+              className="text-2xl font-bold text-[#0A0A0A] mb-3"
+              style={{ fontFamily: "var(--font-outfit)" }}
             >
               See the shapes of real politicians
             </h2>
-            <p className="text-slate-500 text-sm max-w-md mx-auto mb-6 leading-relaxed">
+            <p className="text-[rgba(10,10,10,0.55)] text-sm max-w-md mx-auto mb-6 leading-relaxed">
               We&apos;ve estimated political shapes for 6 well-known politicians based on their
               public voting records and stated positions. Take the quiz first to unlock — and
               see how your shape compares.
             </p>
-            <div className="flex gap-3 justify-center flex-wrap text-sm text-slate-400 mb-6">
+            <div className="flex gap-3 justify-center flex-wrap text-sm text-[rgba(10,10,10,0.45)] mb-6">
               {POLITICIANS.map((p) => (
-                <span key={p.id} className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 px-3 py-1 rounded-full">
+                <span key={p.id} className="flex items-center gap-1.5 bg-[#E5E0D2] border border-[rgba(10,10,10,0.12)] px-3 py-1 rounded-full">
                   <span
                     className="w-2 h-2 rounded-full"
                     style={{ background: partyColor(p.party) }}
@@ -62,7 +62,7 @@ export default function PoliticianShapes() {
             </div>
             <Link
               href="/quiz"
-              className="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-8 py-3 rounded-xl transition-colors"
+              className="inline-block bg-[#5560C8] hover:bg-[#4450B2] text-white font-semibold px-8 py-3 rounded-xl transition-colors"
             >
               Take the Quiz to Unlock →
             </Link>
@@ -73,16 +73,16 @@ export default function PoliticianShapes() {
   }
 
   return (
-    <section id="politicians-section" className="py-16 bg-white border-t border-slate-200">
+    <section id="politicians-section" className="py-16 bg-[#F1EEE5] border-t border-[rgba(10,10,10,0.12)]">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="text-center mb-4">
           <h2
-            className="text-2xl font-bold text-slate-900 mb-2"
-            style={{ fontFamily: "var(--font-space-grotesk)" }}
+            className="text-2xl font-bold text-[#0A0A0A] mb-2"
+            style={{ fontFamily: "var(--font-outfit)" }}
           >
             Real politician shapes
           </h2>
-          <p className="text-slate-500 text-sm max-w-xl mx-auto">
+          <p className="text-[rgba(10,10,10,0.55)] text-sm max-w-xl mx-auto">
             Estimated from publicly available voting records, policy platforms, and political
             science research. These are approximations for educational comparison only.
           </p>
@@ -102,7 +102,7 @@ export default function PoliticianShapes() {
             return (
               <div
                 key={politician.id}
-                className="bg-white border border-slate-200 rounded-2xl shadow-sm hover:shadow-md transition-shadow flex flex-col overflow-hidden"
+                className="bg-[#F1EEE5] border border-[rgba(10,10,10,0.12)] rounded-2xl shadow-sm hover:shadow-md transition-shadow flex flex-col overflow-hidden"
               >
                 {/* Color accent bar */}
                 <div className="h-1 w-full" style={{ background: color }} />
@@ -114,7 +114,7 @@ export default function PoliticianShapes() {
                   >
                     {politician.name}
                   </h3>
-                  <p className="text-xs text-slate-400 text-center mb-2 leading-snug line-clamp-2">
+                  <p className="text-xs text-[rgba(10,10,10,0.45)] text-center mb-2 leading-snug line-clamp-2">
                     {politician.title}
                   </p>
 
@@ -125,9 +125,9 @@ export default function PoliticianShapes() {
 
                   {/* Score badge */}
                   <div className="mt-2 text-center">
-                    <span className="text-xs text-slate-400">
+                    <span className="text-xs text-[rgba(10,10,10,0.45)]">
                       Shape score:{" "}
-                      <span className="font-mono font-semibold text-slate-600">
+                      <span className="font-mono font-semibold text-[rgba(10,10,10,0.70)]">
                         {avg >= 0 ? "+" : ""}
                         {avg.toFixed(2)}
                       </span>
@@ -152,9 +152,9 @@ export default function PoliticianShapes() {
           })}
         </div>
 
-        <p className="text-center text-xs text-slate-400 mt-6">
+        <p className="text-center text-xs text-[rgba(10,10,10,0.45)] mt-6">
           Go to{" "}
-          <Link href="/results" className="text-indigo-500 hover:underline">
+          <Link href="/results" className="text-[#5560C8] hover:underline">
             My Shape
           </Link>{" "}
           to compare your results against these profiles.

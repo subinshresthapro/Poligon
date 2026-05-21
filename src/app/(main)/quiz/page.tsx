@@ -97,16 +97,16 @@ export default function QuizPage() {
   };
 
   return (
-    <div ref={pageTopRef} className="min-h-screen bg-slate-50 py-8 px-4 sm:px-6">
+    <div ref={pageTopRef} className="min-h-screen bg-[#E5E0D2] py-8 px-4 sm:px-6">
       <div className="max-w-2xl mx-auto">
 
         {/* Restored banner */}
         {restored && (
-          <div className="mb-4 flex items-center justify-between bg-indigo-50 border border-indigo-200 rounded-xl px-4 py-3 text-sm">
-            <span className="text-indigo-700">✓ Your previous answers have been restored.</span>
+          <div className="mb-4 flex items-center justify-between bg-[#E5E0D2] border border-[rgba(10,10,10,0.12)] rounded-xl px-4 py-3 text-sm">
+            <span className="text-[#5560C8]">✓ Your previous answers have been restored.</span>
             <button
               onClick={handleStartFresh}
-              className="text-indigo-500 hover:text-indigo-700 font-medium underline underline-offset-2 text-xs ml-4 flex-shrink-0"
+              className="text-[#5560C8] hover:text-[#5560C8] font-medium underline underline-offset-2 text-xs ml-4 flex-shrink-0"
             >
               Start fresh
             </button>
@@ -115,7 +115,7 @@ export default function QuizPage() {
 
         {/* Overall progress bar */}
         <div className="mb-5">
-          <div className="flex items-center justify-between text-xs text-slate-500 mb-1.5">
+          <div className="flex items-center justify-between text-xs text-[rgba(10,10,10,0.55)] mb-1.5">
             <span className="font-medium">
               {categoryIndex + 1} / {totalCategories} categories
             </span>
@@ -123,7 +123,7 @@ export default function QuizPage() {
           </div>
           <div className="h-1.5 bg-slate-200 rounded-full overflow-hidden">
             <div
-              className="h-full bg-indigo-500 rounded-full transition-all duration-500"
+              className="h-full bg-[#5560C8] rounded-full transition-all duration-500"
               style={{ width: `${progressPct}%` }}
             />
           </div>
@@ -143,10 +143,10 @@ export default function QuizPage() {
                   onClick={() => setCategoryIndex(i)}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap flex-shrink-0 border transition-all ${
                     isActive
-                      ? "bg-indigo-600 text-white border-indigo-600 shadow-md"
+                      ? "bg-[#5560C8] text-white border-indigo-600 shadow-md"
                       : catDone
                       ? "bg-emerald-50 text-emerald-700 border-emerald-300 hover:bg-emerald-100"
-                      : "bg-white text-slate-500 border-slate-200 hover:border-slate-400 hover:text-slate-700"
+                      : "bg-[#F1EEE5] text-[rgba(10,10,10,0.55)] border-[rgba(10,10,10,0.12)] hover:border-slate-400 hover:text-[#0A0A0A]"
                   }`}
                 >
                   <span>{cat.emoji}</span>
@@ -161,12 +161,12 @@ export default function QuizPage() {
         </div>
 
         {/* Category header card */}
-        <div className="bg-white border border-slate-200 rounded-2xl px-6 py-5 mb-6 shadow-sm">
+        <div className="bg-[#F1EEE5] border border-[rgba(10,10,10,0.12)] rounded-2xl px-6 py-5 mb-6 shadow-sm">
           <div className="flex items-center gap-3">
             <span className="text-3xl">{currentCategory.emoji}</span>
             <div className="flex-1 min-w-0">
-              <h1 className="text-xl font-bold text-slate-900">{currentCategory.name}</h1>
-              <p className="text-sm text-slate-500 mt-0.5 leading-snug">
+              <h1 className="text-xl font-bold text-[#0A0A0A]">{currentCategory.name}</h1>
+              <p className="text-sm text-[rgba(10,10,10,0.55)] mt-0.5 leading-snug">
                 {currentCategory.description}
               </p>
             </div>
@@ -192,12 +192,12 @@ export default function QuizPage() {
           <button
             onClick={handleBack}
             disabled={categoryIndex === 0}
-            className="px-5 py-2.5 rounded-xl border border-slate-300 text-slate-600 text-sm font-medium hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            className="px-5 py-2.5 rounded-xl border border-[rgba(10,10,10,0.12)] text-[rgba(10,10,10,0.70)] text-sm font-medium hover:bg-[#E5E0D2] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
           >
             ← Back
           </button>
 
-          <div className="text-xs text-slate-400 text-center">
+          <div className="text-xs text-[rgba(10,10,10,0.45)] text-center">
             {currentAnsweredCount} / {currentCategory.questions.length} answered
           </div>
 
@@ -212,7 +212,7 @@ export default function QuizPage() {
             <button
               onClick={handleNext}
               disabled={!allCurrentAnswered}
-              className="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold disabled:opacity-40 disabled:cursor-not-allowed transition-colors shadow-sm"
+              className="px-6 py-2.5 rounded-xl bg-[#5560C8] hover:bg-[#4450B2] text-white text-sm font-semibold disabled:opacity-40 disabled:cursor-not-allowed transition-colors shadow-sm"
             >
               {isLast ? "See My Shape →" : "Next →"}
             </button>
@@ -220,7 +220,7 @@ export default function QuizPage() {
         </div>
 
         {!allCurrentAnswered && (
-          <p className="text-center text-xs text-slate-400 mt-4">
+          <p className="text-center text-xs text-[rgba(10,10,10,0.45)] mt-4">
             Answer all {currentCategory.questions.length} questions in this section to continue.
           </p>
         )}

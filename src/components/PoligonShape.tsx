@@ -2,18 +2,18 @@
 
 import { CATEGORIES } from "@/data/questions";
 
-/** One hue per political dimension — the visual identity palette */
+/** One hue per political dimension — the brand data palette */
 export const DIMENSION_COLORS: Record<string, string> = {
-  immigration:    "#f59e0b", // amber
-  government:     "#8b5cf6", // violet
-  economy:        "#10b981", // emerald
-  healthcare:     "#ef4444", // red
-  education:      "#3b82f6", // blue
-  environment:    "#22c55e", // green
-  civilLiberties: "#f97316", // orange
-  foreignPolicy:  "#06b6d4", // cyan
-  technology:     "#a855f7", // purple
-  social:         "#ec4899", // pink
+  immigration:    "#E8782E",
+  government:     "#8FA82E",
+  economy:        "#D4A53C",
+  healthcare:     "#B8385E",
+  education:      "#8B4FCB",
+  environment:    "#3AA361",
+  civilLiberties: "#4257C9",
+  foreignPolicy:  "#2EA39C",
+  technology:     "#3A8DD8",
+  social:         "#D63D8F",
 };
 
 interface Props {
@@ -68,7 +68,7 @@ export default function PoligonShape({
       // label position
       lx,
       ly,
-      color: DIMENSION_COLORS[cat.id] ?? "#6366f1",
+      color: DIMENSION_COLORS[cat.id] ?? "#5560C8",
       cat,
       angle,
       score,
@@ -97,9 +97,9 @@ export default function PoligonShape({
             cy={cy}
             r={r}
             fill="none"
-            stroke={isZeroRing ? "#94a3b8" : "#e2e8f0"}
+            stroke="rgba(10,10,10,0.10)"
             strokeWidth={isZeroRing ? 1.25 : 0.75}
-            strokeDasharray={isZeroRing ? "3 3" : undefined}
+            strokeDasharray={frac === 1.0 ? undefined : "2 4"}
           />
         );
       })}
@@ -112,7 +112,7 @@ export default function PoligonShape({
           y1={cy}
           x2={pt.ex}
           y2={pt.ey}
-          stroke="#e2e8f0"
+          stroke="rgba(10,10,10,0.10)"
           strokeWidth={0.75}
         />
       ))}
@@ -126,21 +126,12 @@ export default function PoligonShape({
             d={`M ${cx},${cy} L ${pt.x},${pt.y} L ${next.x},${next.y} Z`}
             fill={pt.color}
             fillOpacity={0.8}
-            stroke="white"
+            stroke="rgba(10,10,10,0.10)"
             strokeWidth={0.5}
             strokeLinejoin="round"
           />
         );
       })}
-
-      {/* Outer polygon border */}
-      <polygon
-        points={points.map((p) => `${p.x},${p.y}`).join(" ")}
-        fill="none"
-        stroke="white"
-        strokeWidth={1.5}
-        strokeLinejoin="round"
-      />
 
       {/* Vertex dots */}
       {points.map((pt, i) => (
@@ -148,10 +139,10 @@ export default function PoligonShape({
           key={`dot-${i}`}
           cx={pt.x}
           cy={pt.y}
-          r={size > 160 ? 3 : 2}
+          r={size > 160 ? 4.5 : 2.5}
           fill={pt.color}
-          stroke="white"
-          strokeWidth={1}
+          stroke="rgba(10,10,10,0.25)"
+          strokeWidth={1.4}
         />
       ))}
 
