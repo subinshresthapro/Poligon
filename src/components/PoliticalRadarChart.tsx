@@ -17,8 +17,8 @@ interface PoliticalRadarChartProps {
   scores: Record<string, number>;
   name?: string;
   overlays?: IdeologyProfile[];
-  width?: number;
   height?: number;
+  /** Compact hides all labels — for use in small cards/thumbnails */
   compact?: boolean;
 }
 
@@ -37,7 +37,7 @@ function CustomAngleAxisTick(props: {
   const dx = x - cx;
   const dy = y - cy;
   const mag = Math.sqrt(dx * dx + dy * dy) || 1;
-  const nx = (dx / mag) * 14;
+  const nx = (dx / mag) * 16;
   const ny = (dy / mag) * 14;
 
   const textAnchor =
@@ -56,7 +56,7 @@ function CustomAngleAxisTick(props: {
         fontSize={11}
         fontWeight={600}
         fill="#475569"
-        fontFamily="system-ui, sans-serif"
+        fontFamily="var(--font-space-grotesk), system-ui, sans-serif"
       >
         {emoji} {payload.value}
       </text>
@@ -95,7 +95,7 @@ function CustomTooltip({
 }) {
   if (!active || !payload?.length) return null;
   return (
-    <div className="bg-white border border-slate-200 rounded-lg shadow-lg p-3 text-xs">
+    <div className="bg-white border border-slate-200 rounded-lg shadow-lg p-3 text-xs z-50">
       {payload.map((entry) => {
         const v = entry.value;
         let label = "Neutral";
@@ -105,9 +105,9 @@ function CustomTooltip({
         else if (v > -0.7) label = "Leans Opposed";
         else label = "Strongly Opposes";
         return (
-          <div key={entry.name} className="flex items-center gap-2">
+          <div key={entry.name} className="flex items-center gap-2 mb-1 last:mb-0">
             <span
-              className="inline-block w-2.5 h-2.5 rounded-full"
+              className="inline-block w-2.5 h-2.5 rounded-full flex-shrink-0"
               style={{ background: entry.color }}
             />
             <span className="font-medium text-slate-700">{entry.name}:</span>
@@ -140,18 +140,55 @@ export default function PoliticalRadarChart({
     return point;
   });
 
-  const chartHeight = compact ? 320 : height;
-  const outerRadius = compact ? "75%" : "65%";
+  if (compact) {
+    // Minimal chart for small cards — no labels, no legend, tight margins
+    return (
+      <div style={{ width: "100%", height }}>
+        <ResponsiveContainer width="100%" height="100%">
+          <RadarChart data={data} margin={{ top: 8, right: 8, bottom: 8, left: 8 }}>
+            <PolarGrid gridType="circle" stroke="#e2e8f0" strokeWidth={1} />
+            <PolarAngleAxis dataKey="category" tick={false} axisLine={false} />
+            <PolarRadiusAxis
+              domain={[-1, 1]}
+              ticks={SCORE_TICKS}
+              tick={false}
+              axisLine={false}
+            />
+            {overlays.map((ov) => (
+              <Radar
+                key={ov.id}
+                name={ov.name}
+                dataKey={ov.name}
+                stroke={ov.color}
+                fill={ov.fillColor}
+                fillOpacity={0.15}
+                strokeWidth={1.5}
+                strokeDasharray="3 2"
+                dot={false}
+              />
+            ))}
+            <Radar
+              name={name}
+              dataKey={name}
+              stroke="#6366f1"
+              fill="#6366f1"
+              fillOpacity={0.28}
+              strokeWidth={2}
+              dot={{ r: 3, fill: "#6366f1", strokeWidth: 0 }}
+            />
+            <Tooltip content={<CustomTooltip />} />
+          </RadarChart>
+        </ResponsiveContainer>
+      </div>
+    );
+  }
 
+  // Full chart with labels and legend
   return (
-    <div style={{ width: "100%", height: chartHeight }}>
+    <div style={{ width: "100%", height }}>
       <ResponsiveContainer width="100%" height="100%">
-        <RadarChart data={data} margin={{ top: 30, right: 60, bottom: 30, left: 60 }}>
-          <PolarGrid
-            gridType="circle"
-            stroke="#e2e8f0"
-            strokeWidth={1}
-          />
+        <RadarChart data={data} margin={{ top: 30, right: 65, bottom: 30, left: 65 }}>
+          <PolarGrid gridType="circle" stroke="#e2e8f0" strokeWidth={1} />
           <PolarAngleAxis
             dataKey="category"
             tick={CustomAngleAxisTick as never}
@@ -164,8 +201,6 @@ export default function PoliticalRadarChart({
             axisLine={false}
             angle={90}
           />
-
-          {/* Overlays first (behind user shape) */}
           {overlays.map((ov) => (
             <Radar
               key={ov.id}
@@ -179,8 +214,6 @@ export default function PoliticalRadarChart({
               dot={{ r: 3, fill: ov.color, strokeWidth: 0 }}
             />
           ))}
-
-          {/* User shape on top */}
           <Radar
             name={name}
             dataKey={name}
@@ -191,9 +224,8 @@ export default function PoliticalRadarChart({
             dot={{ r: 4, fill: "#6366f1", strokeWidth: 1.5, stroke: "#fff" }}
             activeDot={{ r: 6, fill: "#6366f1", stroke: "#fff", strokeWidth: 2 }}
           />
-
           <Tooltip content={<CustomTooltip />} />
-          {(overlays.length > 0 || !compact) && (
+          {overlays.length > 0 && (
             <Legend
               iconType="circle"
               iconSize={10}

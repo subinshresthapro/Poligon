@@ -23,37 +23,41 @@ export default function IdeologyGallery() {
             return (
               <div
                 key={ideology.id}
-                className="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm hover:shadow-md transition-shadow"
+                className="bg-white rounded-2xl border border-slate-200 p-3 shadow-sm hover:shadow-md transition-shadow flex flex-col"
               >
+                {/* Title */}
                 <h3
-                  className="text-sm font-bold text-center mb-1"
+                  className="text-sm font-bold text-center mb-1 leading-snug"
                   style={{ color: ideology.color }}
                 >
                   {ideology.name}
                 </h3>
-                <p className="text-xs text-slate-500 text-center mb-2 leading-snug">
+                <p className="text-xs text-slate-500 text-center mb-2 leading-snug line-clamp-2">
                   {ideology.description.split("—")[0].trim()}
                 </p>
 
-                <div className="h-40 pointer-events-none">
+                {/* Chart — fully self-contained, no overflow */}
+                <div className="w-full aspect-square overflow-hidden rounded-lg">
                   <PoliticalRadarChart
                     scores={ideology.scores}
                     name={ideology.name}
                     compact
-                    height={160}
+                    height={140}
                   />
                 </div>
 
-                <ul className="mt-2 space-y-0.5">
+                {/* Traits */}
+                <ul className="mt-2 space-y-0.5 flex-1">
                   {ideology.traits.slice(0, 3).map((t) => (
-                    <li key={t} className="text-xs text-slate-500 flex gap-1">
-                      <span style={{ color: ideology.color }}>•</span>
-                      <span className="leading-snug">{t}</span>
+                    <li key={t} className="text-xs text-slate-500 flex gap-1 leading-snug">
+                      <span className="flex-shrink-0" style={{ color: ideology.color }}>•</span>
+                      <span>{t}</span>
                     </li>
                   ))}
                 </ul>
 
-                <div className="mt-3 text-center">
+                {/* Shape score */}
+                <div className="mt-2 pt-2 border-t border-slate-100 text-center">
                   <span className="text-xs text-slate-400">
                     Shape score:{" "}
                     <span className="font-mono font-semibold text-slate-600">

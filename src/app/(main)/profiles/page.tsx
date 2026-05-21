@@ -13,8 +13,7 @@ export default function ProfilesPage() {
           </h1>
           <p className="text-slate-500 text-sm max-w-xl mx-auto">
             These fictional candidate profiles demonstrate how the political shape system
-            represents different viewpoints. Click any profile to explore it in detail
-            or embed it on your website.
+            represents different viewpoints. Click any profile to explore or embed it.
           </p>
         </div>
 
@@ -26,20 +25,23 @@ export default function ProfilesPage() {
               <Link
                 key={profile.id}
                 href={`/profiles/${profile.id}`}
-                className="bg-white border border-slate-200 rounded-2xl shadow-sm hover:shadow-md transition-all overflow-hidden group"
+                className="bg-white border border-slate-200 rounded-2xl shadow-sm hover:shadow-md transition-all overflow-hidden group flex flex-col"
               >
-                <div className="h-52 pointer-events-none">
+                {/* Chart — contained with overflow hidden */}
+                <div className="w-full overflow-hidden bg-slate-50 rounded-t-2xl" style={{ height: 220 }}>
                   <PoliticalRadarChart
                     scores={profile.scores}
                     name={profile.name}
                     compact
-                    height={208}
+                    height={220}
                   />
                 </div>
-                <div className="px-5 pb-5 border-t border-slate-100 pt-4">
-                  <div className="flex items-start justify-between gap-2">
-                    <div>
-                      <h2 className="font-bold text-slate-900 group-hover:text-indigo-700 transition-colors">
+
+                {/* Info — clean separation from chart */}
+                <div className="px-5 py-4 border-t border-slate-100 flex-1">
+                  <div className="flex items-start justify-between gap-2 mb-1">
+                    <div className="min-w-0">
+                      <h2 className="font-bold text-slate-900 group-hover:text-indigo-700 transition-colors truncate">
                         {profile.name}
                       </h2>
                       <p className="text-xs text-slate-500">{profile.title}</p>
@@ -53,7 +55,8 @@ export default function ProfilesPage() {
                     {profile.description}
                   </p>
                   <p className="text-xs text-slate-400 mt-2">
-                    Overall: <span className="text-slate-600 font-medium">{label}</span>
+                    Overall:{" "}
+                    <span className="text-slate-600 font-medium">{label}</span>
                   </p>
                 </div>
               </Link>
@@ -62,9 +65,7 @@ export default function ProfilesPage() {
         </div>
 
         <div className="mt-12 text-center">
-          <p className="text-sm text-slate-500 mb-4">
-            Want to see your own shape?
-          </p>
+          <p className="text-sm text-slate-500 mb-4">Want to see your own shape?</p>
           <Link
             href="/quiz"
             className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-8 py-3 rounded-xl transition-colors"

@@ -8,11 +8,10 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: var(--font-space-grotesk), system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Recharts responsive container fix */
 .recharts-responsive-container {
   overflow: visible !important;
 }
