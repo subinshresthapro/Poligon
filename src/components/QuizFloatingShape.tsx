@@ -165,7 +165,7 @@ export default function QuizFloatingShape({
   );
 
   return (
-    <div className="fixed bottom-6 right-4 z-40 lg:hidden">
+    <div className="fixed top-20 right-4 z-40 lg:hidden">
       {isComplete ? (
         // When complete, tap goes to results page
         <Link href="/results" aria-label="View your results">
