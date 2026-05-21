@@ -8,6 +8,7 @@ import { answersToScores, encodeScores } from "@/lib/scoring";
 import { saveAnswers, loadAnswers, saveScores, clearSaved } from "@/lib/storage";
 import QuestionCard from "@/components/QuestionCard";
 import QuizLiveShape from "@/components/QuizLiveShape";
+import QuizFloatingShape from "@/components/QuizFloatingShape";
 
 export default function QuizPage() {
   const router = useRouter();
@@ -36,8 +37,14 @@ export default function QuizPage() {
 
   // Scroll page to top whenever category changes
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
   }, [categoryIndex]);
+
+  const scrollToTop = useCallback(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
   // Scroll active pill into view in horizontal nav
   useEffect(() => {
@@ -101,6 +108,7 @@ export default function QuizPage() {
   };
 
   return (
+    <>
     <div ref={pageTopRef} className="min-h-screen bg-[#E5E0D2] py-8 px-4 sm:px-6">
       {/* ── Wide container to accommodate sidebar on lg screens ── */}
       <div className="max-w-5xl mx-auto">
@@ -259,5 +267,15 @@ export default function QuizPage() {
         </div>
       </div>
     </div>
+
+      {/* Mobile floating mini-polygon — fixed bottom-right, lg:hidden */}
+      <QuizFloatingShape
+        answers={answers}
+        isComplete={allAnswered}
+        completedCategoryCount={completedCategoryCount}
+        totalAnswered={totalAnswered}
+        onTap={scrollToTop}
+      />
+    </>
   );
 }
