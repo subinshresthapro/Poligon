@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "About — Poligon",
+  title: "About | Poligon",
   description:
     "Why political nuance matters, and how Poligon's 10-dimension polygon captures it without bias.",
 };
@@ -24,7 +24,7 @@ export default function AboutPage() {
             <br className="hidden sm:inline" /> than a single line.
           </h1>
           <p className="text-[rgba(241,238,229,0.65)] text-base leading-relaxed max-w-xl mx-auto">
-            Poligon was built to capture that nuance — and to remind us that the
+            Poligon was built to capture that nuance, and to remind us that the
             people we disagree with are more complex than any label.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center mt-8">
@@ -88,7 +88,7 @@ export default function AboutPage() {
             </h2>
             <p className="text-[rgba(10,10,10,0.70)] leading-relaxed mb-4">
               In public discourse, &quot;nuanced views&quot; has become almost an
-              insult — a sign that you&apos;re not committed, not decisive. But
+              insult: a sign that you&apos;re not committed, not decisive. But
               holding a mix of views is not the same as having no views. It usually
               means you&apos;ve thought carefully.
             </p>
@@ -118,16 +118,15 @@ export default function AboutPage() {
             <p className="text-[rgba(10,10,10,0.70)] leading-relaxed mb-4">
               Sports are designed to produce a winner. Two sides enter, one leaves
               victorious. The goal is domination, not understanding. When we treat
-              politics the same way — tribal, zero-sum, winner-take-all — we drain
-              it of its actual purpose: collective problem-solving for people who
-              disagree.
+              politics as tribal, zero-sum, winner-take-all, we drain it of its
+              actual purpose: collective problem-solving for people who disagree.
             </p>
             <p className="text-[rgba(10,10,10,0.70)] leading-relaxed mb-4">
               Compromise isn&apos;t betrayal. It&apos;s how democratic societies
-              function. Almost every major policy outcome that has improved lives —
-              civil rights legislation, public health systems, environmental
-              protections — was the product of negotiation, coalition-building, and
-              meeting people partway.
+              function. Almost every major policy outcome that has improved lives
+              was the product of negotiation, coalition-building, and meeting people
+              partway. Civil rights legislation, public health systems, environmental
+              protections: all products of compromise.
             </p>
             <p className="text-[rgba(10,10,10,0.70)] leading-relaxed">
               A tool that helps you see where your views actually overlap with people
@@ -157,8 +156,8 @@ export default function AboutPage() {
               make those decisions disappear. It just hands them to others.
             </p>
             <p className="text-[rgba(10,10,10,0.70)] leading-relaxed">
-              Poligon was built for people who want to think about their values —
-              not to tell them what to think, but to give them a clearer picture of
+              Poligon was built for people who want to think about their values.
+              Not to tell them what to think, but to give them a clearer picture of
               where they stand and why it matters.
             </p>
           </div>
@@ -183,7 +182,7 @@ export default function AboutPage() {
             <p className="text-[rgba(10,10,10,0.70)] leading-relaxed">
               Poligon&apos;s 10 dimensions are broadly applicable across political
               contexts worldwide. The tool isn&apos;t calibrated to any single
-              country&apos;s political landscape — that&apos;s by design. Political
+              country&apos;s political landscape. That&apos;s by design. Political
               identity is human. The shape is yours.
             </p>
           </div>
@@ -202,14 +201,14 @@ export default function AboutPage() {
               Behind every political view is a person with a story. Someone who grew
               up watching their town&apos;s jobs disappear. Someone whose family
               came here with nothing and built something. Someone who has seen
-              firsthand what happens when institutions fail — or when they work
+              firsthand what happens when institutions fail, or when they work
               exactly as they should.
             </p>
             <p className="text-[rgba(10,10,10,0.70)] leading-relaxed">
               Poligon won&apos;t fix political polarisation. But if it helps even a
               few conversations start from &quot;here&apos;s my shape, show me
               yours&quot; instead of &quot;you&apos;re either with us or against
-              us&quot; — that&apos;s worth doing.
+              us&quot;, that&apos;s worth doing.
             </p>
           </div>
 
@@ -241,7 +240,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
             <div>
               <div className="inline-flex items-center gap-2 bg-white/10 rounded-full px-3 py-1 text-xs font-semibold text-[rgba(241,238,229,0.70)] uppercase tracking-widest mb-4">
-                Step 1 — Ten dimensions
+                Step 1: Ten dimensions
               </div>
               <h3
                 className="text-xl sm:text-2xl font-bold text-white mb-4"
@@ -250,7 +249,7 @@ export default function AboutPage() {
                 Not a line. A shape.
               </h3>
               <p className="text-[rgba(241,238,229,0.65)] leading-relaxed mb-5">
-                Traditional political tests measure you on a single axis — left
+                Traditional political tests measure you on a single axis: left
                 vs. right, liberal vs. conservative. Poligon measures ten
                 independent dimensions, because political identity simply is not
                 one-dimensional.
@@ -285,15 +284,15 @@ export default function AboutPage() {
               <p className="text-[rgba(241,238,229,0.70)] text-sm leading-relaxed mb-4">
                 These dimensions are drawn from the framework used by the{" "}
                 <strong className="text-white">Pew Research Center</strong> in
-                its Political Typology studies — one of the most-cited
+                its Political Typology studies, one of the most-cited
                 multi-axis frameworks in political science, mapping American
                 political values since the 1980s.
               </p>
               <p className="text-[rgba(241,238,229,0.70)] text-sm leading-relaxed">
                 Each dimension is largely independent: your views on healthcare
                 funding tell us very little about your views on military
-                spending. That independence is why a single axis fails — and
-                why a polygon with ten spokes captures something truer.
+                spending. That independence is why a single axis falls short,
+                and why a polygon with ten spokes captures something truer.
               </p>
             </div>
           </div>
@@ -309,21 +308,21 @@ export default function AboutPage() {
                 progressive framing and two from a conservative framing. A
                 committed conservative who &quot;Strongly Agrees&quot; with
                 conservative-framed questions scores just as high a conviction
-                level as a committed progressive — not lower.
+                level as a committed progressive. Not lower.
               </p>
               <p className="text-[rgba(241,238,229,0.70)] text-sm leading-relaxed">
                 This symmetry is informed by best-practice guidelines from{" "}
                 <strong className="text-white">
                   American National Election Studies (ANES)
                 </strong>{" "}
-                methodology for avoiding acquiescence bias in attitude measurement
-                — the tendency for respondents to agree with any statement
+                methodology for avoiding acquiescence bias in attitude measurement:
+                the tendency for respondents to agree with any statement
                 regardless of content.
               </p>
             </div>
             <div>
               <div className="inline-flex items-center gap-2 bg-white/10 rounded-full px-3 py-1 text-xs font-semibold text-[rgba(241,238,229,0.70)] uppercase tracking-widest mb-4">
-                Step 2 — Forty questions
+                Step 2: Forty questions
               </div>
               <h3
                 className="text-xl sm:text-2xl font-bold text-white mb-4"
@@ -333,20 +332,20 @@ export default function AboutPage() {
               </h3>
               <p className="text-[rgba(241,238,229,0.65)] leading-relaxed mb-5">
                 Most political quizzes ask questions that are subtly easier to
-                agree with if you lean progressive — because they were written
+                agree with if you lean progressive, because they were written
                 by people who lean progressive. We deliberately designed around
                 this.
               </p>
               <div className="space-y-3">
                 {[
                   {
-                    label: "Progressive-framed (P) — 2 per dimension",
+                    label: "Progressive-framed (P): 2 per dimension",
                     example:
                       '"Asylum seekers should receive a full legal hearing before any deportation decision is made."',
                     color: "#9FE1CB",
                   },
                   {
-                    label: "Conservative-framed (C) — 2 per dimension",
+                    label: "Conservative-framed (C): 2 per dimension",
                     example:
                       '"A country has the right and responsibility to strictly control who crosses its borders."',
                     color: "#C2440A",
@@ -376,7 +375,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
             <div>
               <div className="inline-flex items-center gap-2 bg-white/10 rounded-full px-3 py-1 text-xs font-semibold text-[rgba(241,238,229,0.70)] uppercase tracking-widest mb-4">
-                Step 3 — The polygon
+                Step 3: The polygon
               </div>
               <h3
                 className="text-xl sm:text-2xl font-bold text-white mb-4"
@@ -385,8 +384,8 @@ export default function AboutPage() {
                 Size = conviction. Shade = direction.
               </h3>
               <p className="text-[rgba(241,238,229,0.65)] leading-relaxed mb-5">
-                Your polygon encodes two things simultaneously — how strongly
-                you feel and which direction you lean — using visual language
+                Your polygon encodes two things simultaneously: how strongly
+                you feel, and which direction you lean. It uses visual language
                 rather than numbers.
               </p>
               <div className="space-y-4">
@@ -400,7 +399,7 @@ export default function AboutPage() {
                     </p>
                     <p className="text-[rgba(241,238,229,0.60)] text-xs leading-relaxed">
                       A short spoke means you&apos;re near-neutral on that axis.
-                      A full-length spoke means strong conviction — in either
+                      A full-length spoke means strong conviction, in either
                       direction. An ultra-conservative and an ultra-progressive
                       will both produce a full-size polygon. The difference is
                       the colour, not the size.
@@ -423,7 +422,7 @@ export default function AboutPage() {
                         a deep dark shade
                       </strong>{" "}
                       means conservative lean. Two extreme profiles look
-                      completely different even at identical size — one is a
+                      completely different even at identical size. One is a
                       pastel rainbow, the other a rich jewel-tone palette.
                     </p>
                   </div>
@@ -438,7 +437,7 @@ export default function AboutPage() {
                 Most visualisations put &quot;left&quot; on one side and
                 &quot;right&quot; on the other, making the larger side look
                 dominant. Poligon avoids this entirely. There is no
-                &quot;bigger&quot; or &quot;better&quot; polygon — only stronger
+                &quot;bigger&quot; or &quot;better&quot; polygon; only stronger
                 or weaker conviction, and different shading.
               </p>
               <p className="text-[rgba(241,238,229,0.70)] text-sm leading-relaxed mb-4">
@@ -447,13 +446,13 @@ export default function AboutPage() {
                 two-axis political map, 1969) and academic work on
                 multi-dimensional scaling in political science, including the{" "}
                 <strong className="text-white">DW-NOMINATE</strong> scoring
-                system developed at UCLA — used to score every U.S. Congress
+                system developed at UCLA, used to score every U.S. Congress
                 member since 1789.
               </p>
               <p className="text-[rgba(241,238,229,0.70)] text-sm leading-relaxed">
                 There is no red vs. blue, no left vs. right label on the
                 polygon. Two people with opposite views on every axis produce
-                shapes that are the same physical size — just radically
+                shapes that are the same physical size, just radically
                 different in colour.
               </p>
             </div>
@@ -468,7 +467,7 @@ export default function AboutPage() {
               {[
                 {
                   name: "Pew Research Center",
-                  desc: "Political Typology studies (1987–2023) — primary framework for the 10 dimensions.",
+                  desc: "Political Typology studies (1987-2023), the primary framework for the 10 dimensions.",
                 },
                 {
                   name: "DW-NOMINATE (UCLA)",
