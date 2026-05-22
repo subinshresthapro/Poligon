@@ -2,6 +2,14 @@ export interface Question {
   id: string;
   text: string;
   categoryId: string;
+  /**
+   * When true, this question is framed so that "Agree" maps to the
+   * conservative/traditional position.  The scoring layer multiplies the
+   * raw answer by −1 before averaging, so that a committed conservative
+   * and a committed progressive both produce fully-extended spokes — just
+   * in different signed directions.
+   */
+  reverseScore?: boolean;
 }
 
 export interface Category {

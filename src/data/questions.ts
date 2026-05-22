@@ -1,313 +1,386 @@
 import { Category } from "@/types";
 
+/**
+ * SCORING CONVENTION
+ * ------------------
+ * Each category has 2 "P" (progressive-framed) questions and 2 "C"
+ * (conservative-framed) questions.  C questions carry `reverseScore: true`.
+ * The scoring layer flips their sign before averaging, so that:
+ *
+ *   +1  →  strongly progressive / reform end of this axis
+ *   −1  →  strongly conservative / traditional end of this axis
+ *
+ * A committed conservative and a committed progressive both produce
+ * large, full polygons — they just differ in *shape*, not overall size.
+ */
 export const CATEGORIES: Category[] = [
   {
     id: "immigration",
-    name: "Immigration",
-    shortName: "Immigration",
-    description: "How open or restricted should movement of people across borders be?",
+    name: "Border Openness",
+    shortName: "Border",
+    description: "How open or controlled should movement of people across borders be?",
     emoji: "🌍",
-    positiveLabel: "More open / welcoming",
-    negativeLabel: "More controlled / restricted",
+    positiveLabel: "Open & welcoming",
+    negativeLabel: "Strict border control",
     questions: [
       {
         id: "imm-1",
         categoryId: "immigration",
-        text: "People who have lived and worked in a country for many years, but without official paperwork, should have a realistic way to become permanent residents.",
+        // P — agree = progressive
+        text: "People who have lived and worked here for many years without legal status deserve a clear, achievable path to permanent residency.",
       },
       {
         id: "imm-2",
         categoryId: "immigration",
-        text: "A country generally does better when it allows more people from other places to come and settle there.",
+        // C — agree = conservative
+        reverseScore: true,
+        text: "A country has the right and responsibility to strictly control who crosses its borders, regardless of the circumstances.",
       },
       {
         id: "imm-3",
         categoryId: "immigration",
-        text: "Someone who says they are in danger in their home country should get a proper hearing before being sent back.",
+        // P — agree = progressive
+        text: "Asylum seekers should receive a full legal hearing before any deportation decision is made.",
       },
       {
         id: "imm-4",
         categoryId: "immigration",
-        text: "Spending heavily on physical barriers and patrols along borders causes more harm than it prevents.",
+        // C — agree = conservative
+        reverseScore: true,
+        text: "High levels of immigration put too much pressure on public services, wages, and social cohesion.",
       },
     ],
   },
   {
     id: "government",
-    name: "Government Role",
+    name: "State vs. Market",
     shortName: "Gov. Role",
     description: "How much should government be involved in managing the economy and public life?",
     emoji: "🏛️",
-    positiveLabel: "More active government",
-    negativeLabel: "Smaller, limited government",
+    positiveLabel: "Active government",
+    negativeLabel: "Free market",
     questions: [
       {
         id: "gov-1",
         categoryId: "government",
-        text: "Without clear rules from the government, many businesses will cut corners on safety, pay, and the environment.",
+        // P — agree = progressive
+        text: "The government has a responsibility to ensure a basic standard of living for all citizens, even if it means higher taxes.",
       },
       {
         id: "gov-2",
         categoryId: "government",
-        text: "When a small group of people holds most of the wealth, it becomes the government's job to help balance things out.",
+        // C — agree = conservative
+        reverseScore: true,
+        text: "When government tries to solve social problems, it usually creates more dependency and inefficiency than it fixes.",
       },
       {
         id: "gov-3",
         categoryId: "government",
-        text: "A good society makes sure that people who fall on hard times — through job loss, illness, or bad luck — have somewhere to turn.",
+        // P — agree = progressive
+        text: "Essential services like water, transit, and energy are too important to be left entirely to private profit motives.",
       },
       {
         id: "gov-4",
         categoryId: "government",
-        text: "Having good public services like schools, roads, and hospitals matters more than keeping overall government spending low.",
+        // C — agree = conservative
+        reverseScore: true,
+        text: "Most regulations on businesses end up hurting the very workers and consumers they're meant to protect.",
       },
     ],
   },
   {
     id: "economy",
-    name: "Economy / Taxes",
+    name: "Economic Equality",
     shortName: "Economy",
     description: "How should wealth, taxes, and economic opportunity be distributed?",
     emoji: "💰",
-    positiveLabel: "More redistribution & worker protections",
-    negativeLabel: "More free-market & lower taxes",
+    positiveLabel: "Redistribution & equality",
+    negativeLabel: "Low taxes & free market",
     questions: [
       {
         id: "econ-1",
         categoryId: "economy",
-        text: "People and companies that earn the most should pay a larger share of their income in taxes than everyone else.",
+        // P — agree = progressive
+        text: "The gap between the wealthy and everyone else has grown too large and requires active policy intervention.",
       },
       {
         id: "econ-2",
         categoryId: "economy",
-        text: "When workers negotiate together as a group, they tend to get fairer pay and safer conditions than when they each deal with employers alone.",
+        // C — agree = conservative
+        reverseScore: true,
+        text: "People who work hard and take risks deserve to keep the rewards — high taxes on success reduce the incentive to create.",
       },
       {
         id: "econ-3",
         categoryId: "economy",
-        text: "The growing gap between the highest and lowest earners is a serious problem that the government should actively work to fix.",
+        // P — agree = progressive
+        text: "A minimum wage that keeps pace with living costs is a basic protection every worker deserves.",
       },
       {
         id: "econ-4",
         categoryId: "economy",
-        text: "Trade arrangements that allow foreign companies to undercut local workers on wages should be renegotiated or scrapped.",
+        // C — agree = conservative
+        reverseScore: true,
+        text: "Free markets, not government redistribution, are the most reliable engine for lifting people out of poverty.",
       },
     ],
   },
   {
     id: "healthcare",
-    name: "Healthcare",
+    name: "Universal vs. Private Care",
     shortName: "Healthcare",
     description: "Who should be responsible for making sure people can access medical care?",
     emoji: "🏥",
-    positiveLabel: "Government-guaranteed access",
-    negativeLabel: "Private / market-based system",
+    positiveLabel: "Universal coverage",
+    negativeLabel: "Private & market-based",
     questions: [
       {
         id: "health-1",
         categoryId: "healthcare",
-        text: "Getting medical care when you need it should not depend on how much money you have.",
+        // P — agree = progressive
+        text: "Everyone should have access to healthcare regardless of their ability to pay — this is a basic right.",
       },
       {
         id: "health-2",
         categoryId: "healthcare",
-        text: "A single government-managed health system would take better care of people than leaving it to competing private companies.",
+        // C — agree = conservative
+        reverseScore: true,
+        text: "When government controls healthcare, quality goes down and wait times go up — competition produces better outcomes.",
       },
       {
         id: "health-3",
         categoryId: "healthcare",
-        text: "The government should have the power to set limits on how much companies can charge for medicine.",
+        // P — agree = progressive
+        text: "Pharmaceutical companies should face price controls to prevent them from charging unaffordable prices for essential drugs.",
       },
       {
         id: "health-4",
         categoryId: "healthcare",
-        text: "Nobody should lose their savings or go into debt simply because they got sick.",
+        // C — agree = conservative
+        reverseScore: true,
+        text: "People should be free to choose and pay for their own healthcare coverage rather than being enrolled in a government program.",
       },
     ],
   },
   {
     id: "education",
-    name: "Education",
+    name: "Public vs. School Choice",
     shortName: "Education",
     description: "How should schools and higher education be funded and organized?",
     emoji: "🎓",
-    positiveLabel: "More public funding & access",
-    negativeLabel: "More private / choice-based",
+    positiveLabel: "Strong public schools",
+    negativeLabel: "School choice & private",
     questions: [
       {
         id: "edu-1",
         categoryId: "education",
-        text: "Going to university or college should not leave someone with years or decades of debt to pay off.",
+        // P — agree = progressive
+        text: "Investing heavily in public schools is the best way to give every child an equal start in life.",
       },
       {
         id: "edu-2",
         categoryId: "education",
-        text: "The national government should make sure all public schools are well-funded, regardless of the wealth of the area they are in.",
+        // C — agree = conservative
+        reverseScore: true,
+        text: "Parents should have the freedom to direct their education funding to any school — public, private, or religious — that best fits their child.",
       },
       {
         id: "edu-3",
         categoryId: "education",
-        text: "People who borrowed heavily to pay for their education and are now struggling deserve some form of relief.",
+        // P — agree = progressive
+        text: "Higher education should be free or heavily subsidized so that cost is never a barrier to attending college.",
       },
       {
         id: "edu-4",
         categoryId: "education",
-        text: "Children do better overall when they all attend a well-funded shared school system, rather than competing for spots at many different schools.",
+        // C — agree = conservative
+        reverseScore: true,
+        text: "Student loan forgiveness is unfair to people who either didn't go to college or already paid off their loans.",
       },
     ],
   },
   {
     id: "environment",
-    name: "Environment",
-    shortName: "Environment",
+    name: "Climate Action",
+    shortName: "Climate",
     description: "How urgently should we act on environmental challenges, and at what cost?",
     emoji: "🌱",
-    positiveLabel: "Prioritize environmental protection",
-    negativeLabel: "Prioritize economic growth",
+    positiveLabel: "Protect environment",
+    negativeLabel: "Economic growth first",
     questions: [
       {
         id: "env-1",
         categoryId: "environment",
-        text: "Protecting the long-term health of the planet's weather and ecosystems should be a top government priority, even if it costs more in the short term.",
+        // P — agree = progressive
+        text: "Transitioning away from fossil fuels is urgent enough to justify significant economic disruption and cost.",
       },
       {
         id: "env-2",
         categoryId: "environment",
-        text: "Rules that protect clean air, water, and land from damage are worth the burden they place on businesses.",
+        // C — agree = conservative
+        reverseScore: true,
+        text: "Environmental regulations often go too far, harming industries and workers without proportionate benefit.",
       },
       {
         id: "env-3",
         categoryId: "environment",
-        text: "We should move away from oil, gas, and coal as quickly as possible, even if energy prices go up for a while.",
+        // P — agree = progressive
+        text: "The government should set strict emissions limits on corporations even if it raises consumer prices.",
       },
       {
         id: "env-4",
         categoryId: "environment",
-        text: "Companies that pollute or damage the environment should be required to pay for the harm they cause.",
+        // C — agree = conservative
+        reverseScore: true,
+        text: "Technological innovation, not regulation, is the most effective long-term solution to environmental problems.",
       },
     ],
   },
   {
     id: "civilLiberties",
-    name: "Civil Liberties",
+    name: "Individual Freedom",
     shortName: "Civil Lib.",
     description: "Where is the right balance between individual freedom and collective security?",
     emoji: "⚖️",
-    positiveLabel: "More individual freedom",
-    negativeLabel: "More security & order",
+    positiveLabel: "Civil liberties",
+    negativeLabel: "Security & order",
     questions: [
       {
         id: "civil-1",
         categoryId: "civilLiberties",
-        text: "The government should not be allowed to monitor what people do online or on their phones without permission from a judge.",
+        // P — agree = progressive
+        text: "The government too often uses national security as a justification for surveillance that violates civil liberties.",
       },
       {
         id: "civil-2",
         categoryId: "civilLiberties",
-        text: "There should be independent bodies — separate from the police themselves — with real power to check how police use their authority.",
+        // C — agree = conservative
+        reverseScore: true,
+        text: "Law enforcement needs strong tools — including surveillance and stop-and-search powers — to keep communities safe.",
       },
       {
         id: "civil-3",
         categoryId: "civilLiberties",
-        text: "People should be free to make their own choices about how they live and what they do with their bodies, as long as they are not harming others.",
+        // P — agree = progressive
+        text: "Laws that restrict access to abortion infringe on a person's right to make decisions about their own body.",
       },
       {
         id: "civil-4",
         categoryId: "civilLiberties",
-        text: "People should be allowed to express views that others find offensive or wrong, as long as no direct harm is involved.",
+        // C — agree = conservative
+        reverseScore: true,
+        text: "The right to own a firearm for self-defense is a fundamental individual liberty that should not be heavily restricted.",
       },
     ],
   },
   {
     id: "foreignPolicy",
-    name: "War & Peace",
+    name: "Military Engagement",
     shortName: "War & Peace",
     description: "When should a country use military force, and how much should it spend on defense?",
     emoji: "🕊️",
-    positiveLabel: "Diplomacy & non-intervention",
-    negativeLabel: "Strong defense & military presence",
+    positiveLabel: "Diplomacy first",
+    negativeLabel: "Strong defense",
     questions: [
       {
         id: "fp-1",
         categoryId: "foreignPolicy",
-        text: "Talks and economic pressure should always be tried seriously before a country considers sending its military into a conflict.",
+        // P — agree = progressive
+        text: "Military spending should be significantly reduced and redirected toward diplomacy and international development.",
       },
       {
         id: "fp-2",
         categoryId: "foreignPolicy",
-        text: "When one country sends troops into another, it usually ends up making the situation worse than it was before.",
+        // C — agree = conservative
+        reverseScore: true,
+        text: "A strong military is the most reliable deterrent against aggression — underfunding it invites conflict.",
       },
       {
         id: "fp-3",
         categoryId: "foreignPolicy",
-        text: "Countries working together through shared agreements and institutions tend to solve problems better than when each acts on its own.",
+        // P — agree = progressive
+        text: "The United States should avoid military intervention in foreign conflicts unless directly attacked.",
       },
       {
         id: "fp-4",
         categoryId: "foreignPolicy",
-        text: "Money currently spent on the military could often do more good if used to improve life at home.",
+        // C — agree = conservative
+        reverseScore: true,
+        text: "America has a responsibility to use its military power to defend democracy and human rights around the world.",
       },
     ],
   },
   {
     id: "technology",
-    name: "Tech & Regulation",
+    name: "Tech Regulation",
     shortName: "Technology",
     description: "How much should government regulate technology companies and digital life?",
     emoji: "💻",
-    positiveLabel: "More oversight & regulation",
-    negativeLabel: "Less regulation, more innovation",
+    positiveLabel: "More oversight",
+    negativeLabel: "Less regulation",
     questions: [
       {
         id: "tech-1",
         categoryId: "technology",
-        text: "A small number of technology companies have grown so large that the government should step in to limit how much control they have.",
+        // P — agree = progressive
+        text: "Large tech platforms have too much unchecked power and need strong government regulation.",
       },
       {
         id: "tech-2",
         categoryId: "technology",
-        text: "People should have a clear legal right to know what information companies collect about them — and to say no.",
+        // C — agree = conservative
+        reverseScore: true,
+        text: "Government intervention in the tech sector risks stifling the innovation that has driven economic growth.",
       },
       {
         id: "tech-3",
         categoryId: "technology",
-        text: "The government needs to set firm rules for how AI systems are built and used, before the problems become serious.",
+        // P — agree = progressive
+        text: "People should have the legal right to know what data companies collect about them and how it is used.",
       },
       {
         id: "tech-4",
         categoryId: "technology",
-        text: "When harmful or false content spreads widely through an online platform, the company running it should be held responsible.",
+        // C — agree = conservative
+        reverseScore: true,
+        text: "Content moderation by platforms is a form of censorship — platforms should face legal consequences for removing lawful speech.",
       },
     ],
   },
   {
     id: "social",
-    name: "Social Issues",
+    name: "Cultural Change",
     shortName: "Social",
-    description: "How should society handle questions of equality, identity, and justice?",
+    description: "How should society handle questions of identity, equity, and historical injustice?",
     emoji: "🤝",
-    positiveLabel: "Progressive social change",
-    negativeLabel: "Traditional values & stability",
+    positiveLabel: "Progressive change",
+    negativeLabel: "Traditional values",
     questions: [
       {
         id: "soc-1",
         categoryId: "social",
-        text: "When certain groups have been treated unfairly for a long time, the government should take active steps to help level the playing field.",
+        // P — agree = progressive
+        text: "Diversity in leadership and institutions makes them more effective and representative.",
       },
       {
         id: "soc-2",
         categoryId: "social",
-        text: "The decision to end a pregnancy should be made by the person who is pregnant — not by the government.",
+        // C — agree = conservative
+        reverseScore: true,
+        text: "Placing too much emphasis on group identity divides society rather than uniting it around shared values.",
       },
       {
         id: "soc-3",
         categoryId: "social",
-        text: "People should have equal legal rights and protections regardless of who they are attracted to or how they identify.",
+        // P — agree = progressive
+        text: "Historical injustices have created present-day disadvantages that society has a responsibility to actively correct.",
       },
       {
         id: "soc-4",
         categoryId: "social",
-        text: "The way policing and the courts currently work causes serious problems for many communities, and significant changes are needed.",
+        // C — agree = conservative
+        reverseScore: true,
+        text: "Individuals should be judged entirely on their own actions and merits — group membership should play no role in decisions.",
       },
     ],
   },
