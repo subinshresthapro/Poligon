@@ -45,7 +45,7 @@ export const IDEOLOGIES: IdeologyProfile[] = [
       healthcare: -0.60,
       education: -0.35,
       environment: -0.40,
-      civilLiberties: 0.10,
+      civilLiberties: -0.40, // leans toward security & order over civil liberties
       foreignPolicy: -0.50,
       technology: -0.25,
       social: -0.75,

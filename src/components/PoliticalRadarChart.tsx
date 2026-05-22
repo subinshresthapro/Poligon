@@ -10,7 +10,7 @@ import {
 } from "react";
 import { CATEGORIES } from "@/data/questions";
 import { DIMENSION_COLORS } from "@/components/PoligonShape";
-import { getSegmentColor } from "@/lib/colorUtils";
+import { getSegmentColor, CATEGORY_LIGHT_DARK } from "@/lib/colorUtils";
 import { IdeologyProfile } from "@/types";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -184,32 +184,37 @@ export function drawPoligonOnCtx(
     const textBaseline: CanvasTextBaseline =
       Math.abs(sinA) < 0.15 ? "middle" : sinA > 0 ? "top" : "bottom";
 
-    // Main label
+    // Main label (axis name)
     ctx.font = `${mainFont} ${mainSize}px 'Outfit', system-ui, sans-serif`;
     ctx.textAlign = textAlign;
     ctx.textBaseline = textBaseline;
     ctx.fillStyle = "#0A0A0A";
     ctx.fillText(`${cat.emoji} ${cat.shortName}`, lx, ly);
 
-    // Position the sub-labels just below the main label
-    let subY: number;
-    if (textBaseline === "bottom") {
-      subY = ly + 2;         // main text extends upward from ly
-    } else if (textBaseline === "top") {
-      subY = ly + mainSize + 3;
-    } else {
-      subY = ly + mainSize / 2 + 3;
+    // Personalised direction label — only rendered when the user has a clear
+    // lean on this axis (|score| > 0.15).  Shows the relevant pole label in
+    // the dimension's dark colour so it always has contrast on a light bg.
+    const score = scores[cat.id] ?? 0;
+    if (Math.abs(score) > 0.15) {
+      const isProgressive = score > 0;
+      const poleLabel = isProgressive ? cat.positiveLabel : cat.negativeLabel;
+      const darkColor = (CATEGORY_LIGHT_DARK[cat.id] ?? { dark: "#2A3080" }).dark;
+
+      // Position the sub-label just below the main label
+      let subY: number;
+      if (textBaseline === "bottom") {
+        subY = ly + 2;
+      } else if (textBaseline === "top") {
+        subY = ly + mainSize + 3;
+      } else {
+        subY = ly + mainSize / 2 + 3;
+      }
+
+      ctx.font = `${subSize}px system-ui, sans-serif`;
+      ctx.textBaseline = "top";
+      ctx.fillStyle = darkColor + "CC"; // dark dimension colour at 80 % opacity
+      ctx.fillText(`${isProgressive ? "↑" : "↓"} ${poleLabel}`, lx, subY);
     }
-
-    // Positive pole (progressive → light shade)
-    ctx.font = `${subSize}px system-ui, sans-serif`;
-    ctx.textBaseline = "top";
-    ctx.fillStyle = "rgba(16,140,80,0.78)";
-    ctx.fillText(`↑ ${cat.positiveLabel}`, lx, subY);
-
-    // Negative pole (conservative → dark shade)
-    ctx.fillStyle = "rgba(200,60,30,0.68)";
-    ctx.fillText(`↓ ${cat.negativeLabel}`, lx, subY + subSize + 2);
   });
 }
 
@@ -458,6 +463,29 @@ export default function PoliticalRadarChart({
         {renderTooltip()}
       </div>
       {renderLegend()}
+      {/* Shade-encoding key — always visible so the reader can decode the colours */}
+      {!compact && (
+        <div className="flex items-center justify-center gap-5 mt-3 text-xs text-[rgba(10,10,10,0.55)]">
+          <div className="flex items-center gap-1.5">
+            <span
+              className="w-4 h-3 rounded-sm flex-shrink-0"
+              style={{ background: "#3A1F7A" }}
+            />
+            <span>
+              <strong className="text-[#0A0A0A]">Dark</strong> = conservative lean
+            </span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <span
+              className="w-4 h-3 rounded-sm flex-shrink-0"
+              style={{ background: "#C4B0E8" }}
+            />
+            <span>
+              <strong className="text-[#0A0A0A]">Light</strong> = progressive lean
+            </span>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

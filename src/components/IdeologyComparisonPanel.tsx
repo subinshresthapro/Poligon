@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { IDEOLOGIES } from "@/data/ideologies";
-import { IdeologyProfile } from "@/types";
-import PoliticalRadarChart from "./PoliticalRadarChart";
+import { findArchetype } from "@/lib/archetypes";
+import PoligonShape from "@/components/PoligonShape";
 
 interface IdeologyComparisonPanelProps {
   userScores: Record<string, number>;
@@ -20,9 +20,8 @@ export default function IdeologyComparisonPanel({
     );
   };
 
-  const overlays: IdeologyProfile[] = IDEOLOGIES.filter((i) =>
-    selected.includes(i.id)
-  );
+  const selectedIdeologies = IDEOLOGIES.filter((i) => selected.includes(i.id));
+  const userArchetype = findArchetype(userScores);
 
   return (
     <div className="space-y-5">
@@ -31,10 +30,13 @@ export default function IdeologyComparisonPanel({
           Compare with example traditions
         </h3>
         <p className="text-xs text-[rgba(10,10,10,0.55)]">
-          These are rough archetypes, not rigid labels. Select any to overlay on your chart.
+          These are rough archetypes, not rigid labels. Select any to see their
+          shape alongside yours — colour encoding is the same: dark wedge = conservative
+          lean, light wedge = progressive lean.
         </p>
       </div>
 
+      {/* Ideology toggle buttons */}
       <div className="flex flex-wrap gap-2">
         {IDEOLOGIES.map((ideology) => {
           const isOn = selected.includes(ideology.id);
@@ -55,36 +57,49 @@ export default function IdeologyComparisonPanel({
         })}
       </div>
 
+      {/* Side-by-side polygon comparison grid */}
       {selected.length > 0 && (
-        <div className="bg-[#F1EEE5] border border-[rgba(10,10,10,0.12)] rounded-2xl p-4">
-          <PoliticalRadarChart
-            scores={userScores}
-            name="Your Shape"
-            overlays={overlays}
-            height={420}
-          />
-        </div>
-      )}
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          {/* ── User's shape — reference card ── */}
+          <div className="bg-[#E5E0D2] border border-[rgba(10,10,10,0.12)] rounded-2xl p-4 flex flex-col items-center text-center">
+            <p className="text-[10px] font-semibold text-[#5560C8] uppercase tracking-widest mb-2">
+              Your Shape
+            </p>
+            <div className="mb-2">
+              <PoligonShape scores={userScores} size={120} />
+            </div>
+            <p className="text-sm font-bold text-[#0A0A0A] leading-tight">
+              {userArchetype.emoji} {userArchetype.name}
+            </p>
+            <p className="text-[10px] text-[rgba(10,10,10,0.50)] mt-1 leading-relaxed">
+              {userArchetype.description}
+            </p>
+          </div>
 
-      {selected.length > 0 && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {overlays.map((ov) => (
+          {/* ── One card per selected ideology ── */}
+          {selectedIdeologies.map((ideology) => (
             <div
-              key={ov.id}
-              className="rounded-xl border p-4"
-              style={{ borderColor: ov.color + "40", background: ov.color + "08" }}
+              key={ideology.id}
+              className="bg-[#F1EEE5] border rounded-2xl p-4 flex flex-col items-center text-center"
+              style={{ borderColor: ideology.color + "30" }}
             >
-              <div
-                className="font-semibold text-sm mb-1"
-                style={{ color: ov.color }}
+              <p
+                className="text-[10px] font-semibold uppercase tracking-widest mb-2"
+                style={{ color: ideology.color }}
               >
-                {ov.name}
+                {ideology.name}
+              </p>
+              <div className="mb-2">
+                <PoligonShape scores={ideology.scores} size={120} />
               </div>
-              <p className="text-xs text-[rgba(10,10,10,0.55)] mb-3">{ov.description}</p>
-              <ul className="space-y-1">
-                {ov.traits.map((t) => (
-                  <li key={t} className="text-xs text-[rgba(10,10,10,0.70)] flex gap-1.5">
-                    <span style={{ color: ov.color }}>•</span> {t}
+              <p className="text-[10px] text-[rgba(10,10,10,0.55)] leading-relaxed mb-2">
+                {ideology.description}
+              </p>
+              <ul className="w-full space-y-1 text-left">
+                {ideology.traits.map((t) => (
+                  <li key={t} className="flex gap-1.5 text-[10px]">
+                    <span style={{ color: ideology.color }} className="flex-shrink-0">•</span>
+                    <span className="text-[rgba(10,10,10,0.65)]">{t}</span>
                   </li>
                 ))}
               </ul>
@@ -95,7 +110,7 @@ export default function IdeologyComparisonPanel({
 
       {selected.length === 0 && (
         <p className="text-sm text-[rgba(10,10,10,0.45)] text-center py-4">
-          Select one or more traditions above to overlay them on your political shape.
+          Select one or more traditions above to see their shape compared with yours.
         </p>
       )}
     </div>
