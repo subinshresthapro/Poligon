@@ -50,21 +50,14 @@ function ResultsContent() {
     }
   }, [searchParams, router]);
 
-  if (!scores) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-[rgba(10,10,10,0.45)] text-sm">Loading your shape…</p>
-      </div>
-    );
-  }
-
-  const copyCompareLink = async () => {
+  // ── All hooks must be above every early return ──────────────────────────
+  const copyCompareLink = useCallback(async () => {
     if (!scores) return;
     const url = `${window.location.origin}/compare?a=${encodeScores(scores)}`;
     try { await navigator.clipboard.writeText(url); } catch { /* silent */ }
     setCompareCopied(true);
     setTimeout(() => setCompareCopied(false), 2500);
-  };
+  }, [scores]);
 
   const handleInstagramShare = useCallback(async () => {
     if (!scores) return;
@@ -95,6 +88,15 @@ function ResultsContent() {
     a.download = "my-poligon.png";
     a.click();
   }, [scores]);
+  // ─────────────────────────────────────────────────────────────────────────
+
+  if (!scores) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-[rgba(10,10,10,0.45)] text-sm">Loading your shape…</p>
+      </div>
+    );
+  }
 
   const categoryScores = scoresToCategoryScores(scores);
   const avg = shapeScore(scores);
