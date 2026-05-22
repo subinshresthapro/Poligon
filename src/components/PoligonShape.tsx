@@ -5,21 +5,14 @@ import { getSegmentColor, getDimensionBrandColor } from "@/lib/colorUtils";
 
 /**
  * Mid-tone brand colour per dimension (score = 0 on the light↔dark scale).
- * Used by the results-page pill decorations, legend dots, etc. — anywhere that
- * needs a single representative colour rather than a direction-encoded shade.
+ * Derived dynamically from CATEGORY_LIGHT_DARK so it never goes stale
+ * when palette entries are updated.
+ *
+ * Used by results-page pill decorations, legend dots, etc.
  */
-export const DIMENSION_COLORS: Record<string, string> = {
-  immigration:    "#DE8152",  // midpoint of #C2440A ↔ #FBBF9A
-  government:     "#619A5A",  // midpoint of #1A5C14 ↔ #A8D8A0
-  economy:        "#C29945",  // midpoint of #8B5A00 ↔ #FAD98A
-  healthcare:     "#C16184",  // midpoint of #8B1A45 ↔ #F7A8C4
-  education:      "#7F67B1",  // midpoint of #3A1F7A ↔ #C4B0E8
-  environment:    "#539886",  // midpoint of #085041 ↔ #9FE1CB
-  civilLiberties: "#5A81AD",  // midpoint of #0C3A6B ↔ #A8C8F0
-  foreignPolicy:  "#658FA9",  // midpoint of #1A4A6B ↔ #B0D4E8
-  technology:     "#7171A1",  // midpoint of #2A2A6B ↔ #B8B8D8
-  social:         "#C28158",  // midpoint of #8B3A10 ↔ #FAC8A0
-};
+export const DIMENSION_COLORS: Record<string, string> = Object.fromEntries(
+  CATEGORIES.map((c) => [c.id, getDimensionBrandColor(c.id)])
+);
 
 interface Props {
   scores: Record<string, number>;

@@ -14,16 +14,16 @@
 // Keys match the category IDs in src/data/questions.ts.
 
 export const CATEGORY_LIGHT_DARK: Record<string, { light: string; dark: string }> = {
-  immigration:    { light: "#FBBF9A", dark: "#C2440A" },
-  government:     { light: "#A8D8A0", dark: "#1A5C14" },
-  economy:        { light: "#FAD98A", dark: "#8B5A00" },
-  healthcare:     { light: "#F7A8C4", dark: "#8B1A45" },
-  education:      { light: "#C4B0E8", dark: "#3A1F7A" },
-  environment:    { light: "#9FE1CB", dark: "#085041" },
-  civilLiberties: { light: "#A8C8F0", dark: "#0C3A6B" },
-  foreignPolicy:  { light: "#B0D4E8", dark: "#1A4A6B" },
-  technology:     { light: "#B8B8D8", dark: "#2A2A6B" },
-  social:         { light: "#FAC8A0", dark: "#8B3A10" },
+  immigration:    { light: "#FBBF9A", dark: "#C2440A" }, // orange       — unchanged
+  government:     { light: "#A8D8A0", dark: "#1A5C14" }, // green        — unchanged
+  economy:        { light: "#FDE68A", dark: "#78350F" }, // deep yellow  — revised (away from orange)
+  healthcare:     { light: "#F7A8C4", dark: "#8B1A45" }, // pink         — unchanged
+  education:      { light: "#93C5FD", dark: "#1E3A5F" }, // sky blue     — revised (was purple, clashed with technology)
+  environment:    { light: "#9FE1CB", dark: "#085041" }, // teal         — unchanged
+  civilLiberties: { light: "#DDD6FE", dark: "#5B21B6" }, // violet       — revised (was blue, clashed with foreignPolicy)
+  foreignPolicy:  { light: "#BAE6FD", dark: "#0C4A6E" }, // blue         — now the only blue on the wheel
+  technology:     { light: "#C4B0E8", dark: "#3A1F7A" }, // purple       — unchanged, now distinct from education
+  social:         { light: "#D9F99D", dark: "#365314" }, // lime green   — revised (was orange, clashed with immigration)
 };
 
 // Fallback for unknown category IDs (indigo pair)
