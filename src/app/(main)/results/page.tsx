@@ -12,6 +12,7 @@ import {
 } from "@/lib/scoring";
 import { saveScores, loadScores } from "@/lib/storage";
 import PoligonShape, { DIMENSION_COLORS } from "@/components/PoligonShape";
+import { getSegmentColor } from "@/lib/colorUtils";
 import PoliticalRadarChart from "@/components/PoliticalRadarChart";
 import CategoryBreakdown from "@/components/CategoryBreakdown";
 import IdeologyComparisonPanel from "@/components/IdeologyComparisonPanel";
@@ -142,19 +143,22 @@ function ResultsContent() {
             <div className="flex flex-wrap gap-2">
               {CATEGORIES.map((cat) => {
                 const score = scores[cat.id] ?? 0;
-                const color = DIMENSION_COLORS[cat.id] ?? "#5560C8";
+                // brandColor = mid-tone, used for pill border/bg so it's always readable
+                const brandColor = DIMENSION_COLORS[cat.id] ?? "#5560C8";
+                // scoreColor = actual shade for this score (dark for conservative, light for progressive)
+                const scoreColor = getSegmentColor(cat.id, score);
                 return (
                   <div
                     key={cat.id}
                     className="flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full border"
-                    style={{ borderColor: color + "40", background: color + "12" }}
+                    style={{ borderColor: brandColor + "40", background: brandColor + "12" }}
                   >
                     <span
                       className="w-2 h-2 rounded-full flex-shrink-0"
-                      style={{ background: color }}
+                      style={{ background: scoreColor }}
                     />
                     <span className="text-[rgba(10,10,10,0.70)]">{cat.emoji} {cat.shortName}</span>
-                    <span className="font-mono font-semibold" style={{ color }}>
+                    <span className="font-mono font-semibold" style={{ color: scoreColor }}>
                       {score >= 0 ? "+" : ""}{score.toFixed(2)}
                     </span>
                   </div>

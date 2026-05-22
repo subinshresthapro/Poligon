@@ -10,7 +10,7 @@ import {
 } from "react";
 import { CATEGORIES } from "@/data/questions";
 import { DIMENSION_COLORS } from "@/components/PoligonShape";
-import { getDirectionalShade } from "@/lib/colorUtils";
+import { getSegmentColor } from "@/lib/colorUtils";
 import { IdeologyProfile } from "@/types";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -97,13 +97,12 @@ export function drawPoligonOnCtx(
     const angle = (2 * Math.PI * i) / n - Math.PI / 2;
     const signed = Math.max(-1, Math.min(1, scores[cat.id] ?? 0));
     const r = Math.abs(signed) * maxR;
-    const base = DIMENSION_COLORS[cat.id] ?? "#5560C8";
     return {
       x: cx + r * Math.cos(angle),
       y: cy + r * Math.sin(angle),
       angle,
       signed,
-      fillColor: getDirectionalShade(base, signed),
+      fillColor: getSegmentColor(cat.id, signed),
       cat,
     };
   });
@@ -348,8 +347,7 @@ export default function PoliticalRadarChart({
       pole = cat.negativeLabel;
     }
 
-    const baseColor = DIMENSION_COLORS[cat.id] ?? "#5560C8";
-    const shadeColor = getDirectionalShade(baseColor, signed);
+    const shadeColor = getSegmentColor(cat.id, signed);
 
     return (
       <div

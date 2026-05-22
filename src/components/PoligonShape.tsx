@@ -1,24 +1,24 @@
 "use client";
 
 import { CATEGORIES } from "@/data/questions";
-import { getDirectionalShade } from "@/lib/colorUtils";
+import { getSegmentColor, getDimensionBrandColor } from "@/lib/colorUtils";
 
 /**
- * One brand colour per political dimension.
- * These are the "base" colours that getDirectionalShade() shifts lighter
- * (progressive) or darker (conservative) based on the signed axis score.
+ * Mid-tone brand colour per dimension (score = 0 on the light↔dark scale).
+ * Used by the results-page pill decorations, legend dots, etc. — anywhere that
+ * needs a single representative colour rather than a direction-encoded shade.
  */
 export const DIMENSION_COLORS: Record<string, string> = {
-  immigration:    "#E8782E",
-  government:     "#8FA82E",
-  economy:        "#D4A53C",
-  healthcare:     "#B8385E",
-  education:      "#8B4FCB",
-  environment:    "#3AA361",
-  civilLiberties: "#4257C9",
-  foreignPolicy:  "#2EA39C",
-  technology:     "#3A8DD8",
-  social:         "#D63D8F",
+  immigration:    "#DE8152",  // midpoint of #C2440A ↔ #FBBF9A
+  government:     "#619A5A",  // midpoint of #1A5C14 ↔ #A8D8A0
+  economy:        "#C29945",  // midpoint of #8B5A00 ↔ #FAD98A
+  healthcare:     "#C16184",  // midpoint of #8B1A45 ↔ #F7A8C4
+  education:      "#7F67B1",  // midpoint of #3A1F7A ↔ #C4B0E8
+  environment:    "#539886",  // midpoint of #085041 ↔ #9FE1CB
+  civilLiberties: "#5A81AD",  // midpoint of #0C3A6B ↔ #A8C8F0
+  foreignPolicy:  "#658FA9",  // midpoint of #1A4A6B ↔ #B0D4E8
+  technology:     "#7171A1",  // midpoint of #2A2A6B ↔ #B8B8D8
+  social:         "#C28158",  // midpoint of #8B3A10 ↔ #FAC8A0
 };
 
 interface Props {
@@ -37,8 +37,8 @@ interface Props {
  * A 10-spoke polygon where:
  *  • Spoke LENGTH  = conviction strength (|score|).  Both a committed
  *    progressive and a committed conservative produce a full polygon.
- *  • Wedge SHADE   = direction.  Light, vibrant pastel = progressive (+1).
- *    Deep, rich dark = conservative (−1).  The two profiles look completely
+ *  • Wedge SHADE   = direction.  Light pastel = progressive (+1).
+ *    Deep rich dark = conservative (−1).  The two profiles look completely
  *    different even at identical size.
  */
 export default function PoligonShape({
@@ -56,7 +56,6 @@ export default function PoligonShape({
     const angle = (2 * Math.PI * i) / n - Math.PI / 2;
     const signed = Math.max(-1, Math.min(1, scores[cat.id] ?? 0));
     const r = Math.abs(signed) * maxR;
-    const baseColor = DIMENSION_COLORS[cat.id] ?? "#5560C8";
 
     return {
       x: cx + r * Math.cos(angle),
@@ -68,16 +67,14 @@ export default function PoligonShape({
       lx: cx + (maxR + (showLabels ? 18 : 0)) * Math.cos(angle),
       ly: cy + (maxR + (showLabels ? 18 : 0)) * Math.sin(angle),
       // shade-encoded fill colour for this wedge
-      fillColor: getDirectionalShade(baseColor, signed),
-      baseColor,
+      fillColor: getSegmentColor(cat.id, signed),
+      brandColor: getDimensionBrandColor(cat.id),
       cat,
       angle,
       score: signed,
     };
   });
 
-  // Grid rings — uniform weight (no special neutral ring now that
-  // the polygon uses absolute values; neutrality = r ≈ 0 at centre)
   const rings = [0.25, 0.5, 0.75, 1.0];
 
   return (
@@ -137,7 +134,7 @@ export default function PoligonShape({
           cy={pt.y}
           r={size > 160 ? 4.5 : 2.5}
           fill={pt.fillColor}
-          stroke="rgba(10,10,10,0.22)"
+          stroke="rgba(255,255,255,0.7)"
           strokeWidth={1.4}
         />
       ))}

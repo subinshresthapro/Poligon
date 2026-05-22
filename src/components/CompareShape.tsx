@@ -1,8 +1,7 @@
 "use client";
 
 import { CATEGORIES } from "@/data/questions";
-import { DIMENSION_COLORS } from "@/components/PoligonShape";
-import { getDirectionalShade } from "@/lib/colorUtils";
+import { getSegmentColor } from "@/lib/colorUtils";
 
 /** Kept for the compare-page legend and per-dimension breakdown dots */
 export const COLOR_A = "#5560C8"; // "You"
@@ -21,10 +20,12 @@ interface Props {
 /**
  * CompareShape — two shade-encoded polygons overlaid.
  *
- * Both shapes use per-dimension brand colours.  The shade of each wedge
- * encodes that person's direction on the axis: light = progressive,
- * dark = conservative.  Person A is drawn on top at full opacity; person B
- * is drawn behind at ~55 % opacity so both are legible when they overlap.
+ * Both shapes use per-dimension explicit light/dark palette colours.
+ * The shade of each wedge encodes that person's direction on the axis:
+ * light = progressive, dark = conservative.
+ *
+ * Person A is drawn on top at full opacity; person B is drawn behind at
+ * ~55 % opacity so both are legible when they overlap.
  */
 export default function CompareShape({
   scoresA,
@@ -44,13 +45,12 @@ export default function CompareShape({
       const angle = (2 * Math.PI * i) / n - Math.PI / 2;
       const signed = Math.max(-1, Math.min(1, scores[cat.id] ?? 0));
       const r = Math.abs(signed) * maxR;
-      const base = DIMENSION_COLORS[cat.id] ?? "#5560C8";
       return {
         x: cx + r * Math.cos(angle),
         y: cy + r * Math.sin(angle),
         ex: cx + maxR * Math.cos(angle),
         ey: cy + maxR * Math.sin(angle),
-        fillColor: getDirectionalShade(base, signed),
+        fillColor: getSegmentColor(cat.id, signed),
         score: signed,
         cat,
       };
@@ -81,8 +81,8 @@ export default function CompareShape({
             cy={pt.y}
             r={dotR}
             fill={pt.fillColor}
-            fillOpacity={opacity + 0.1}
-            stroke="rgba(10,10,10,0.18)"
+            fillOpacity={Math.min(1, opacity + 0.1)}
+            stroke="rgba(255,255,255,0.6)"
             strokeWidth={1.2}
           />
         </g>
