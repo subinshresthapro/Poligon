@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { PROFILE_MAP, SAMPLE_PROFILES } from "@/data/profiles";
@@ -12,6 +13,14 @@ interface Props {
 
 export async function generateStaticParams() {
   return SAMPLE_PROFILES.map((p) => ({ id: p.id }));
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params;
+  const profile = PROFILE_MAP[id];
+  return {
+    title: profile ? `Profile - ${profile.name}` : "Profile",
+  };
 }
 
 export default async function ProfilePage({ params }: Props) {

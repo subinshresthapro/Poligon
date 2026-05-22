@@ -22,11 +22,14 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "Poligon — The Shape of Your Politics",
+  title: {
+    template: "Poligon - %s",
+    default: "Poligon - The Shape of Your Politics",
+  },
   description:
     "Discover your unique political polygon across 10 dimensions. Beyond left and right.",
   openGraph: {
-    title: "Poligon — The Shape of Your Politics",
+    title: "Poligon - The Shape of Your Politics",
     description:
       "A non-partisan tool that maps your political views as a unique coloured polygon across 10 dimensions.",
     type: "website",

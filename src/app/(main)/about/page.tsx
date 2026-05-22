@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "About | Poligon",
+  title: "About & Why",
   description:
     "Why political nuance matters, and how Poligon's 10-dimension polygon captures it without bias.",
 };

@@ -1,5 +1,11 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { SAMPLE_PROFILES } from "@/data/profiles";
+
+export const metadata: Metadata = {
+  title: "Profiles",
+  description: "Compare your political shape against candidate profiles and real politician estimates.",
+};
 import { shapeScore, scoreLabel } from "@/lib/scoring";
 import PoligonShape from "@/components/PoligonShape";
 import PoliticianShapes from "@/components/PoliticianShapes";
