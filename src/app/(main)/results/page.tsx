@@ -214,11 +214,11 @@ function ResultsContent() {
             <div className="bg-[#F1EEE5] border border-[rgba(10,10,10,0.12)] rounded-2xl shadow-sm p-5">
               <h3 className="text-sm font-semibold text-[#0A0A0A] mb-4">How to read this</h3>
               <ScoreLegend />
-              <p className="text-xs text-[rgba(10,10,10,0.45)] mt-4 leading-relaxed">
-                Spoke length = <strong>conviction strength</strong> — a committed
-                conservative and a committed progressive both produce a full polygon.
-                The <em>direction</em> of each spoke (progressive or conservative)
-                is shown in the tooltip and the Category Breakdown below.
+                <p className="text-xs text-[rgba(10,10,10,0.45)] mt-4 leading-relaxed">
+                <strong>Spoke length</strong> = conviction strength.{" "}
+                <strong>Wedge shade</strong> = direction — light pastel = progressive,
+                deep dark = conservative.  Two extreme profiles always look completely
+                different, even at the same size.  Hover any spoke for details.
               </p>
             </div>
 

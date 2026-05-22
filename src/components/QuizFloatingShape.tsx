@@ -12,9 +12,12 @@ function computeLiveScores(answers: Answers): Record<string, number> {
   for (const cat of CATEGORIES) {
     const answered = cat.questions.filter((q) => answers[q.id] !== undefined);
     if (answered.length === 0) {
-      scores[cat.id] = -1;
+      scores[cat.id] = 0; // abs(0) = no spoke yet
     } else {
-      const sum = answered.reduce((acc, q) => acc + (answers[q.id] as number), 0);
+      const sum = answered.reduce((acc, q) => {
+        const val = answers[q.id] as number;
+        return acc + (q.reverseScore ? -val : val);
+      }, 0);
       scores[cat.id] = sum / answered.length / 2;
     }
   }

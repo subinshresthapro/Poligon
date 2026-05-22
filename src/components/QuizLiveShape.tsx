@@ -19,22 +19,24 @@ interface Props {
 /**
  * Compute live scores from partial answers.
  *
- * - Unanswered categories  →  −1  (vertices collapse to center: nothing shows)
- * - Partially answered     →  average of answered questions so far
- * - Fully answered         →  full average
+ * - Unanswered categories  →  0  (no spoke — abs(0) = 0, so the wedge is hidden)
+ * - Partially answered     →  running average of answered questions so far
+ * - Fully answered         →  full signed average
  *
- * This means the polygon literally grows from nothing as the user answers,
- * with each spoke shooting outward as questions are ticked.
+ * Respects reverseScore on C-framed questions so the live polygon correctly
+ * shows progressive vs conservative direction as the user answers.
  */
 function computeLiveScores(answers: Answers): Record<string, number> {
   const scores: Record<string, number> = {};
   for (const cat of CATEGORIES) {
     const answered = cat.questions.filter((q) => answers[q.id] !== undefined);
     if (answered.length === 0) {
-      scores[cat.id] = -1; // center — invisible
+      scores[cat.id] = 0; // no spoke yet
     } else {
-      const sum = answered.reduce((acc, q) => acc + (answers[q.id] as number), 0);
-      // answers are −2 … +2; divide by 2 to normalise to −1 … +1
+      const sum = answered.reduce((acc, q) => {
+        const val = answers[q.id] as number;
+        return acc + (q.reverseScore ? -val : val);
+      }, 0);
       scores[cat.id] = sum / answered.length / 2;
     }
   }

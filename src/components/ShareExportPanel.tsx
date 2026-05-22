@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { iframeSnippet, jsSnippet } from "@/lib/embed";
+import { exportPoligonPNG } from "@/components/PoliticalRadarChart";
 
 interface ShareExportPanelProps {
   scores: Record<string, number>;
@@ -13,6 +14,7 @@ type Tab = "share" | "iframe" | "js";
 export default function ShareExportPanel({ scores, name }: ShareExportPanelProps) {
   const [tab, setTab] = useState<Tab>("share");
   const [copied, setCopied] = useState(false);
+  const [exporting, setExporting] = useState(false);
 
   const origin =
     typeof window !== "undefined" ? window.location.origin : "https://your-domain.com";
@@ -31,6 +33,20 @@ export default function ShareExportPanel({ scores, name }: ShareExportPanelProps
     });
   };
 
+  const downloadPNG = async () => {
+    if (exporting) return;
+    setExporting(true);
+    try {
+      const dataUrl = exportPoligonPNG(scores, { size: 600 });
+      const link = document.createElement("a");
+      link.download = `my-poligon${name ? `-${name.toLowerCase().replace(/\s+/g, "-")}` : ""}.png`;
+      link.href = dataUrl;
+      link.click();
+    } finally {
+      setExporting(false);
+    }
+  };
+
   const tabs: { id: Tab; label: string }[] = [
     { id: "share", label: "Share Link" },
     { id: "iframe", label: "iFrame Embed" },
@@ -45,6 +61,24 @@ export default function ShareExportPanel({ scores, name }: ShareExportPanelProps
 
   return (
     <div className="space-y-4">
+      {/* PNG download button */}
+      <div className="flex items-center justify-between bg-[#E5E0D2] rounded-xl px-4 py-3">
+        <div>
+          <p className="text-sm font-semibold text-[#0A0A0A]">Download as PNG</p>
+          <p className="text-xs text-[rgba(10,10,10,0.50)] mt-0.5">
+            600 × 600 px — share on social or save for later
+          </p>
+        </div>
+        <button
+          onClick={downloadPNG}
+          disabled={exporting}
+          className="flex-shrink-0 flex items-center gap-2 bg-[#5560C8] hover:bg-[#4450B2] disabled:opacity-60 text-white font-semibold px-4 py-2 rounded-xl transition-colors text-sm"
+        >
+          {exporting ? "…" : "⬇ PNG"}
+        </button>
+      </div>
+
+      {/* Code / link tabs */}
       <div className="flex gap-1 bg-[rgba(10,10,10,0.06)] rounded-lg p-1">
         {tabs.map((t) => (
           <button

@@ -86,23 +86,27 @@ function EmbedContent() {
 
       {/* Legend */}
       {showLegend && (
-        <div className="mt-2 px-2">
-          <div className="flex flex-wrap gap-x-4 gap-y-1.5 justify-center">
-            {[
-              { score: "+1", label: "Strongly Supports", dot: "bg-emerald-600" },
-              { score: "0", label: "Neutral", dot: "bg-slate-400" },
-              { score: "−1", label: "Strongly Opposes", dot: "bg-red-600" },
-            ].map(({ score, label: l, dot }) => (
-              <div key={score} className="flex items-center gap-1.5">
-                <span className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${dot}`} />
-                <span className="text-xs text-[rgba(10,10,10,0.55)]">
-                  <span className="font-semibold text-[#0A0A0A]">{score}</span> = {l}
-                </span>
-              </div>
-            ))}
+        <div className="mt-2 px-2 space-y-1">
+          <div className="flex flex-wrap gap-x-4 gap-y-1 justify-center">
+            <div className="flex items-center gap-1.5">
+              <div className="w-10 h-2.5 rounded flex-shrink-0" style={{
+                background: "linear-gradient(90deg, #B8D8F0 0%, #3A8DD8 50%, #163A60 100%)"
+              }} />
+              <span className="text-xs text-[rgba(10,10,10,0.55)]">
+                <span className="font-semibold text-[#0A0A0A]">Light</span> = progressive
+              </span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <div className="w-10 h-2.5 rounded flex-shrink-0" style={{
+                background: "linear-gradient(90deg, #3A8DD8 0%, #163A60 100%)"
+              }} />
+              <span className="text-xs text-[rgba(10,10,10,0.55)]">
+                <span className="font-semibold text-[#0A0A0A]">Dark</span> = conservative
+              </span>
+            </div>
           </div>
-          <p className="text-center text-xs text-[rgba(10,10,10,0.45)] mt-2">
-            Each spoke = one political dimension · Distance from center = level of support
+          <p className="text-center text-xs text-[rgba(10,10,10,0.45)]">
+            Spoke length = conviction · Shade = direction
           </p>
         </div>
       )}
