@@ -12,12 +12,14 @@
  * inward), not overall size.
  */
 export default function ScoreLegend() {
+  // Conviction bands — the polygon plots |score|, so 1.0 = maximum
+  // conviction regardless of whether you lean progressive or conservative.
   const items = [
-    { score: "+1.0", label: "Strongly progressive", dot: "bg-emerald-600" },
-    { score: "+0.5", label: "Leans progressive", dot: "bg-emerald-400" },
-    { score: "0.0", label: "Neutral / Mixed", dot: "bg-slate-400" },
-    { score: "−0.5", label: "Leans conservative", dot: "bg-orange-400" },
-    { score: "−1.0", label: "Strongly conservative", dot: "bg-red-600" },
+    { score: "1.0", label: "Maximum conviction", dot: "bg-[#5560C8]" },
+    { score: "0.75", label: "Strong conviction", dot: "bg-indigo-400" },
+    { score: "0.5", label: "Moderate conviction", dot: "bg-slate-400" },
+    { score: "0.25", label: "Mild / uncertain", dot: "bg-slate-300" },
+    { score: "0.0", label: "Neutral", dot: "bg-slate-200 border border-slate-300" },
   ];
 
   return (
@@ -25,14 +27,15 @@ export default function ScoreLegend() {
       {items.map(({ score, label, dot }) => (
         <div key={score} className="flex items-center gap-3">
           <span className={`w-3 h-3 rounded-full flex-shrink-0 ${dot}`} />
-          <span className="text-sm font-semibold text-[#0A0A0A] w-10">{score}</span>
+          <span className="text-sm font-semibold text-[#0A0A0A] w-8">{score}</span>
           <span className="text-sm text-[rgba(10,10,10,0.55)]">{label}</span>
         </div>
       ))}
-      <p className="text-xs text-[rgba(10,10,10,0.40)] mt-2 leading-relaxed">
-        Each axis has two named poles — hover a spoke to see what <em>your</em> direction means.
-        Both committed progressives and conservatives can produce a full polygon; the shape,
-        not the size, shows where you stand.
+      <p className="text-xs text-[rgba(10,10,10,0.40)] mt-3 leading-relaxed">
+        <strong>Spoke length = conviction strength.</strong> A committed conservative
+        and a committed progressive both produce a full polygon — they just lean in
+        different directions. Hover any spoke or open Category Breakdown to see
+        which direction your position is on each axis.
       </p>
     </div>
   );

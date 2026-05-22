@@ -215,8 +215,10 @@ function ResultsContent() {
               <h3 className="text-sm font-semibold text-[#0A0A0A] mb-4">How to read this</h3>
               <ScoreLegend />
               <p className="text-xs text-[rgba(10,10,10,0.45)] mt-4 leading-relaxed">
-                The further a point extends from the center, the more you support that
-                dimension&apos;s direction.
+                Spoke length = <strong>conviction strength</strong> — a committed
+                conservative and a committed progressive both produce a full polygon.
+                The <em>direction</em> of each spoke (progressive or conservative)
+                is shown in the tooltip and the Category Breakdown below.
               </p>
             </div>
 

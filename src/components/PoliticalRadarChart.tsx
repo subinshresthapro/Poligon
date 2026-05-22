@@ -22,7 +22,9 @@ interface PoliticalRadarChartProps {
   compact?: boolean;
 }
 
-const SCORE_TICKS = [-1, -0.5, 0, 0.5, 1];
+// The radar plots ABSOLUTE conviction (0 = neutral, 1 = maximum conviction).
+// Signed direction is stored separately in the data and shown in the tooltip.
+const SCORE_TICKS = [0, 0.25, 0.5, 0.75, 1];
 
 /**
  * Angle-axis tick that shows:
@@ -117,6 +119,8 @@ function RadiusAxisTick(props: {
 }) {
   const { x = 0, y = 0, payload } = props;
   if (!payload) return null;
+  // Display conviction level: 0 = none, 1 = maximum
+  const label = payload.value === 0 ? "0" : payload.value.toFixed(2).replace(/^0/, "");
   return (
     <g transform={`translate(${x},${y})`}>
       <text
@@ -126,15 +130,18 @@ function RadiusAxisTick(props: {
         fill="rgba(10,10,10,0.45)"
         fontFamily="system-ui, sans-serif"
       >
-        {payload.value === 0 ? "0" : payload.value > 0 ? `+${payload.value}` : payload.value}
+        {label}
       </text>
     </g>
   );
 }
 
 /**
- * Tooltip that surfaces the axis-specific pole label for the hovered spoke,
- * so users understand what their signed score actually means.
+ * Tooltip that surfaces the axis-specific pole label for the hovered spoke.
+ *
+ * The radar plots ABSOLUTE conviction, so `entry.value` is in [0,1].
+ * We recover the SIGNED direction from the `_signed` field stored alongside
+ * each abs value in the data point.
  */
 function CustomTooltip({
   active,
@@ -145,17 +152,17 @@ function CustomTooltip({
     name: string;
     value: number;
     color: string;
-    payload: { category: string };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    payload: Record<string, any>;
   }>;
 }) {
   if (!active || !payload?.length) return null;
 
-  // All entries share the same hovered axis
-  const categoryShortName = payload[0]?.payload?.category;
+  const categoryShortName = payload[0]?.payload?.category as string | undefined;
   const cat = CATEGORIES.find((c) => c.shortName === categoryShortName);
 
   return (
-    <div className="bg-[#F1EEE5] border border-[rgba(10,10,10,0.12)] rounded-lg shadow-lg p-3 text-xs z-50 max-w-[200px]">
+    <div className="bg-[#F1EEE5] border border-[rgba(10,10,10,0.12)] rounded-lg shadow-lg p-3 text-xs z-50 max-w-[220px]">
       {cat && (
         <p className="text-[rgba(10,10,10,0.55)] mb-2 leading-snug">
           <span className="font-semibold text-[#0A0A0A]">
@@ -170,20 +177,25 @@ function CustomTooltip({
         </p>
       )}
       {payload.map((entry) => {
-        const v = entry.value;
+        // abs conviction strength (what's plotted on the radar)
+        const absV = entry.value;
+        // signed direction (stored as a separate field in the data point)
+        const signedV = (entry.payload[`${entry.name}_signed`] as number) ?? absV;
+
         let label: string;
         let pole: string | undefined;
 
-        if (v >= 0.7) {
+        if (absV < 0.15) {
+          label = "Mixed / Neutral";
+        } else if (signedV >= 0.7) {
           label = "Strongly progressive";
           pole = cat?.positiveLabel;
-        } else if (v >= 0.3) {
+        } else if (signedV >= 0.3) {
           label = "Progressive lean";
           pole = cat?.positiveLabel;
-        } else if (v > -0.3) {
+        } else if (signedV > -0.3) {
           label = "Mixed / Neutral";
-          pole = undefined;
-        } else if (v > -0.7) {
+        } else if (signedV > -0.7) {
           label = "Conservative lean";
           pole = cat?.negativeLabel;
         } else {
@@ -200,8 +212,8 @@ function CustomTooltip({
               />
               <span className="font-medium text-[#0A0A0A]">{entry.name}:</span>
               <span style={{ color: entry.color }} className="font-mono">
-                {v > 0 ? "+" : ""}
-                {v.toFixed(2)}
+                {signedV > 0 ? "+" : ""}
+                {signedV.toFixed(2)}
               </span>
             </div>
             <p className="text-[rgba(10,10,10,0.55)] pl-4 leading-snug">
@@ -227,12 +239,19 @@ export default function PoliticalRadarChart({
   compact = false,
 }: PoliticalRadarChartProps) {
   const data = CATEGORIES.map((cat) => {
+    const signed = scores[cat.id] ?? 0;
+    // Plot absolute conviction so both −1 and +1 produce a full spoke.
+    // The signed value is stored under `${seriesName}_signed` and read
+    // by the tooltip to show the actual directional position.
     const point: Record<string, number | string> = {
       category: cat.shortName,
-      [name]: scores[cat.id] ?? 0,
+      [name]: Math.abs(signed),
+      [`${name}_signed`]: signed,
     };
     overlays.forEach((ov) => {
-      point[ov.name] = ov.scores[cat.id] ?? 0;
+      const ovSigned = ov.scores[cat.id] ?? 0;
+      point[ov.name] = Math.abs(ovSigned);
+      point[`${ov.name}_signed`] = ovSigned;
     });
     return point;
   });
@@ -246,7 +265,7 @@ export default function PoliticalRadarChart({
             <PolarGrid gridType="circle" stroke="rgba(10,10,10,0.12)" strokeWidth={1} />
             <PolarAngleAxis dataKey="category" tick={false} axisLine={false} />
             <PolarRadiusAxis
-              domain={[-1, 1]}
+              domain={[0, 1]}
               ticks={SCORE_TICKS}
               tick={false}
               axisLine={false}
@@ -291,7 +310,7 @@ export default function PoliticalRadarChart({
             tickLine={false}
           />
           <PolarRadiusAxis
-            domain={[-1, 1]}
+            domain={[0, 1]}
             ticks={SCORE_TICKS}
             tick={RadiusAxisTick as never}
             axisLine={false}

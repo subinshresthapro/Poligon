@@ -48,9 +48,11 @@ export default function PoligonShape({
   // ── Compute the polygon vertex for each dimension ──────────────────────
   const points = CATEGORIES.map((cat, i) => {
     const angle = (2 * Math.PI * i) / n - Math.PI / 2;
-    const score = Math.max(-1, Math.min(1, scores[cat.id] ?? 0));
-    // Map score: -1 → r=0, 0 → r=maxR/2, +1 → r=maxR
-    const r = ((score + 1) / 2) * maxR;
+    const signed = Math.max(-1, Math.min(1, scores[cat.id] ?? 0));
+    // Use ABSOLUTE value for spoke length so that a committed conservative
+    // and a committed progressive both produce a full, large polygon.
+    // The DIRECTION (±) is shown in the detail radar chart and CategoryBreakdown.
+    const r = Math.abs(signed) * maxR;
     // Spoke endpoint (full length)
     const ex = cx + maxR * Math.cos(angle);
     const ey = cy + maxR * Math.sin(angle);
@@ -71,7 +73,7 @@ export default function PoligonShape({
       color: DIMENSION_COLORS[cat.id] ?? "#5560C8",
       cat,
       angle,
-      score,
+      score: signed,
     };
   });
 
