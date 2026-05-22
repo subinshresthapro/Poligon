@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SAMPLE_PROFILES } from "@/data/profiles";
-import { shapeScore, scoreLabel } from "@/lib/scoring";
+import { shapeScore, convictionPercent } from "@/lib/scoring";
+import LeanBadge from "@/components/LeanBadge";
 import PoligonShape from "@/components/PoligonShape";
 import PoliticianShapes from "@/components/PoliticianShapes";
 import PoliticianTeaser from "@/components/PoliticianTeaser";
@@ -38,7 +39,6 @@ export default function ProfilesPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {SAMPLE_PROFILES.map((profile) => {
               const avg = shapeScore(profile.scores);
-              const label = scoreLabel(avg);
               return (
                 <Link
                   key={profile.id}
@@ -56,17 +56,15 @@ export default function ProfilesPage() {
                         </h2>
                         <p className="text-xs text-[rgba(10,10,10,0.55)]">{profile.title}</p>
                       </div>
-                      <span className="flex-shrink-0 text-xs font-mono font-semibold text-[#5560C8] bg-[#E5E0D2] px-2 py-0.5 rounded-md">
-                        {avg >= 0 ? "+" : ""}
-                        {avg.toFixed(2)}
+                      <span className="flex-shrink-0 text-xs font-semibold text-[#5560C8] bg-[#E5E0D2] px-2 py-0.5 rounded-md">
+                        {convictionPercent(avg)}%
                       </span>
                     </div>
                     <p className="text-xs text-[rgba(10,10,10,0.55)] mt-2 leading-relaxed line-clamp-2">
                       {profile.description}
                     </p>
-                    <p className="text-xs text-[rgba(10,10,10,0.45)] mt-2">
-                      Overall:{" "}
-                      <span className="text-[rgba(10,10,10,0.70)] font-medium">{label}</span>
+                    <p className="text-xs text-[rgba(10,10,10,0.45)] mt-2 flex items-center gap-1.5">
+                      Overall: <LeanBadge score={avg} size="sm" />
                     </p>
                   </div>
                 </Link>

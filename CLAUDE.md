@@ -95,8 +95,10 @@ A political typology quiz that maps your views across 10 independent dimensions 
 | `IdeologyComparisonPanel` | Side-by-side grid of shade-encoded `PoligonShape` cards; shows overlap % per ideology |
 | `CompareShape` | Two shade-encoded polygons overlaid (Person A full opacity, Person B ~52 % opacity) |
 | `ShareExportPanel` | Copy link · iFrame · JS snippet · PNG download |
-| `CategoryBreakdown` | Per-axis score bars with pole labels |
+| `CategoryBreakdown` | Per-axis score bars; shows conviction % + LeanBadge, not signed numbers |
 | `ScoreLegend` | Explains spoke-length and shade encoding |
+| `LeanBadge` | Inline badge showing "Reform", "Traditional", or "Mixed" with neutral color coding |
+| `ConvictionBar` | Progress bar showing conviction strength (0–100%) with category color fill |
 
 ---
 
@@ -107,12 +109,50 @@ A political typology quiz that maps your views across 10 independent dimensions 
 - **Quiz → Results flow**: `goToResults()` in `quiz/page.tsx` calls `answersToScores()`, `saveScores()`, then `router.push('/results?scores=<encoded>')`. All navigation from quiz to results must go through this function — not a bare `<Link href="/results">`.
 - **No direction bias in polygon size**: spoke radius uses `Math.abs(score)`. A score of −1 and +1 both produce a full-length spoke.
 
+## Score Display System
+
+**Never show raw signed scores (e.g. `-0.93` or `+0.50`) in the UI.** A negative sign on a conservative score reads as a value judgment. Always display two neutral, separated pieces of information:
+
+| Display | Source | Meaning |
+|---|---|---|
+| **Conviction %** | `convictionPercent(score)` = `Math.round(Math.abs(score) * 100)` | How strongly the user holds this view (0–100, always positive) |
+| **Lean label** | `leanLabel(score)` → `"Reform" \| "Traditional" \| "Mixed"` | Which direction they lean (threshold: `\|score\| < 0.15` = Mixed) |
+
+### Helper functions (all in `src/lib/scoring.ts`)
+```ts
+convictionPercent(score: number): number        // Math.round(Math.abs(score) * 100)
+leanLabel(score: number): "Reform" | "Traditional" | "Mixed"
+leanLabelStyle(score: number): { bg, text, darkBg, darkText }  // color tokens for the badge
+```
+
+### Components
+- **`LeanBadge`** (`src/components/LeanBadge.tsx`) — inline colored badge. Props: `score`, `size?: "sm" | "md"`, `dark?: boolean`
+- **`ConvictionBar`** (`src/components/ConvictionBar.tsx`) — progress bar. Props: `score`, `categoryColor?: string`
+
+### Label colors (neutral — neither party owns these words)
+- **Reform** — green tint (`#E1F5EE` / `#085041`): favours change and new approaches
+- **Traditional** — amber tint (`#FAEEDA` / `#633806`): favours proven approaches and stability
+- **Mixed** — muted gray: balanced or context-dependent
+
+### Dot colors for dimension pills
+```ts
+leanLabel(score) === "Reform"       → "#1E3A5F"   // cool dark blue
+leanLabel(score) === "Traditional"  → "#C2440A"   // warm terracotta
+// Mixed                            → "rgba(10,10,10,0.25)"
+```
+
+### What NOT to change
+- Signed scores passed **to** `PoligonShape` — the visual uses them internally; do not convert
+- Archetype matching in `src/lib/archetypes.ts` — reads signed scores internally, correct
+- `scoreLabel()` / `scoreLabelColor()` may still exist in `scoring.ts` but are not used in the UI — do not add new uses of them
+
 ---
 
 ## Feature History (reverse chronological)
 
 | Date | Feature |
 |---|---|
+| 2026-05 | Score display redesign: replaced all signed ±0.xx displays with conviction % + Reform/Traditional/Mixed lean badges |
 | 2025-05 | Social share buttons (X, Facebook, WhatsApp, Reddit, LinkedIn, Telegram) in results page |
 | 2025-05 | About page "How It Works" section with methodology + sources |
 | 2025-05 | Personalised radar axis labels (one label matching user's actual lean, not both poles) + dark/light legend strip |

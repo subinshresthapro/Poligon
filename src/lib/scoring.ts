@@ -91,6 +91,38 @@ export function decodeScores(encoded: string): Record<string, number> | null {
   }
 }
 
+/**
+ * Convert a signed axis score (−1 to +1) to conviction strength (0–100).
+ * Both a strongly conservative and strongly progressive score return high conviction.
+ */
+export function convictionPercent(score: number): number {
+  return Math.round(Math.abs(score) * 100);
+}
+
+/**
+ * Convert a signed axis score to a neutral directional label.
+ * Thresholds: |score| < 0.15 = Mixed, score > 0 = Reform, score < 0 = Traditional
+ */
+export function leanLabel(score: number): "Reform" | "Traditional" | "Mixed" {
+  if (Math.abs(score) < 0.15) return "Mixed";
+  return score > 0 ? "Reform" : "Traditional";
+}
+
+/**
+ * Style tokens for the lean label badge background and text color.
+ */
+export function leanLabelStyle(score: number): {
+  bg: string;
+  text: string;
+  darkBg: string;
+  darkText: string;
+} {
+  const label = leanLabel(score);
+  if (label === "Reform")      return { bg: "#E1F5EE", text: "#085041", darkBg: "#04342C", darkText: "#9FE1CB" };
+  if (label === "Traditional") return { bg: "#FAEEDA", text: "#633806", darkBg: "#412402", darkText: "#FAC775" };
+  return { bg: "rgba(10,10,10,0.06)", text: "rgba(10,10,10,0.55)", darkBg: "rgba(255,255,255,0.08)", darkText: "rgba(241,238,229,0.55)" };
+}
+
 export function answersToScores(answers: Answers): Record<string, number> {
   const categoryScores = calculateCategoryScores(answers);
   return Object.fromEntries(categoryScores.map((cs) => [cs.categoryId, cs.score]));

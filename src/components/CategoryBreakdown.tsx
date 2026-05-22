@@ -1,7 +1,8 @@
 "use client";
 
 import { CategoryScore } from "@/types";
-import { scoreLabel, scoreLabelColor } from "@/lib/scoring";
+import { convictionPercent, leanLabel } from "@/lib/scoring";
+import LeanBadge from "@/components/LeanBadge";
 import { useState } from "react";
 
 interface CategoryBreakdownProps {
@@ -42,8 +43,6 @@ export default function CategoryBreakdown({ categoryScores }: CategoryBreakdownP
     <div className="space-y-3">
       {categoryScores.map((cs) => {
         const isOpen = expanded === cs.categoryId;
-        const label = scoreLabel(cs.score);
-        const labelColor = scoreLabelColor(cs.score);
 
         return (
           <div
@@ -62,13 +61,10 @@ export default function CategoryBreakdown({ categoryScores }: CategoryBreakdownP
                       {cs.name}
                     </span>
                     <div className="flex items-center gap-2 flex-shrink-0">
-                      <span className={`text-xs font-medium ${labelColor}`}>
-                        {label}
+                      <span className="text-xs text-[rgba(10,10,10,0.55)]">
+                        {convictionPercent(cs.score)}%
                       </span>
-                      <span className="text-xs text-[rgba(10,10,10,0.45)] font-mono">
-                        {cs.score >= 0 ? "+" : ""}
-                        {cs.score.toFixed(2)}
-                      </span>
+                      <LeanBadge score={cs.score} size="sm" />
                     </div>
                   </div>
                   <ScoreBar score={cs.score} />
@@ -83,21 +79,22 @@ export default function CategoryBreakdown({ categoryScores }: CategoryBreakdownP
               <div className="px-5 pb-4 border-t border-[rgba(10,10,10,0.08)]">
                 <div className="mt-3 flex items-center justify-between text-xs text-[rgba(10,10,10,0.55)]">
                   <span className="flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-full bg-red-500 inline-block" />
+                    <span className="w-2 h-2 rounded-full bg-[#C2440A] inline-block" />
                     {cs.negativeLabel}
                   </span>
                   <span className="flex items-center gap-1.5">
                     {cs.positiveLabel}
-                    <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" />
+                    <span className="w-2 h-2 rounded-full bg-[#1E3A5F] inline-block" />
                   </span>
                 </div>
                 <div className="mt-3 text-xs text-[rgba(10,10,10,0.55)]">
                   <span className="font-medium text-[#0A0A0A]">Your position:</span>{" "}
-                  <span className={labelColor}>{label}</span> on this dimension
-                  {cs.score >= 0 ? (
-                    <span> — aligning more toward <strong>{cs.positiveLabel}</strong></span>
+                  <LeanBadge score={cs.score} size="sm" />{" "}
+                  with <strong>{convictionPercent(cs.score)}% conviction</strong>
+                  {leanLabel(cs.score) !== "Mixed" ? (
+                    <span>, leaning toward <strong>{cs.score >= 0 ? cs.positiveLabel : cs.negativeLabel}</strong></span>
                   ) : (
-                    <span> — aligning more toward <strong>{cs.negativeLabel}</strong></span>
+                    <span> — balanced between both sides</span>
                   )}
                 </div>
               </div>

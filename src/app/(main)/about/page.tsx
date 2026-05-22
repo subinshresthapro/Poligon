@@ -458,6 +458,90 @@ export default function AboutPage() {
             </div>
           </div>
 
+          {/* Step 4 — How scores are shown */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+            <div>
+              <div className="inline-flex items-center gap-2 bg-white/10 rounded-full px-3 py-1 text-xs font-semibold text-[rgba(241,238,229,0.70)] uppercase tracking-widest mb-4">
+                Step 4: Reading your results
+              </div>
+              <h3
+                className="text-xl sm:text-2xl font-bold text-white mb-4"
+                style={{ fontFamily: "var(--font-outfit)" }}
+              >
+                Conviction strength and lean direction.
+              </h3>
+              <p className="text-[rgba(241,238,229,0.65)] leading-relaxed mb-5">
+                Each dimension shows two pieces of information: how strongly you
+                feel, and which direction you lean. Neither piece carries a value
+                judgment on its own.
+              </p>
+              <div className="space-y-3">
+                {[
+                  {
+                    dot: "#1E3A5F",
+                    badge: { bg: "#E1F5EE", color: "#085041", label: "Reform" },
+                    desc: "Favours change and new approaches on this axis",
+                  },
+                  {
+                    dot: "#C2440A",
+                    badge: { bg: "#FAEEDA", color: "#633806", label: "Traditional" },
+                    desc: "Favours proven approaches and stability on this axis",
+                  },
+                  {
+                    dot: "rgba(255,255,255,0.25)",
+                    badge: { bg: "rgba(255,255,255,0.10)", color: "rgba(241,238,229,0.60)", label: "Mixed" },
+                    desc: "Balanced or context-dependent views",
+                  },
+                ].map((item) => (
+                  <div key={item.badge.label} className="flex items-start gap-3 text-xs">
+                    <span
+                      style={{
+                        width: "8px",
+                        height: "8px",
+                        borderRadius: "50%",
+                        background: item.dot,
+                        flexShrink: 0,
+                        marginTop: "3px",
+                        display: "inline-block",
+                      }}
+                    />
+                    <span
+                      style={{
+                        background: item.badge.bg,
+                        color: item.badge.color,
+                        padding: "1px 6px",
+                        borderRadius: "4px",
+                        fontWeight: 500,
+                        fontSize: "11px",
+                        flexShrink: 0,
+                      }}
+                    >
+                      {item.badge.label}
+                    </span>
+                    <span className="text-[rgba(241,238,229,0.55)]">{item.desc}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="bg-white/[0.04] border border-white/10 rounded-2xl p-6">
+              <p className="text-[rgba(241,238,229,0.40)] text-xs uppercase tracking-widest mb-3">
+                Why no negative numbers?
+              </p>
+              <p className="text-[rgba(241,238,229,0.70)] text-sm leading-relaxed mb-4">
+                The app does not display scores like <code className="text-white bg-white/10 px-1 rounded">-0.93</code> or{" "}
+                <code className="text-white bg-white/10 px-1 rounded">+0.50</code>. A negative sign on
+                a conservative score could be read as a value judgment. Internally,
+                the math still uses signed values, but what you see is always
+                neutral: a percentage and a direction.
+              </p>
+              <p className="text-[rgba(241,238,229,0.70)] text-sm leading-relaxed">
+                A 95% Traditional and a 95% Reform score both reflect deeply held,
+                consistent convictions. The percentage tells you <em>how strongly</em>;
+                the label tells you <em>which way</em>. Neither is better or worse.
+              </p>
+            </div>
+          </div>
+
           {/* Sources grid */}
           <div className="border-t border-white/10 pt-10">
             <p className="text-[rgba(241,238,229,0.40)] text-xs uppercase tracking-widest text-center mb-6">

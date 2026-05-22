@@ -7,9 +7,11 @@ import {
   decodeScores,
   encodeScores,
   shapeScore,
-  scoreLabel,
   scoresToCategoryScores,
+  convictionPercent,
+  leanLabel,
 } from "@/lib/scoring";
+import LeanBadge from "@/components/LeanBadge";
 import { saveScores, loadScores } from "@/lib/storage";
 import PoligonShape, { DIMENSION_COLORS } from "@/components/PoligonShape";
 import { getSegmentColor } from "@/lib/colorUtils";
@@ -100,7 +102,6 @@ function ResultsContent() {
 
   const categoryScores = scoresToCategoryScores(scores);
   const avg = shapeScore(scores);
-  const overallLabel = scoreLabel(avg);
   const archetype = findArchetype(scores);
 
   const tabs = [
@@ -159,12 +160,13 @@ function ResultsContent() {
               <div className="bg-[#E5E0D2] border border-[rgba(10,10,10,0.12)] rounded-xl px-5 py-4">
                 <p className="text-xs text-[rgba(10,10,10,0.45)] uppercase tracking-widest mb-1">Shape score</p>
                 <p
-                  className="text-2xl font-bold font-mono"
-                  style={{ color: "#6E2226", fontFamily: "var(--font-jetbrains-mono), monospace" }}
+                  className="text-2xl font-bold"
+                  style={{ color: "#6E2226", fontFamily: "var(--font-outfit)" }}
                 >
-                  {avg >= 0 ? "+" : ""}{avg.toFixed(2)}
+                  {convictionPercent(avg)}%
                 </p>
-                <p className="text-xs text-[rgba(10,10,10,0.55)] mt-1">{overallLabel}</p>
+                <p className="text-xs text-[rgba(10,10,10,0.45)] mt-0.5 mb-2">conviction strength</p>
+                <LeanBadge score={avg} size="md" />
               </div>
             </div>
           </div>
@@ -187,12 +189,14 @@ function ResultsContent() {
                   >
                     <span
                       className="w-2 h-2 rounded-full flex-shrink-0"
-                      style={{ background: scoreColor }}
+                      style={{
+                        background: leanLabel(score) === "Reform" ? "#1E3A5F"
+                          : leanLabel(score) === "Traditional" ? "#C2440A"
+                          : "rgba(10,10,10,0.25)",
+                      }}
                     />
-                    <span className="text-[rgba(10,10,10,0.70)]">{cat.emoji} {cat.shortName}</span>
-                    <span className="font-mono font-semibold" style={{ color: scoreColor }}>
-                      {score >= 0 ? "+" : ""}{score.toFixed(2)}
-                    </span>
+                    <span className="text-[rgba(10,10,10,0.70)]">{cat.emoji} {cat.shortName} · {convictionPercent(score)}%</span>
+                    <LeanBadge score={score} size="sm" />
                   </div>
                 );
               })}
@@ -347,13 +351,8 @@ function ResultsContent() {
                     <div key={cs.categoryId} className="flex items-center gap-2 text-xs">
                       <span>{cs.emoji}</span>
                       <span className="text-[rgba(10,10,10,0.70)] flex-1 truncate">{cs.name}</span>
-                      <span
-                        className={`font-mono font-semibold flex-shrink-0 ${
-                          cs.score >= 0 ? "text-emerald-600" : "text-red-500"
-                        }`}
-                      >
-                        {cs.score >= 0 ? "+" : ""}{cs.score.toFixed(2)}
-                      </span>
+                      <span className="text-[rgba(10,10,10,0.55)] flex-shrink-0">{convictionPercent(cs.score)}%</span>
+                      <LeanBadge score={cs.score} size="sm" />
                     </div>
                   ))}
               </div>

@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { POLITICIANS } from "@/data/politicians";
-import { shapeScore } from "@/lib/scoring";
+import { shapeScore, convictionPercent } from "@/lib/scoring";
+import LeanBadge from "@/components/LeanBadge";
 import { hasSavedScores } from "@/lib/storage";
 import PoligonShape from "./PoligonShape";
 
@@ -122,14 +123,11 @@ export default function PoliticianShapes() {
                   </div>
 
                   {/* Score badge */}
-                  <div className="mt-2 text-center">
+                  <div className="mt-2 text-center flex items-center justify-center gap-1.5">
                     <span className="text-xs text-[rgba(10,10,10,0.45)]">
-                      Shape score:{" "}
-                      <span className="font-mono font-semibold text-[rgba(10,10,10,0.70)]">
-                        {avg >= 0 ? "+" : ""}
-                        {avg.toFixed(2)}
-                      </span>
+                      {convictionPercent(avg)}%
                     </span>
+                    <LeanBadge score={avg} size="sm" />
                   </div>
 
                   {/* Party */}
