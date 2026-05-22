@@ -231,28 +231,30 @@ export default function QuizPage() {
                 {currentAnsweredCount} / {currentCategory.questions.length} answered
               </div>
 
-              {allAnswered && !isLast ? (
-                <button
-                  onClick={goToResults}
-                  className="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold transition-colors shadow-sm"
-                >
-                  See My Shape →
-                </button>
-              ) : (
-                <button
-                  onClick={handleNext}
-                  disabled={!allCurrentAnswered}
-                  className="px-6 py-2.5 rounded-xl bg-[#5560C8] hover:bg-[#4450B2] text-white text-sm font-semibold disabled:opacity-40 disabled:cursor-not-allowed transition-colors shadow-sm"
-                >
-                  {isLast ? "See My Shape →" : "Next →"}
-                </button>
-              )}
+              <button
+                onClick={handleNext}
+                disabled={!allCurrentAnswered}
+                className="px-6 py-2.5 rounded-xl bg-[#5560C8] hover:bg-[#4450B2] text-white text-sm font-semibold disabled:opacity-40 disabled:cursor-not-allowed transition-colors shadow-sm"
+              >
+                {isLast ? "See My Shape →" : "Next →"}
+              </button>
             </div>
 
             {!allCurrentAnswered && (
               <p className="text-center text-xs text-[rgba(10,10,10,0.45)] mt-4">
                 Answer all {currentCategory.questions.length} questions in this section to continue.
               </p>
+            )}
+
+            {allAnswered && (
+              <div className="text-center mt-3">
+                <button
+                  onClick={goToResults}
+                  className="text-sm text-emerald-600 hover:text-emerald-700 font-medium underline underline-offset-2 transition-colors"
+                >
+                  All done — see my shape →
+                </button>
+              </div>
             )}
           </div>
 
