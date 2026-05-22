@@ -21,14 +21,12 @@ function partyColor(party: string): string {
 
 export default function PoliticianShapes() {
   const [unlocked, setUnlocked] = useState(false);
-  const [checked, setChecked] = useState(false);
 
   useEffect(() => {
-    setUnlocked(hasSavedScores());
-    setChecked(true);
+    // Only unlock after mount so the lock screen is always the SSR default —
+    // prevents the static page from ever shipping an "unlocked" state.
+    if (hasSavedScores()) setUnlocked(true);
   }, []);
-
-  if (!checked) return null;
 
   if (!unlocked) {
     return (

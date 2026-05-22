@@ -18,14 +18,10 @@ function partyColor(party: string) {
 
 export default function PoliticianTeaser() {
   const [unlocked, setUnlocked] = useState(false);
-  const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    setUnlocked(hasSavedScores());
-    setReady(true);
+    if (hasSavedScores()) setUnlocked(true);
   }, []);
-
-  if (!ready) return null;
 
   const scrollToSection = () => {
     document.getElementById("politicians-section")?.scrollIntoView({
