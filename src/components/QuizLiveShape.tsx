@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import { CATEGORIES } from "@/data/questions";
 import { Answers } from "@/types";
 import { findArchetype } from "@/lib/archetypes";
@@ -14,6 +13,11 @@ interface Props {
   completedCategoryCount: number;
   /** Smaller layout for the mobile top card */
   compact?: boolean;
+  /**
+   * Called when the user clicks "View My Results →".
+   * Should save scores and navigate to /results with encoded score params.
+   */
+  onViewResults?: () => void;
 }
 
 /**
@@ -48,6 +52,7 @@ export default function QuizLiveShape({
   isComplete,
   completedCategoryCount,
   compact = false,
+  onViewResults,
 }: Props) {
   const scores = computeLiveScores(answers);
   const prevCount = useRef(completedCategoryCount);
@@ -122,13 +127,13 @@ export default function QuizLiveShape({
             >
               {archetype!.description}
             </p>
-            <Link
-              href="/results"
+            <button
+              onClick={onViewResults}
               className="block w-full bg-[#5560C8] hover:bg-[#4450B2] text-white font-semibold rounded-xl transition-colors text-center"
               style={{ fontSize: compact ? 12 : 13, padding: compact ? "8px 0" : "10px 0" }}
             >
               View My Results →
-            </Link>
+            </button>
           </>
         ) : totalAnswered === 0 ? (
           /* ── Empty state ── */

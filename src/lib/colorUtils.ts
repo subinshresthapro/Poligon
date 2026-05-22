@@ -107,7 +107,7 @@ export function getDirectionalShade(baseHex: string, signedScore: number): strin
   const targetL =
     t >= 0
       ? baseLightness + (LIGHT_L - baseLightness) * t
-      : baseLightness + (baseLightness - DARK_L) * (-t);
+      : baseLightness - (baseLightness - DARK_L) * (-t);
 
   // Slightly boost saturation at strong positions to retain vibrancy
   const targetS = Math.min(100, s + Math.abs(t) * SAT_BOOST);

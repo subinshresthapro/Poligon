@@ -124,6 +124,7 @@ export default function QuizPage() {
                 isComplete={allAnswered}
                 completedCategoryCount={completedCategoryCount}
                 compact
+                onViewResults={goToResults}
               />
             </div>
 
@@ -261,6 +262,7 @@ export default function QuizPage() {
               answers={answers}
               isComplete={allAnswered}
               completedCategoryCount={completedCategoryCount}
+              onViewResults={goToResults}
             />
           </div>
 
@@ -275,6 +277,7 @@ export default function QuizPage() {
         completedCategoryCount={completedCategoryCount}
         totalAnswered={totalAnswered}
         onTap={scrollToTop}
+        onViewResults={goToResults}
       />
     </>
   );

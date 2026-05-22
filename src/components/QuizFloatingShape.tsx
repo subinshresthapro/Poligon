@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import { CATEGORIES } from "@/data/questions";
 import { Answers } from "@/types";
 import { findArchetype } from "@/lib/archetypes";
@@ -31,6 +30,11 @@ interface Props {
   totalAnswered: number;
   /** Called when the user taps the FAB — should scroll to top of page */
   onTap: () => void;
+  /**
+   * Called when the user taps the floating shape after completing the quiz.
+   * Should save scores and navigate to /results with encoded score params.
+   */
+  onViewResults?: () => void;
 }
 
 /**
@@ -43,6 +47,7 @@ export default function QuizFloatingShape({
   completedCategoryCount,
   totalAnswered,
   onTap,
+  onViewResults,
 }: Props) {
   const scores = computeLiveScores(answers);
   const archetype = isComplete ? findArchetype(scores) : null;
@@ -170,10 +175,10 @@ export default function QuizFloatingShape({
   return (
     <div className="fixed top-20 right-4 z-40 lg:hidden">
       {isComplete ? (
-        // When complete, tap goes to results page
-        <Link href="/results" aria-label="View your results">
+        // When complete, tap navigates to results with encoded score params
+        <button onClick={onViewResults} aria-label="View your results" style={{ background: "none", border: "none", padding: 0, cursor: "pointer" }}>
           {inner}
-        </Link>
+        </button>
       ) : (
         // When in progress, tap scrolls to top to see main card
         <button onClick={onTap} aria-label="Scroll up to see your shape">
