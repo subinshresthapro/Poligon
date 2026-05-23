@@ -66,8 +66,8 @@ export default function NavActions() {
           href="/results"
           className={`ml-1.5 px-3.5 py-2 sm:px-4 rounded-lg text-sm font-semibold transition-colors ${
             isActive("/results")
-              ? "bg-[#4450B2] text-white"
-              : "bg-[#5560C8] hover:bg-[#4450B2] text-white"
+              ? "bg-[var(--color-accent-deep)] text-white"
+              : "bg-[var(--color-accent)] hover:bg-[var(--color-accent-deep)] text-white"
           }`}
         >
           My Poligon
@@ -77,8 +77,8 @@ export default function NavActions() {
           href="/quiz"
           className={`ml-1.5 px-3.5 py-2 sm:px-4 rounded-lg text-sm font-semibold transition-colors ${
             isActive("/quiz")
-              ? "bg-[#4450B2] text-white"
-              : "bg-[#5560C8] hover:bg-[#4450B2] text-white"
+              ? "bg-[var(--color-accent-deep)] text-white"
+              : "bg-[var(--color-accent)] hover:bg-[var(--color-accent-deep)] text-white"
           }`}
         >
           Take the Quiz

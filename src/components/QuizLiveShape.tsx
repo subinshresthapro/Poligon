@@ -109,7 +109,7 @@ export default function QuizLiveShape({
         {isComplete ? (
           /* ── Completed state ── */
           <>
-            <p className="text-[10px] font-semibold text-[#5560C8] uppercase tracking-widest mb-1">
+            <p className="text-[10px] font-semibold text-[var(--color-accent)] uppercase tracking-widest mb-1">
               Your archetype
             </p>
             <p
@@ -129,7 +129,7 @@ export default function QuizLiveShape({
             </p>
             <button
               onClick={onViewResults}
-              className="block w-full bg-[#5560C8] hover:bg-[#4450B2] text-white font-semibold rounded-xl transition-colors text-center"
+              className="block w-full bg-[var(--color-accent)] hover:bg-[var(--color-accent-deep)] text-white font-semibold rounded-xl transition-colors text-center"
               style={{ fontSize: compact ? 12 : 13, padding: compact ? "8px 0" : "10px 0" }}
             >
               View My Results →
@@ -166,7 +166,7 @@ export default function QuizLiveShape({
                       width: 6,
                       height: 6,
                       background: done
-                        ? "#5560C8"
+                        ? "var(--color-accent)"
                         : started
                         ? "rgba(85,96,200,0.35)"
                         : "rgba(10,10,10,0.12)",

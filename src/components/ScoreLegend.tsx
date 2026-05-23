@@ -31,7 +31,7 @@ export default function ScoreLegend() {
           ].map(({ pct, label, width }) => (
             <div key={pct} className="flex items-center gap-2">
               <div className="w-16 h-1.5 bg-[rgba(10,10,10,0.06)] rounded-full overflow-hidden flex-shrink-0">
-                <div className={`h-full bg-[#5560C8] rounded-full ${width}`} />
+                <div className={`h-full bg-[var(--color-accent)] rounded-full ${width}`} />
               </div>
               <span className="text-xs text-[rgba(10,10,10,0.55)]">
                 <span className="font-semibold text-[#0A0A0A] w-8 inline-block">{pct}</span>

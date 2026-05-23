@@ -36,7 +36,7 @@ export default async function ProfilePage({ params }: Props) {
       <div className="max-w-5xl mx-auto">
         {/* Breadcrumb */}
         <div className="mb-6 text-sm">
-          <Link href="/profiles" className="text-[#5560C8] hover:text-[#4450B2]">
+          <Link href="/profiles" className="text-[var(--color-accent)] hover:text-[var(--color-accent-deep)]">
             ← All Profiles
           </Link>
         </div>
@@ -53,7 +53,7 @@ export default async function ProfilePage({ params }: Props) {
             </div>
             <div className="text-right flex-shrink-0">
               <div className="text-xs text-[rgba(10,10,10,0.45)]">Shape Score</div>
-              <div className="text-2xl font-bold font-mono text-[#5560C8]">
+              <div className="text-2xl font-bold font-mono text-[var(--color-accent)]">
                 {avg >= 0 ? "+" : ""}
                 {avg.toFixed(2)}
               </div>

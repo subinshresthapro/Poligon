@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Outfit, JetBrains_Mono, Instrument_Serif } from "next/font/google";
+import { Suspense } from "react";
+import ThemeProvider from "@/components/ThemeProvider";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -42,7 +44,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       lang="en"
       className={`${outfit.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable} h-full`}
     >
-      <body className="min-h-full antialiased">{children}</body>
+      <body className="min-h-full antialiased">
+        <Suspense fallback={null}>
+          <ThemeProvider />
+        </Suspense>
+        {children}
+      </body>
     </html>
   );
 }

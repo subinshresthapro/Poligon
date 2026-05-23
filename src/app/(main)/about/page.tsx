@@ -13,7 +13,7 @@ export default function AboutPage() {
       {/* ── Hero ────────────────────────────────────────────────────────────── */}
       <section className="bg-[#0A0A0A] text-white py-16 sm:py-20 px-4 sm:px-6">
         <div className="max-w-3xl mx-auto text-center">
-          <p className="text-[#5560C8] text-sm font-semibold uppercase tracking-widest mb-4">
+          <p className="text-[var(--color-accent)] text-sm font-semibold uppercase tracking-widest mb-4">
             About Poligon
           </p>
           <h1
@@ -36,7 +36,7 @@ export default function AboutPage() {
             </a>
             <a
               href="#how"
-              className="inline-block bg-[#5560C8] hover:bg-[#4450B2] text-white font-semibold px-6 py-2.5 rounded-xl transition-colors text-sm"
+              className="inline-block bg-[var(--color-accent)] hover:bg-[var(--color-accent-deep)] text-white font-semibold px-6 py-2.5 rounded-xl transition-colors text-sm"
             >
               How the polygon works ↓
             </a>
@@ -218,7 +218,7 @@ export default function AboutPage() {
       {/* ── HOW IT WORKS ────────────────────────────────────────────────────── */}
       <div id="how" className="bg-[#0A0A0A] text-white py-16 sm:py-20 px-4 sm:px-6">
         <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-16">
-          <p className="text-[#5560C8] text-sm font-semibold uppercase tracking-widest mb-4">
+          <p className="text-[var(--color-accent)] text-sm font-semibold uppercase tracking-widest mb-4">
             How it works
           </p>
           <h2
@@ -644,7 +644,7 @@ export default function AboutPage() {
                 "Built to spark conversation, not division.",
               ].map((item) => (
                 <li key={item} className="flex items-start gap-2">
-                  <span className="text-[#5560C8] flex-shrink-0 mt-0.5">
+                  <span className="text-[var(--color-accent)] flex-shrink-0 mt-0.5">
                     ✓
                   </span>
                   {item}
@@ -659,7 +659,7 @@ export default function AboutPage() {
             </p>
             <Link
               href="/quiz"
-              className="inline-block bg-[#5560C8] hover:bg-[#4450B2] text-white font-semibold px-8 py-3.5 rounded-xl transition-colors"
+              className="inline-block bg-[var(--color-accent)] hover:bg-[var(--color-accent-deep)] text-white font-semibold px-8 py-3.5 rounded-xl transition-colors"
             >
               Take the Quiz →
             </Link>

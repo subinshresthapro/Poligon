@@ -4,7 +4,7 @@ import { CATEGORIES } from "@/data/questions";
 import { getSegmentColor } from "@/lib/colorUtils";
 
 /** Kept for the compare-page legend and per-dimension breakdown dots */
-export const COLOR_A = "#5560C8"; // "You"
+export const COLOR_A = "var(--color-accent)"; // "You"
 export const COLOR_B = "#E8782E"; // "Friend"
 
 interface Props {

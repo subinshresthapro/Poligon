@@ -450,7 +450,7 @@ export default function PoliticalRadarChart({
     return (
       <div className="flex flex-wrap items-center justify-center gap-3 mt-2 text-xs text-[rgba(10,10,10,0.55)]">
         <div className="flex items-center gap-1.5">
-          <span className="w-3 h-3 rounded-full bg-[#5560C8]" />
+          <span className="w-3 h-3 rounded-full bg-[var(--color-accent)]" />
           <span>{name}</span>
         </div>
         {overlays.map((ov) => (

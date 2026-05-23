@@ -51,12 +51,12 @@ export default function ProfilesPage() {
                   <div className="px-5 py-4 border-t border-[rgba(10,10,10,0.08)] flex-1">
                     <div className="flex items-start justify-between gap-2 mb-1">
                       <div className="min-w-0">
-                        <h2 className="font-bold text-[#0A0A0A] group-hover:text-[#5560C8] transition-colors truncate">
+                        <h2 className="font-bold text-[#0A0A0A] group-hover:text-[var(--color-accent)] transition-colors truncate">
                           {profile.name}
                         </h2>
                         <p className="text-xs text-[rgba(10,10,10,0.55)]">{profile.title}</p>
                       </div>
-                      <span className="flex-shrink-0 text-xs font-semibold text-[#5560C8] bg-[#E5E0D2] px-2 py-0.5 rounded-md">
+                      <span className="flex-shrink-0 text-xs font-semibold text-[var(--color-accent)] bg-[#E5E0D2] px-2 py-0.5 rounded-md">
                         {convictionPercent(avg)}%
                       </span>
                     </div>
@@ -76,7 +76,7 @@ export default function ProfilesPage() {
             <p className="text-sm text-[rgba(10,10,10,0.55)] mb-4">Want to see your own shape?</p>
             <Link
               href="/quiz"
-              className="bg-[#5560C8] hover:bg-[#4450B2] text-white font-semibold px-8 py-3 rounded-xl transition-colors"
+              className="bg-[var(--color-accent)] hover:bg-[var(--color-accent-deep)] text-white font-semibold px-8 py-3 rounded-xl transition-colors"
             >
               Take the Quiz →
             </Link>

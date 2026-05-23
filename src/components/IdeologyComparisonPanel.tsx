@@ -95,7 +95,7 @@ export default function IdeologyComparisonPanel({
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
           {/* ── User's shape — reference card ── */}
           <div className="bg-[#E5E0D2] border border-[rgba(10,10,10,0.12)] rounded-2xl p-4 flex flex-col items-center text-center">
-            <p className="text-[10px] font-semibold text-[#5560C8] uppercase tracking-widest mb-2">
+            <p className="text-[10px] font-semibold text-[var(--color-accent)] uppercase tracking-widest mb-2">
               Your Shape
             </p>
             <div className="mb-2">
@@ -110,7 +110,7 @@ export default function IdeologyComparisonPanel({
             <ul className="w-full space-y-1 text-left">
               {userTraits.map((t) => (
                 <li key={t} className="flex gap-1.5 text-[10px]">
-                  <span className="text-[#5560C8] flex-shrink-0">•</span>
+                  <span className="text-[var(--color-accent)] flex-shrink-0">•</span>
                   <span className="text-[rgba(10,10,10,0.65)]">{t}</span>
                 </li>
               ))}

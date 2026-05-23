@@ -72,7 +72,7 @@ export default function ShareExportPanel({ scores, name }: ShareExportPanelProps
         <button
           onClick={downloadPNG}
           disabled={exporting}
-          className="flex-shrink-0 flex items-center gap-2 bg-[#5560C8] hover:bg-[#4450B2] disabled:opacity-60 text-white font-semibold px-4 py-2 rounded-xl transition-colors text-sm"
+          className="flex-shrink-0 flex items-center gap-2 bg-[var(--color-accent)] hover:bg-[var(--color-accent-deep)] disabled:opacity-60 text-white font-semibold px-4 py-2 rounded-xl transition-colors text-sm"
         >
           {exporting ? "…" : "⬇ PNG"}
         </button>
@@ -101,7 +101,7 @@ export default function ShareExportPanel({ scores, name }: ShareExportPanelProps
         </pre>
         <button
           onClick={() => copy(codeMap[tab])}
-          className="absolute top-3 right-3 bg-[#5560C8] hover:bg-[#4450B2] text-white text-xs px-3 py-1.5 rounded-lg transition-colors font-medium"
+          className="absolute top-3 right-3 bg-[var(--color-accent)] hover:bg-[var(--color-accent-deep)] text-white text-xs px-3 py-1.5 rounded-lg transition-colors font-medium"
         >
           {copied ? "Copied!" : "Copy"}
         </button>

@@ -32,7 +32,7 @@ export default function LandingPage() {
         <div
           className="absolute inset-0 opacity-[0.04]"
           style={{
-            backgroundImage: "radial-gradient(circle, #5560C8 1px, transparent 1px)",
+            backgroundImage: "radial-gradient(circle, var(--color-accent) 1px, transparent 1px)",
             backgroundSize: "32px 32px",
           }}
         />
@@ -44,8 +44,8 @@ export default function LandingPage() {
             className="absolute right-[-60px] top-1/2 -translate-y-1/2 w-[440px] h-[440px]"
             aria-hidden="true"
           >
-            <polygon points="200,30 335,115 335,285 200,370 65,285 65,115" fill="none" stroke="#5560C8" strokeWidth="1" />
-            <polygon points="200,70 305,135 305,265 200,330 95,265 95,135" fill="none" stroke="#6E2226" strokeWidth="0.5" />
+            <polygon points="200,30 335,115 335,285 200,370 65,285 65,115" fill="none" stroke="var(--color-accent)" strokeWidth="1" />
+            <polygon points="200,70 305,135 305,265 200,330 95,265 95,135" fill="none" stroke="var(--color-secondary)" strokeWidth="0.5" />
             <polygon points="200,110 275,155 275,245 200,290 125,245 125,155" fill="none" stroke="rgba(255,255,255,0.18)" strokeWidth="0.5" />
             {/* Dimension-coloured slices */}
             {[
@@ -70,7 +70,7 @@ export default function LandingPage() {
           {/* Brand label */}
           <div className="inline-flex items-center gap-2 mb-6">
             <svg width="22" height="22" viewBox="0 0 28 28" aria-hidden="true">
-              <polygon points="14,7 21,10 20,18 13,21 7,17 9,10" fill="#5560C8" />
+              <polygon points="14,7 21,10 20,18 13,21 7,17 9,10" fill="var(--color-accent)" />
               <polygon
                 points="14,2 25,8 25,20 14,26 3,20 3,8"
                 fill="none"
@@ -79,7 +79,7 @@ export default function LandingPage() {
                 strokeLinejoin="miter"
               />
             </svg>
-            <span className="text-[#5560C8] font-semibold text-sm tracking-widest uppercase">
+            <span className="text-[var(--color-accent)] font-semibold text-sm tracking-widest uppercase">
               Poligon · Polygon for Politics
             </span>
           </div>
@@ -95,12 +95,12 @@ export default function LandingPage() {
                 fontFamily: "var(--font-instrument-serif), Georgia, serif",
                 fontStyle: "italic",
                 fontWeight: 400,
-                color: "#6E2226",
+                color: "var(--color-secondary)",
               }}
             >
               one-
             </em>
-            <span className="bg-[#5560C8] text-white px-2">dimensional.</span>
+            <span className="bg-[var(--color-accent)] text-white px-2">dimensional.</span>
           </h1>
 
           {/* Tagline */}
@@ -126,7 +126,7 @@ export default function LandingPage() {
             ].map(({ value, label }) => (
               <div key={label} className="text-center">
                 <div
-                  className="text-2xl font-bold text-[#5560C8]"
+                  className="text-2xl font-bold text-[var(--color-accent)]"
                   style={{ fontFamily: "var(--font-outfit)" }}
                 >
                   {value}
@@ -141,7 +141,7 @@ export default function LandingPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/quiz"
-              className="bg-[#5560C8] hover:bg-[#4450B2] text-white font-semibold px-8 py-3.5 rounded-xl text-base transition-colors"
+              className="bg-[var(--color-accent)] hover:bg-[var(--color-accent-deep)] text-white font-semibold px-8 py-3.5 rounded-xl text-base transition-colors"
             >
               Discover My Shape →
             </Link>
@@ -230,7 +230,7 @@ export default function LandingPage() {
               </p>
               <Link
                 href="/quiz"
-                className="inline-block bg-[#5560C8] hover:bg-[#4450B2] text-white text-sm font-semibold px-6 py-2.5 rounded-lg transition-colors"
+                className="inline-block bg-[var(--color-accent)] hover:bg-[var(--color-accent-deep)] text-white text-sm font-semibold px-6 py-2.5 rounded-lg transition-colors"
               >
                 Reveal My Shape →
               </Link>
@@ -246,7 +246,7 @@ export default function LandingPage() {
 
             {/* Text */}
             <div>
-              <p className="text-[#5560C8] text-xs font-semibold uppercase tracking-widest mb-3">
+              <p className="text-[var(--color-accent)] text-xs font-semibold uppercase tracking-widest mb-3">
                 The social feature
               </p>
               <h2
@@ -282,7 +282,7 @@ export default function LandingPage() {
               {/* Legend */}
               <div className="flex justify-center gap-6 text-xs mb-4">
                 <span className="flex items-center gap-2">
-                  <span className="w-3 h-3 rounded-sm bg-[#5560C8]" />
+                  <span className="w-3 h-3 rounded-sm bg-[var(--color-accent)]" />
                   <span className="text-[rgba(10,10,10,0.70)] font-medium">You</span>
                 </span>
                 <span className="flex items-center gap-2">
@@ -297,7 +297,7 @@ export default function LandingPage() {
 
               <Link
                 href="/quiz"
-                className="inline-block mt-4 bg-[#5560C8] hover:bg-[#4450B2] text-white text-sm font-semibold px-6 py-2.5 rounded-lg transition-colors"
+                className="inline-block mt-4 bg-[var(--color-accent)] hover:bg-[var(--color-accent-deep)] text-white text-sm font-semibold px-6 py-2.5 rounded-lg transition-colors"
               >
                 Take the Quiz to Compare →
               </Link>
@@ -325,7 +325,7 @@ export default function LandingPage() {
             No account required. Data is passed as a simple JSON object.
             Each embed becomes a little colour-pop of political identity.
           </p>
-          <pre className="bg-[#1a1a1a] border border-[rgba(255,255,255,0.08)] rounded-xl p-4 text-left text-xs text-[#5560C8] overflow-x-auto mb-6 font-mono leading-relaxed">
+          <pre className="bg-[#1a1a1a] border border-[rgba(255,255,255,0.08)] rounded-xl p-4 text-left text-xs text-[var(--color-accent)] overflow-x-auto mb-6 font-mono leading-relaxed">
             {`<iframe
   src="https://your-domain.com/embed?data=..."
   width="600" height="520" frameborder="0"
@@ -333,7 +333,7 @@ export default function LandingPage() {
           </pre>
           <Link
             href="/quiz"
-            className="bg-[#5560C8] hover:bg-[#4450B2] text-white font-semibold px-8 py-3 rounded-xl text-base transition-colors"
+            className="bg-[var(--color-accent)] hover:bg-[var(--color-accent-deep)] text-white font-semibold px-8 py-3 rounded-xl text-base transition-colors"
           >
             Get Started →
           </Link>

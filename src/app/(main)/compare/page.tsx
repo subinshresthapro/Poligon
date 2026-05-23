@@ -82,7 +82,7 @@ function CompareContent() {
           </p>
           <Link
             href="/"
-            className="inline-block bg-[#5560C8] hover:bg-[#4450B2] text-white font-semibold px-6 py-2.5 rounded-xl transition-colors text-sm"
+            className="inline-block bg-[var(--color-accent)] hover:bg-[var(--color-accent-deep)] text-white font-semibold px-6 py-2.5 rounded-xl transition-colors text-sm"
           >
             Go Home
           </Link>
@@ -104,7 +104,7 @@ function CompareContent() {
         {/* Hero */}
         <section className="bg-[#0A0A0A] text-white py-14 sm:py-20 px-4 sm:px-6">
           <div className="max-w-2xl mx-auto text-center">
-            <p className="text-[#5560C8] text-sm font-semibold uppercase tracking-widest mb-4">
+            <p className="text-[var(--color-accent)] text-sm font-semibold uppercase tracking-widest mb-4">
               Compare Shapes
             </p>
             <h1
@@ -143,7 +143,7 @@ function CompareContent() {
 
             <Link
               href={`/quiz?returnTo=${encodeURIComponent(returnTo)}`}
-              className="block text-center bg-[#5560C8] hover:bg-[#4450B2] text-white font-semibold px-8 py-3.5 rounded-xl transition-colors"
+              className="block text-center bg-[var(--color-accent)] hover:bg-[var(--color-accent-deep)] text-white font-semibold px-8 py-3.5 rounded-xl transition-colors"
             >
               Take the Quiz →
             </Link>
@@ -176,7 +176,7 @@ function CompareContent() {
         {/* Hero */}
         <section className="bg-[#0A0A0A] text-white py-14 sm:py-18 px-4 sm:px-6">
           <div className="max-w-2xl mx-auto text-center">
-            <p className="text-[#5560C8] text-sm font-semibold uppercase tracking-widest mb-4">
+            <p className="text-[var(--color-accent)] text-sm font-semibold uppercase tracking-widest mb-4">
               Compare Shapes
             </p>
             <h1
@@ -312,7 +312,7 @@ function CompareContent() {
 
             {/* ── Share CTA ── */}
             <div className="bg-[#0A0A0A] text-white rounded-2xl p-6 text-center">
-              <p className="text-xs font-semibold text-[#5560C8] uppercase tracking-widest mb-2">
+              <p className="text-xs font-semibold text-[var(--color-accent)] uppercase tracking-widest mb-2">
                 Spread the conversation
               </p>
               <p className="font-bold text-lg mb-1.5" style={{ fontFamily: "var(--font-outfit)" }}>
@@ -323,7 +323,7 @@ function CompareContent() {
               </p>
               <button
                 onClick={copyMyLink}
-                className="inline-flex items-center gap-2 bg-[#5560C8] hover:bg-[#4450B2] text-white font-semibold px-6 py-2.5 rounded-xl transition-colors text-sm"
+                className="inline-flex items-center gap-2 bg-[var(--color-accent)] hover:bg-[var(--color-accent-deep)] text-white font-semibold px-6 py-2.5 rounded-xl transition-colors text-sm"
               >
                 {copied ? "✓ Copied!" : "🔗 Copy my compare link"}
               </button>

@@ -30,6 +30,17 @@
 :root {
   --background: #F1EEE5;
   --foreground: #0A0A0A;
+  /* Runtime-switchable brand accent (overridden by [data-theme="b"] below) */
+  --color-accent:       #5560C8;
+  --color-accent-deep:  #4450B2;
+  --color-secondary:    #6E2226;
+}
+
+/* ── Theme B: Persimmon × Cobalt ─────────────────────────────────────────── */
+html[data-theme="b"] {
+  --color-accent:       #E04F2A;
+  --color-accent-deep:  #B23E1F;
+  --color-secondary:    #1E40C8;
 }
 
 body {

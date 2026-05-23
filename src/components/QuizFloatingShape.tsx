@@ -124,7 +124,7 @@ export default function QuizFloatingShape({
       <div style={{ padding: "6px 8px 8px", textAlign: "center" }}>
         {isComplete ? (
           <>
-            <p style={{ fontSize: 9, fontWeight: 700, color: "#5560C8", lineHeight: 1.2 }}>
+            <p style={{ fontSize: 9, fontWeight: 700, color: "var(--color-accent)", lineHeight: 1.2 }}>
               {archetype!.emoji} {archetype!.name}
             </p>
             <p style={{ fontSize: 8, color: "rgba(10,10,10,0.45)", marginTop: 2 }}>
@@ -153,7 +153,7 @@ export default function QuizFloatingShape({
                       height: 4,
                       borderRadius: "50%",
                       background: done
-                        ? "#5560C8"
+                        ? "var(--color-accent)"
                         : started
                         ? "rgba(85,96,200,0.4)"
                         : "rgba(10,10,10,0.12)",

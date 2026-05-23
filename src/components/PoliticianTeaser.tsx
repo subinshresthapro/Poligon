@@ -62,10 +62,10 @@ export default function PoliticianTeaser() {
         <div className="flex-1 min-w-0">
           {unlocked ? (
             <>
-              <p className="text-sm font-semibold text-[#4450B2] leading-snug">
+              <p className="text-sm font-semibold text-[var(--color-accent-deep)] leading-snug">
                 Real politician shapes are below ↓
               </p>
-              <p className="text-xs text-[#5560C8] mt-0.5 truncate">
+              <p className="text-xs text-[var(--color-accent)] mt-0.5 truncate">
                 Sanders · AOC · Obama · Romney · Ron Paul · Trump
               </p>
             </>
@@ -83,7 +83,7 @@ export default function PoliticianTeaser() {
 
         {/* Arrow */}
         <span className={`text-lg flex-shrink-0 transition-transform group-hover:translate-y-0.5 ${
-          unlocked ? "text-[#5560C8]" : "text-[rgba(10,10,10,0.45)]"
+          unlocked ? "text-[var(--color-accent)]" : "text-[rgba(10,10,10,0.45)]"
         }`}>
           ↓
         </span>

@@ -61,7 +61,7 @@ export default function PoliticianShapes() {
             </div>
             <Link
               href="/quiz"
-              className="inline-block bg-[#5560C8] hover:bg-[#4450B2] text-white font-semibold px-8 py-3 rounded-xl transition-colors"
+              className="inline-block bg-[var(--color-accent)] hover:bg-[var(--color-accent-deep)] text-white font-semibold px-8 py-3 rounded-xl transition-colors"
             >
               Take the Quiz to Unlock →
             </Link>
@@ -150,7 +150,7 @@ export default function PoliticianShapes() {
 
         <p className="text-center text-xs text-[rgba(10,10,10,0.45)] mt-6">
           Go to{" "}
-          <Link href="/results" className="text-[#5560C8] hover:underline">
+          <Link href="/results" className="text-[var(--color-accent)] hover:underline">
             My Shape
           </Link>{" "}
           to compare your results against these profiles.

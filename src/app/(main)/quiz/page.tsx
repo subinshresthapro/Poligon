@@ -131,10 +131,10 @@ export default function QuizPage() {
             {/* Restored banner */}
             {restored && (
               <div className="mb-4 flex items-center justify-between bg-[#F1EEE5] border border-[rgba(10,10,10,0.12)] rounded-xl px-4 py-3 text-sm">
-                <span className="text-[#5560C8]">✓ Your previous answers have been restored.</span>
+                <span className="text-[var(--color-accent)]">✓ Your previous answers have been restored.</span>
                 <button
                   onClick={handleStartFresh}
-                  className="text-[#5560C8] hover:text-[#4450B2] font-medium underline underline-offset-2 text-xs ml-4 flex-shrink-0"
+                  className="text-[var(--color-accent)] hover:text-[var(--color-accent-deep)] font-medium underline underline-offset-2 text-xs ml-4 flex-shrink-0"
                 >
                   Start fresh
                 </button>
@@ -151,7 +151,7 @@ export default function QuizPage() {
               </div>
               <div className="h-1.5 bg-[rgba(10,10,10,0.10)] rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-[#5560C8] rounded-full transition-all duration-500"
+                  className="h-full bg-[var(--color-accent)] rounded-full transition-all duration-500"
                   style={{ width: `${progressPct}%` }}
                 />
               </div>
@@ -173,7 +173,7 @@ export default function QuizPage() {
                       onClick={() => setCategoryIndex(i)}
                       className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap flex-shrink-0 border transition-all ${
                         isActive
-                          ? "bg-[#5560C8] text-white border-[#5560C8] shadow-sm"
+                          ? "bg-[var(--color-accent)] text-white border-[var(--color-accent)] shadow-sm"
                           : catDone
                           ? "bg-emerald-50 text-emerald-700 border-emerald-300 hover:bg-emerald-100"
                           : "bg-[#F1EEE5] text-[rgba(10,10,10,0.55)] border-[rgba(10,10,10,0.12)] hover:border-[rgba(10,10,10,0.30)] hover:text-[#0A0A0A]"
@@ -234,7 +234,7 @@ export default function QuizPage() {
               <button
                 onClick={handleNext}
                 disabled={!allCurrentAnswered}
-                className="px-6 py-2.5 rounded-xl bg-[#5560C8] hover:bg-[#4450B2] text-white text-sm font-semibold disabled:opacity-40 disabled:cursor-not-allowed transition-colors shadow-sm"
+                className="px-6 py-2.5 rounded-xl bg-[var(--color-accent)] hover:bg-[var(--color-accent-deep)] text-white text-sm font-semibold disabled:opacity-40 disabled:cursor-not-allowed transition-colors shadow-sm"
               >
                 {isLast ? "See My Shape →" : "Next →"}
               </button>

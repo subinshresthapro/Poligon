@@ -72,7 +72,7 @@ function EmbedContent() {
           <div className="text-xs text-[rgba(10,10,10,0.45)]">Shape Score</div>
           <div
             className="text-lg font-bold font-mono"
-            style={{ color: "#6E2226", fontFamily: "var(--font-jetbrains-mono), monospace" }}
+            style={{ color: "var(--color-secondary)", fontFamily: "var(--font-jetbrains-mono), monospace" }}
           >
             {avg >= 0 ? "+" : ""}
             {avg.toFixed(2)}
@@ -117,7 +117,7 @@ function EmbedContent() {
           href="/"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-xs text-[#5560C8] hover:text-[#4450B2]"
+          className="text-xs text-[var(--color-accent)] hover:text-[var(--color-accent-deep)]"
         >
           poligon.app
         </a>

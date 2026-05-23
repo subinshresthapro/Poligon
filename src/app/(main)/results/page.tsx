@@ -123,7 +123,7 @@ function ResultsContent() {
             </div>
 
             <div className="flex-1 text-center sm:text-left">
-              <p className="text-xs font-semibold text-[#5560C8] uppercase tracking-widest mb-1">
+              <p className="text-xs font-semibold text-[var(--color-accent)] uppercase tracking-widest mb-1">
                 Your political archetype
               </p>
               <h1
@@ -146,7 +146,7 @@ function ResultsContent() {
                 <p className="text-xs text-[rgba(10,10,10,0.45)] uppercase tracking-widest mb-1">Shape score</p>
                 <p
                   className="text-2xl font-bold"
-                  style={{ color: "#6E2226", fontFamily: "var(--font-outfit)" }}
+                  style={{ color: "var(--color-secondary)", fontFamily: "var(--font-outfit)" }}
                 >
                   {convictionPercent(avg)}%
                 </p>
@@ -163,7 +163,7 @@ function ResultsContent() {
               {CATEGORIES.map((cat) => {
                 const score = scores[cat.id] ?? 0;
                 // brandColor = mid-tone, used for pill border/bg so it's always readable
-                const brandColor = DIMENSION_COLORS[cat.id] ?? "#5560C8";
+                const brandColor = DIMENSION_COLORS[cat.id] ?? "var(--color-accent)";
                 // scoreColor = actual shade for this score (dark for conservative, light for progressive)
                 const scoreColor = getSegmentColor(cat.id, score);
                 return (
@@ -195,7 +195,7 @@ function ResultsContent() {
             {/* Two overlapping hex icons */}
             <div className="flex-shrink-0 flex items-center -space-x-3">
               <svg width="38" height="38" viewBox="0 0 28 28" aria-hidden="true">
-                <polygon points="14,7 21,10 20,18 13,21 7,17 9,10" fill="#5560C8" fillOpacity="0.9" />
+                <polygon points="14,7 21,10 20,18 13,21 7,17 9,10" fill="var(--color-accent)" fillOpacity="0.9" />
               </svg>
               <svg width="38" height="38" viewBox="0 0 28 28" aria-hidden="true">
                 <polygon points="14,7 21,10 20,18 13,21 7,17 9,10" fill="#E8782E" fillOpacity="0.9" />
@@ -203,7 +203,7 @@ function ResultsContent() {
             </div>
 
             <div className="flex-1 text-center sm:text-left">
-              <p className="text-xs font-semibold text-[#5560C8] uppercase tracking-widest mb-0.5">
+              <p className="text-xs font-semibold text-[var(--color-accent)] uppercase tracking-widest mb-0.5">
                 Compare shapes with a friend
               </p>
               <p className="font-bold text-base" style={{ fontFamily: "var(--font-outfit)" }}>
@@ -217,7 +217,7 @@ function ResultsContent() {
 
             <button
               onClick={copyCompareLink}
-              className="flex-shrink-0 flex items-center gap-2 bg-[#5560C8] hover:bg-[#4450B2] text-white font-semibold px-5 py-2.5 rounded-xl transition-colors text-sm whitespace-nowrap"
+              className="flex-shrink-0 flex items-center gap-2 bg-[var(--color-accent)] hover:bg-[var(--color-accent-deep)] text-white font-semibold px-5 py-2.5 rounded-xl transition-colors text-sm whitespace-nowrap"
             >
               {compareCopied ? "✓ Copied!" : "🔗 Copy compare link"}
             </button>
@@ -357,7 +357,7 @@ function ResultsContent() {
 
             <Link
               href="/quiz"
-              className="block text-center text-sm text-[#5560C8] hover:text-[#4450B2] font-medium border border-[rgba(10,10,10,0.12)] rounded-xl py-2.5 bg-[#F1EEE5] transition-colors"
+              className="block text-center text-sm text-[var(--color-accent)] hover:text-[var(--color-accent-deep)] font-medium border border-[rgba(10,10,10,0.12)] rounded-xl py-2.5 bg-[#F1EEE5] transition-colors"
             >
               ↩ Edit My Answers
             </Link>
@@ -373,7 +373,7 @@ function ResultsContent() {
                 onClick={() => setTab(t.id)}
                 className={`flex-1 py-3.5 text-sm font-medium border-b-2 transition-colors ${
                   tab === t.id
-                    ? "border-indigo-600 text-[#5560C8] bg-[#E5E0D2]"
+                    ? "border-[var(--color-accent)] text-[var(--color-accent)] bg-[#E5E0D2]"
                     : "border-transparent text-[rgba(10,10,10,0.55)] hover:text-[#0A0A0A] hover:bg-[#E5E0D2]"
                 }`}
               >
