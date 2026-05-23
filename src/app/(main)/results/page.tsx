@@ -29,6 +29,7 @@ function ResultsContent() {
   const [tab, setTab] = useState<"breakdown" | "compare" | "share">("breakdown");
   const [scores, setScores] = useState<Record<string, number> | null>(null);
   const [fromStorage, setFromStorage] = useState(false);
+  const [isViewingShared, setIsViewingShared] = useState(false);
   const [compareCopied, setCompareCopied] = useState(false);
 
   useEffect(() => {
@@ -37,7 +38,21 @@ function ResultsContent() {
       const decoded = decodeScores(encoded);
       if (decoded) {
         setScores(decoded);
-        saveScores(decoded);
+        const existing = loadScores();
+        if (existing) {
+          // User already has their own scores — check if the URL scores differ
+          const isDifferent = Object.keys(decoded).some(
+            (k) => Math.abs((decoded[k] ?? 0) - (existing[k] ?? 0)) > 0.01
+          );
+          if (isDifferent) {
+            // This is someone else's shared link — do NOT overwrite their data
+            setIsViewingShared(true);
+          }
+          // If scores are the same, it's their own page refresh — no banner needed
+        } else {
+          // No existing scores: user is coming straight from the quiz for the first time
+          saveScores(decoded);
+        }
       } else {
         router.replace("/quiz");
       }
@@ -110,6 +125,21 @@ function ResultsContent() {
               className="text-emerald-600 hover:text-emerald-800 font-semibold underline underline-offset-2 text-xs ml-4 flex-shrink-0"
             >
               Edit answers
+            </Link>
+          </div>
+        )}
+
+        {/* Shared-link banner — shown when viewing someone else's results URL */}
+        {isViewingShared && (
+          <div className="mb-4 flex items-center justify-between bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 text-sm">
+            <span className="text-amber-700">
+              👀 You&apos;re viewing someone else&apos;s shape. Your own shape is saved separately.
+            </span>
+            <Link
+              href="/results"
+              className="text-amber-600 hover:text-amber-800 font-semibold underline underline-offset-2 text-xs ml-4 flex-shrink-0 whitespace-nowrap"
+            >
+              View my shape →
             </Link>
           </div>
         )}
