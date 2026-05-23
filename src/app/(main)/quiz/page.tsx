@@ -252,7 +252,7 @@ export default function QuizPage() {
                   onClick={goToResults}
                   className="text-sm text-emerald-600 hover:text-emerald-700 font-medium underline underline-offset-2 transition-colors"
                 >
-                  All done — see my shape →
+                  All done. See my shape →
                 </button>
               </div>
             )}

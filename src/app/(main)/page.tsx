@@ -1,6 +1,27 @@
 import Link from "next/link";
 import IdeologyGallery from "@/components/IdeologyGallery";
 import ScoreLegend from "@/components/ScoreLegend";
+import PoligonShape from "@/components/PoligonShape";
+import CompareShape from "@/components/CompareShape";
+
+// Sample scores for the homepage preview (broadly Reform Progressive)
+const PREVIEW_SCORES: Record<string, number> = {
+  immigration: 0.25, government: 0.75, economy: 0.88, healthcare: 0.75,
+  education: 0.25, environment: 0.63, civilLiberties: 0.70, foreignPolicy: 0.45,
+  technology: 0.65, social: 0.55,
+};
+
+// Comparison preview: Reform Progressive vs National Conservative
+const COMPARE_A: Record<string, number> = {
+  immigration: 0.55, government: 0.65, economy: 0.55, healthcare: 0.70,
+  education: 0.65, environment: 0.70, civilLiberties: 0.60, foreignPolicy: 0.35,
+  technology: 0.50, social: 0.65,
+};
+const COMPARE_B: Record<string, number> = {
+  immigration: -0.80, government: -0.60, economy: -0.50, healthcare: -0.50,
+  education: -0.35, environment: -0.45, civilLiberties: -0.10, foreignPolicy: -0.55,
+  technology: -0.20, social: -0.75,
+};
 
 export default function LandingPage() {
   return (
@@ -91,9 +112,9 @@ export default function LandingPage() {
           </p>
 
           <p className="text-base text-[rgba(241,238,229,0.55)] max-w-2xl mx-auto mb-10 leading-relaxed">
-            Most tools put you on a line — left or right. We map your views across{" "}
+            Most tools put you on a line: left or right. We map your views across{" "}
             <strong className="text-white">10 different dimensions</strong>, creating a
-            coloured polygon that&apos;s uniquely yours — your political identity at a glance.
+            coloured polygon that&apos;s uniquely yours: your political identity at a glance.
           </p>
 
           {/* Stats */}
@@ -148,17 +169,17 @@ export default function LandingPage() {
               {
                 icon: "📝",
                 title: "Answer 40 questions",
-                desc: "Rate how much you agree or disagree with statements across 10 topics — things like the economy, healthcare, environment, and personal freedoms.",
+                desc: "Rate how much you agree or disagree with statements across 10 topics: things like the economy, healthcare, environment, and personal freedoms.",
               },
               {
                 icon: "⬡",
                 title: "See your unique shape",
-                desc: "Each topic becomes one spoke on a coloured polygon. Your answers determine how far each point extends — creating a shape that's yours alone.",
+                desc: "Each topic becomes one spoke on a coloured polygon. Your answers determine how far each point extends, creating a shape that's yours alone.",
               },
               {
                 icon: "🔗",
                 title: "Compare with a friend",
-                desc: "Share your compare link. When a friend takes the quiz and opens it, both polygons appear overlaid — political difference as geometry, not warfare.",
+                desc: "Share your compare link. When a friend takes the quiz and opens it, both polygons appear overlaid. Political difference as geometry, not warfare.",
               },
             ].map(({ icon, title, desc }) => (
               <div key={title} className="text-center">
@@ -185,18 +206,15 @@ export default function LandingPage() {
                 How to read your shape
               </h2>
               <p className="text-[rgba(10,10,10,0.55)] mb-6 leading-relaxed text-sm">
-                Each spoke represents one topic. How far a point extends from the center
-                shows how strongly you feel about it — from{" "}
-                <span className="text-red-600 font-medium">−1 (strongly disagree)</span> at
-                the center to{" "}
-                <span className="text-emerald-600 font-medium">+1 (strongly agree)</span>{" "}
-                at the outer edge. The connected points form your unique coloured polygon.
+                Each spoke represents one topic. The further a point extends from the center,
+                the stronger your conviction on that dimension. A spoke at the outer edge means
+                deep conviction; near the center means near-neutral. The connected points form your unique coloured polygon.
               </p>
               <ScoreLegend />
               <div className="mt-6 p-4 bg-[#F1EEE5] border border-[rgba(10,10,10,0.12)] rounded-xl text-sm text-[rgba(10,10,10,0.55)]">
                 <strong className="text-[#0A0A0A]">Important:</strong> Scores reflect your
-                position on a specific dimension, not a left–right axis. Two people with
-                very different politics can both score high on civil liberties — for
+                position on a specific dimension, not a left-right axis. Two people with
+                very different politics can both score high on civil liberties, for
                 completely different reasons.
               </div>
             </div>
@@ -204,50 +222,11 @@ export default function LandingPage() {
               <div className="text-[rgba(10,10,10,0.55)] text-xs font-semibold uppercase tracking-widest mb-4">
                 Your shape will look something like this
               </div>
-              {/* Decorative polygon preview */}
-              <div className="flex items-center justify-center" style={{ height: 200 }}>
-                <svg width="180" height="180" viewBox="0 0 180 180" aria-hidden="true">
-                  {[0.25, 0.5, 0.75, 1].map((frac) => (
-                    <circle
-                      key={frac}
-                      cx={90} cy={90} r={frac * 78}
-                      fill="none"
-                      stroke="rgba(10,10,10,0.10)"
-                      strokeWidth={frac === 0.5 ? 1.25 : 0.75}
-                      strokeDasharray={frac === 1 ? undefined : "2 4"}
-                    />
-                  ))}
-                  {[
-                    { angle: -90, score: 0.85, color: "#E8782E" },
-                    { angle: -18, score: 0.60, color: "#8FA82E" },
-                    { angle: 54,  score: 0.90, color: "#D4A53C" },
-                    { angle: 126, score: 0.40, color: "#B8385E" },
-                    { angle: 198, score: 0.70, color: "#8B4FCB" },
-                    { angle: 270, score: 0.55, color: "#3AA361" },
-                  ].map(({ angle: a, score: s, color: c }, i, arr) => {
-                    const next = arr[(i + 1) % arr.length];
-                    const r1 = s * 78;
-                    const r2 = next.score * 78;
-                    const toRad = (d: number) => (d * Math.PI) / 180;
-                    const x1 = 90 + r1 * Math.cos(toRad(a));
-                    const y1 = 90 + r1 * Math.sin(toRad(a));
-                    const x2 = 90 + r2 * Math.cos(toRad(next.angle));
-                    const y2 = 90 + r2 * Math.sin(toRad(next.angle));
-                    return (
-                      <path
-                        key={i}
-                        d={`M 90,90 L ${x1},${y1} L ${x2},${y2} Z`}
-                        fill={c}
-                        fillOpacity={0.75}
-                        stroke="rgba(10,10,10,0.10)"
-                        strokeWidth={0.75}
-                      />
-                    );
-                  })}
-                </svg>
+              <div className="flex items-center justify-center">
+                <PoligonShape scores={PREVIEW_SCORES} size={200} />
               </div>
               <p className="text-xs text-[rgba(10,10,10,0.55)] mt-2 mb-4">
-                Each person&apos;s shape is unique — take the quiz to see yours.
+                Each person&apos;s shape is unique. Take the quiz to see yours.
               </p>
               <Link
                 href="/quiz"
@@ -280,7 +259,7 @@ export default function LandingPage() {
                 Political disagreement becomes personal when it&apos;s between people who know each other. Poligon turns that into geometry.
               </p>
               <p className="text-[rgba(241,238,229,0.50)] text-sm leading-relaxed mb-6">
-                Share your compare link. When your partner, colleague, or friend opens it and takes the quiz, both shapes appear overlaid on the same polygon — where they overlap, you agree. Where they diverge, you don&apos;t. No arguing about labels required.
+                Share your compare link. When your partner, colleague, or friend opens it and takes the quiz, both shapes appear overlaid on the same polygon. Where they overlap, you agree. Where they diverge, you don&apos;t. No labels required.
               </p>
               <div className="flex flex-wrap gap-3 text-xs text-[rgba(241,238,229,0.55)]">
                 {["Couples", "Coworkers", "Families", "Friends", "Book clubs"].map((g) => (
@@ -296,57 +275,18 @@ export default function LandingPage() {
 
             {/* Visual */}
             <div className="bg-[#F1EEE5] rounded-2xl p-6 text-center">
-              {/* Two overlapping polygons preview */}
               <div className="flex justify-center mb-4">
-                <svg width="200" height="200" viewBox="0 0 200 200" aria-hidden="true">
-                  {[0.25,0.5,0.75,1].map((f) => (
-                    <circle key={f} cx={100} cy={100} r={f*84} fill="none"
-                      stroke="rgba(10,10,10,0.08)" strokeWidth={f===1?1:0.75}
-                      strokeDasharray={f===1?undefined:"2 4"} />
-                  ))}
-                  {[0,1,2,3,4,5,6,7,8,9].map((i) => {
-                    const a = (2*Math.PI*i/10) - Math.PI/2;
-                    return <line key={i} x1={100} y1={100}
-                      x2={100+84*Math.cos(a)} y2={100+84*Math.sin(a)}
-                      stroke="rgba(10,10,10,0.07)" strokeWidth={0.75} />;
-                  })}
-                  {/* Shape A (blue) */}
-                  <polygon
-                    points={[0.9,0.6,0.8,0.4,0.7,0.9,0.5,0.8,0.3,0.7,0.85,0.6,0.75,0.4,0.65,0.9,0.5,0.7,0.9,0.6]
-                      .reduce((pts: string[], v, i, arr) => {
-                        if (i % 2 === 0) {
-                          const angle = (2*Math.PI*(i/2)/10) - Math.PI/2;
-                          const r = v * 84;
-                          pts.push(`${(100+r*Math.cos(angle)).toFixed(1)},${(100+r*Math.sin(angle)).toFixed(1)}`);
-                        }
-                        return pts;
-                      }, []).join(" ")}
-                    fill="#5560C8" fillOpacity={0.30} stroke="#5560C8" strokeWidth={2} strokeLinejoin="round"
-                  />
-                  {/* Shape B (orange) */}
-                  <polygon
-                    points={[0.4,0.8,0.6,0.9,0.5,0.4,0.85,0.3,0.75,0.6,0.4,0.9,0.6,0.7,0.8,0.5,0.35,0.85,0.6,0.4]
-                      .reduce((pts: string[], v, i) => {
-                        if (i % 2 === 0) {
-                          const angle = (2*Math.PI*(i/2)/10) - Math.PI/2;
-                          const r = v * 84;
-                          pts.push(`${(100+r*Math.cos(angle)).toFixed(1)},${(100+r*Math.sin(angle)).toFixed(1)}`);
-                        }
-                        return pts;
-                      }, []).join(" ")}
-                    fill="#E8782E" fillOpacity={0.30} stroke="#E8782E" strokeWidth={2} strokeLinejoin="round"
-                  />
-                </svg>
+                <CompareShape scoresA={COMPARE_A} scoresB={COMPARE_B} nameA="You" nameB="Your friend" size={220} />
               </div>
 
               {/* Legend */}
               <div className="flex justify-center gap-6 text-xs mb-4">
-                <span className="flex items-center gap-1.5">
-                  <span className="w-3 h-3 rounded-sm" style={{ background: "#5560C8" }} />
+                <span className="flex items-center gap-2">
+                  <span className="w-3 h-3 rounded-sm bg-[#5560C8]" />
                   <span className="text-[rgba(10,10,10,0.70)] font-medium">You</span>
                 </span>
-                <span className="flex items-center gap-1.5">
-                  <span className="w-3 h-3 rounded-sm" style={{ background: "#E8782E" }} />
+                <span className="flex items-center gap-2">
+                  <span className="w-3 h-3 rounded-sm bg-[#E8782E]" />
                   <span className="text-[rgba(10,10,10,0.70)] font-medium">Your friend</span>
                 </span>
               </div>
@@ -382,7 +322,7 @@ export default function LandingPage() {
           <p className="text-[rgba(241,238,229,0.55)] text-sm mb-6 leading-relaxed">
             Embed any political shape on your website with one line of code.
             Perfect for candidate profiles, voter guides, or news articles.
-            No account required — data is passed as a simple JSON object.
+            No account required. Data is passed as a simple JSON object.
             Each embed becomes a little colour-pop of political identity.
           </p>
           <pre className="bg-[#1a1a1a] border border-[rgba(255,255,255,0.08)] rounded-xl p-4 text-left text-xs text-[#5560C8] overflow-x-auto mb-6 font-mono leading-relaxed">

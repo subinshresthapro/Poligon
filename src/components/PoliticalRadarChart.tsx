@@ -226,7 +226,7 @@ export function drawPoligonOnCtx(
  */
 export function exportPoligonPNG(
   scores: Record<string, number>,
-  options: { size?: number; bgColor?: string } = {}
+  options: { size?: number; bgColor?: string; label?: string } = {}
 ): string {
   const size = options.size ?? 600;
   const bg = options.bgColor ?? "#F1EEE5";
@@ -240,6 +240,23 @@ export function exportPoligonPNG(
   ctx.scale(dpr, dpr);
 
   drawPoligonOnCtx(ctx, size, scores, [], false, bg);
+
+  // Optional archetype label drawn in the bottom margin
+  if (options.label) {
+    const fontSize = Math.round(size * 0.030);
+    ctx.font = `600 ${fontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`;
+    ctx.fillStyle = "rgba(10,10,10,0.50)";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "bottom";
+    ctx.fillText(options.label, size / 2, size - 10);
+
+    // Small "poligon.app" branding beside the label
+    const brandSize = Math.round(size * 0.022);
+    ctx.font = `400 ${brandSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`;
+    ctx.fillStyle = "rgba(85,96,200,0.55)";
+    ctx.fillText("poligon.app", size / 2, size - 10 - fontSize - 4);
+  }
+
   return canvas.toDataURL("image/png");
 }
 

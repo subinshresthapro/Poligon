@@ -599,6 +599,35 @@ export default function AboutPage() {
       {/* ── Principles + CTA ────────────────────────────────────────────────── */}
       <div className="py-16 px-4 sm:px-6 bg-[#F1EEE5]">
         <div className="max-w-2xl mx-auto space-y-10">
+
+          {/* Who built this */}
+          <div>
+            <div className="w-12 h-12 bg-[#E5E0D2] rounded-2xl flex items-center justify-center text-2xl mb-5">
+              👥
+            </div>
+            <h2
+              className="text-2xl font-bold text-[#0A0A0A] mb-4"
+              style={{ fontFamily: "var(--font-outfit)" }}
+            >
+              Who built this?
+            </h2>
+            <p className="text-[rgba(10,10,10,0.70)] leading-relaxed mb-4">
+              Poligon was built by ordinary people. Not a political party, not a campaign, not
+              a think tank, and not a corporation. No political organisation has funded it,
+              directed it, or had any say in its design. No one in politics has paid for it.
+              No corporate interest is behind it.
+            </p>
+            <p className="text-[rgba(10,10,10,0.70)] leading-relaxed mb-4">
+              It started from a simple frustration: the tools we are given to understand politics
+              flatten everything into a single line and sort people into opposing camps. We wanted
+              something that showed the real texture of people&apos;s views.
+            </p>
+            <p className="text-[rgba(10,10,10,0.70)] leading-relaxed">
+              The goal is to bridge the divide, not widen it. To help people find the common
+              ground that gets lost in the noise. Built by citizens, for citizens.
+            </p>
+          </div>
+
           <div className="bg-[#E5E0D2] border border-[rgba(10,10,10,0.12)] rounded-2xl p-6">
             <h3
               className="font-bold text-[#0A0A0A] mb-2"

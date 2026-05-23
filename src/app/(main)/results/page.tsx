@@ -61,33 +61,18 @@ function ResultsContent() {
     setTimeout(() => setCompareCopied(false), 2500);
   }, [scores]);
 
-  const handleInstagramShare = useCallback(async () => {
+  const handleDownloadPoligon = useCallback(async () => {
     if (!scores) return;
     const { exportPoligonPNG } = await import("@/components/PoliticalRadarChart");
     const arch = findArchetype(scores);
-    const shareUrl = `${window.location.origin}/compare?a=${encodeScores(scores)}`;
-    const shareText = `I just found my political shape on Poligon — I'm ${arch.emoji} ${arch.name}. See how ours compare: ${shareUrl}`;
-    const dataUri = await exportPoligonPNG(scores, { size: 1080, bgColor: "#F1EEE5" });
-
-    // Try Web Share API with file (works on mobile — opens native share sheet incl. Instagram)
-    if (typeof navigator !== "undefined" && navigator.share && navigator.canShare) {
-      try {
-        const res = await fetch(dataUri);
-        const blob = await res.blob();
-        const file = new File([blob], "my-poligon.png", { type: "image/png" });
-        if (navigator.canShare({ files: [file] })) {
-          await navigator.share({ files: [file], text: shareText });
-          return;
-        }
-      } catch {
-        // fall through to download
-      }
-    }
-
-    // Desktop fallback: download the image
+    const dataUri = exportPoligonPNG(scores, {
+      size: 1080,
+      bgColor: "#F1EEE5",
+      label: `${arch.emoji} ${arch.name}`,
+    });
     const a = document.createElement("a");
     a.href = dataUri;
-    a.download = "my-poligon.png";
+    a.download = `my-poligon-${arch.name.toLowerCase().replace(/\s+/g, "-")}.png`;
     a.click();
   }, [scores]);
   // ─────────────────────────────────────────────────────────────────────────
@@ -279,7 +264,7 @@ function ResultsContent() {
                 name: "Instagram",
                 bg: "#E1306C",
                 border: "transparent",
-                action: handleInstagramShare,
+                action: () => window.open("https://www.instagram.com/", "_blank", "noopener"),
                 icon: <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-current flex-shrink-0" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z" /></svg>,
               },
               {
@@ -301,7 +286,7 @@ function ResultsContent() {
                     <button
                       key={p.name}
                       onClick={p.action}
-                      title={p.name === "Instagram" ? "Save image to share on Instagram" : `Share on ${p.name}`}
+                      title={`Share on ${p.name}`}
                       className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-white text-xs font-medium transition-opacity hover:opacity-80"
                       style={{ backgroundColor: p.bg, border: `1px solid ${p.border}` }}
                     >
@@ -310,8 +295,20 @@ function ResultsContent() {
                     </button>
                   ))}
                 </div>
+                {/* Download button */}
+                <div className="flex justify-center mt-3">
+                  <button
+                    onClick={handleDownloadPoligon}
+                    className="flex items-center gap-2 px-4 py-2 rounded-full text-white text-xs font-semibold transition-opacity hover:opacity-80 bg-[#3A3A3A] border border-[rgba(255,255,255,0.15)]"
+                  >
+                    <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-current flex-shrink-0" aria-hidden="true">
+                      <path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 4v-2h14v2H5z"/>
+                    </svg>
+                    Download my Poligon
+                  </button>
+                </div>
                 <p className="text-[10px] text-[rgba(241,238,229,0.25)] text-center mt-2">
-                  Instagram: saves your polygon as a 1080px image to share in your story or post
+                  Download saves a 1080px image with your archetype label. Then share it anywhere.
                 </p>
               </div>
             );

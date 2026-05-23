@@ -108,7 +108,7 @@ export const CATEGORIES: Category[] = [
         categoryId: "economy",
         // C — agree = conservative
         reverseScore: true,
-        text: "People who work hard and take risks deserve to keep the rewards — high taxes on success reduce the incentive to create.",
+        text: "People who work hard and take risks deserve to keep the rewards. High taxes on success reduce the incentive to create.",
       },
       {
         id: "econ-3",
@@ -138,14 +138,14 @@ export const CATEGORIES: Category[] = [
         id: "health-1",
         categoryId: "healthcare",
         // P — agree = progressive
-        text: "Everyone should have access to healthcare regardless of their ability to pay — this is a basic right.",
+        text: "Everyone should have access to healthcare regardless of their ability to pay. It is a basic right.",
       },
       {
         id: "health-2",
         categoryId: "healthcare",
         // C — agree = conservative
         reverseScore: true,
-        text: "When government controls healthcare, quality goes down and wait times go up — competition produces better outcomes.",
+        text: "When government controls healthcare, quality goes down and wait times go up. Competition produces better outcomes.",
       },
       {
         id: "health-3",
@@ -182,7 +182,7 @@ export const CATEGORIES: Category[] = [
         categoryId: "education",
         // C — agree = conservative
         reverseScore: true,
-        text: "Parents should have the freedom to direct their education funding to any school — public, private, or religious — that best fits their child.",
+        text: "Parents should have the freedom to direct their education funding to any school, public, private, or religious, that best fits their child.",
       },
       {
         id: "edu-3",
@@ -256,7 +256,7 @@ export const CATEGORIES: Category[] = [
         categoryId: "civilLiberties",
         // C — agree = conservative
         reverseScore: true,
-        text: "Law enforcement needs strong tools — including surveillance and stop-and-search powers — to keep communities safe.",
+        text: "Law enforcement needs strong tools, including surveillance and stop-and-search powers, to keep communities safe.",
       },
       {
         id: "civil-3",
@@ -293,7 +293,7 @@ export const CATEGORIES: Category[] = [
         categoryId: "foreignPolicy",
         // C — agree = conservative
         reverseScore: true,
-        text: "A strong military is the most reliable deterrent against aggression — underfunding it invites conflict.",
+        text: "A strong military is the most reliable deterrent against aggression. Underfunding it invites conflict.",
       },
       {
         id: "fp-3",
@@ -343,7 +343,7 @@ export const CATEGORIES: Category[] = [
         categoryId: "technology",
         // C — agree = conservative
         reverseScore: true,
-        text: "Content moderation by platforms is a form of censorship — platforms should face legal consequences for removing lawful speech.",
+        text: "Content moderation by platforms is a form of censorship; platforms should face legal consequences for removing lawful speech.",
       },
     ],
   },
@@ -380,7 +380,7 @@ export const CATEGORIES: Category[] = [
         categoryId: "social",
         // C — agree = conservative
         reverseScore: true,
-        text: "Individuals should be judged entirely on their own actions and merits — group membership should play no role in decisions.",
+        text: "Individuals should be judged entirely on their own actions and merits. Group membership should play no role in decisions.",
       },
     ],
   },
