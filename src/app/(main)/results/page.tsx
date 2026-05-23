@@ -12,7 +12,7 @@ import {
   leanLabel,
 } from "@/lib/scoring";
 import LeanBadge from "@/components/LeanBadge";
-import { saveScores, loadScores } from "@/lib/storage";
+import { loadScores } from "@/lib/storage";
 import PoligonShape, { DIMENSION_COLORS } from "@/components/PoligonShape";
 import { getSegmentColor } from "@/lib/colorUtils";
 import PoliticalRadarChart from "@/components/PoliticalRadarChart";
@@ -38,21 +38,21 @@ function ResultsContent() {
       const decoded = decodeScores(encoded);
       if (decoded) {
         setScores(decoded);
+        // Results page NEVER writes to localStorage — the quiz page already calls
+        // saveScores() before navigating here.  Writing here would corrupt a
+        // visitor's own data when they open a shared link.
         const existing = loadScores();
         if (existing) {
-          // User already has their own scores — check if the URL scores differ
           const isDifferent = Object.keys(decoded).some(
             (k) => Math.abs((decoded[k] ?? 0) - (existing[k] ?? 0)) > 0.01
           );
           if (isDifferent) {
-            // This is someone else's shared link — do NOT overwrite their data
             setIsViewingShared(true);
           }
-          // If scores are the same, it's their own page refresh — no banner needed
-        } else {
-          // No existing scores: user is coming straight from the quiz for the first time
-          saveScores(decoded);
+          // Same scores = own results page (or their own page refresh) — no banner
         }
+        // No existing scores = fresh visitor viewing a shared link.
+        // Show the results in-memory only; do NOT save to localStorage.
       } else {
         router.replace("/quiz");
       }
