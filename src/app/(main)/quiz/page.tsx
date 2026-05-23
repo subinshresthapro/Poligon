@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useCallback, useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
+import { Suspense, useState, useCallback, useEffect, useRef } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { CATEGORIES } from "@/data/questions";
 import { Answers, ScoreValue } from "@/types";
 import { answersToScores, encodeScores } from "@/lib/scoring";
@@ -10,8 +10,13 @@ import QuestionCard from "@/components/QuestionCard";
 import QuizLiveShape from "@/components/QuizLiveShape";
 import QuizFloatingShape from "@/components/QuizFloatingShape";
 
-export default function QuizPage() {
+function QuizContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  // returnTo is set by the compare page so Person B lands back on the comparison
+  // after completing the quiz. Only allow same-site paths (start with /).
+  const rawReturnTo = searchParams.get("returnTo");
+  const returnTo = rawReturnTo && rawReturnTo.startsWith("/") ? rawReturnTo : null;
   const [answers, setAnswers] = useState<Answers>({});
   const [categoryIndex, setCategoryIndex] = useState(0);
   const [restored, setRestored] = useState(false);
@@ -92,7 +97,13 @@ export default function QuizPage() {
   const goToResults = () => {
     const scores = answersToScores(answers);
     saveScores(scores);
-    router.push(`/results?scores=${encodeScores(scores)}`);
+    if (returnTo) {
+      // Person B came from a compare link — send them back so both shapes appear.
+      // Their scores are now in localStorage; the compare page reads them on load.
+      router.push(returnTo);
+    } else {
+      router.push(`/results?scores=${encodeScores(scores)}`);
+    }
   };
 
   const handleNext = () => {
@@ -282,5 +293,13 @@ export default function QuizPage() {
         onViewResults={goToResults}
       />
     </>
+  );
+}
+
+export default function QuizPage() {
+  return (
+    <Suspense fallback={null}>
+      <QuizContent />
+    </Suspense>
   );
 }
