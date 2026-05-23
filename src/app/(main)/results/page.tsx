@@ -31,6 +31,7 @@ function ResultsContent() {
   const [fromStorage, setFromStorage] = useState(false);
   const [isViewingShared, setIsViewingShared] = useState(false);
   const [compareCopied, setCompareCopied] = useState(false);
+  const [radarVariant, setRadarVariant] = useState<"abstract" | "chart">("abstract");
 
   useEffect(() => {
     const encoded = searchParams.get("scores");
@@ -347,12 +348,33 @@ function ResultsContent() {
 
         {/* ── Main chart + sidebar ─────────────────────────────────────────── */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-          {/* Recharts radar for detailed view */}
+          {/* Shape view — toggled between abstract emblem and analytical chart */}
           <div className="lg:col-span-2 bg-[#F1EEE5] border border-[rgba(10,10,10,0.12)] rounded-2xl shadow-sm p-4">
-            <p className="text-xs text-[rgba(10,10,10,0.45)] text-center mb-2 uppercase tracking-widest">
-              Full radar view
-            </p>
-            <PoliticalRadarChart scores={scores} name="Your Shape" height={440} />
+            {/* View toggle */}
+            <div className="flex gap-2 justify-center mb-4">
+              {(["abstract", "chart"] as const).map((v) => (
+                <button
+                  key={v}
+                  onClick={() => setRadarVariant(v)}
+                  className="text-xs px-3 py-1 rounded-full border transition-colors"
+                  style={{
+                    borderColor: radarVariant === v ? "var(--color-accent)" : "rgba(10,10,10,0.15)",
+                    background: radarVariant === v ? "var(--color-accent)" : "transparent",
+                    color: radarVariant === v ? "#fff" : "rgba(10,10,10,0.6)",
+                    cursor: "pointer",
+                  }}
+                >
+                  {v === "abstract" ? "Shape view" : "Data view"}
+                </button>
+              ))}
+            </div>
+            {radarVariant === "abstract" ? (
+              <div className="flex items-center justify-center" style={{ minHeight: 440 }}>
+                <PoligonShape scores={scores} size={380} variant="abstract" />
+              </div>
+            ) : (
+              <PoliticalRadarChart scores={scores} name="Your Shape" height={440} />
+            )}
           </div>
 
           {/* Sidebar */}

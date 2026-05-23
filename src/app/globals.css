@@ -43,6 +43,13 @@ html[data-theme="b"] {
   --color-secondary:    #1E40C8;
 }
 
+/* ── Theme C: Vermillion × Cobalt ────────────────────────────────────────── */
+html[data-theme="c"] {
+  --color-accent:       #DC3D26;
+  --color-accent-deep:  #B12E1A;
+  --color-secondary:    #1E40C8;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);

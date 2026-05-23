@@ -22,6 +22,15 @@ interface Props {
   showLabels?: boolean;
   /** Extra CSS class names for the <svg> element. */
   className?: string;
+  /**
+   * 'abstract' (default) — clean filled shape, no grid rings, no spoke lines,
+   *   no borders between segments. Single thin outer edge only. Feels like a
+   *   personal emblem or fingerprint.
+   *
+   * 'chart' — original style with grid rings, spoke lines, segment borders,
+   *   and vertex dots. Useful for detailed analysis views.
+   */
+  variant?: "abstract" | "chart";
 }
 
 /**
@@ -39,6 +48,7 @@ export default function PoligonShape({
   size = 280,
   showLabels = false,
   className = "",
+  variant = "abstract",
 }: Props) {
   const cx = size / 2;
   const cy = size / 2;
@@ -78,8 +88,8 @@ export default function PoligonShape({
       className={`overflow-visible ${className}`}
       aria-label="Political shape polygon"
     >
-      {/* Grid rings */}
-      {rings.map((frac) => (
+      {/* Grid rings — chart variant only */}
+      {variant === "chart" && rings.map((frac) => (
         <circle
           key={frac}
           cx={cx}
@@ -92,8 +102,8 @@ export default function PoligonShape({
         />
       ))}
 
-      {/* Spoke lines */}
-      {points.map((pt, i) => (
+      {/* Spoke lines — chart variant only */}
+      {variant === "chart" && points.map((pt, i) => (
         <line
           key={`spoke-${i}`}
           x1={cx} y1={cy}
@@ -111,16 +121,27 @@ export default function PoligonShape({
             key={`slice-${i}`}
             d={`M ${cx},${cy} L ${pt.x.toFixed(2)},${pt.y.toFixed(2)} L ${next.x.toFixed(2)},${next.y.toFixed(2)} Z`}
             fill={pt.fillColor}
-            fillOpacity={0.88}
-            stroke="rgba(10,10,10,0.08)"
-            strokeWidth={0.5}
+            fillOpacity={0.92}
+            stroke={variant === "chart" ? "rgba(255,255,255,0.5)" : pt.fillColor}
+            strokeWidth={variant === "chart" ? 0.8 : 0.3}
             strokeLinejoin="round"
           />
         );
       })}
 
-      {/* Vertex dots */}
-      {points.map((pt, i) => (
+      {/* Outer edge — abstract variant only */}
+      {variant === "abstract" && (
+        <polygon
+          points={points.map(pt => `${pt.x.toFixed(2)},${pt.y.toFixed(2)}`).join(" ")}
+          fill="none"
+          stroke="rgba(255,255,255,0.7)"
+          strokeWidth={1.8}
+          strokeLinejoin="round"
+        />
+      )}
+
+      {/* Vertex dots — chart variant only */}
+      {variant === "chart" && points.map((pt, i) => (
         <circle
           key={`dot-${i}`}
           cx={pt.x}
