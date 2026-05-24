@@ -186,15 +186,6 @@ function ResultsContent() {
                 View collection →
               </Link>
             )}
-            {/* View my own shape — only when viewer has own scores */}
-            {isViewingShared && (
-              <Link
-                href="/results"
-                className="text-sm font-medium text-[rgba(10,10,10,0.55)] hover:text-[#0A0A0A] transition-colors whitespace-nowrap"
-              >
-                My Poligon →
-              </Link>
-            )}
           </div>
         </div>
       </div>

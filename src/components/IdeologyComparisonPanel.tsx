@@ -9,10 +9,16 @@ import { computeAgreement } from "@/lib/sharedPoligons";
 
 interface IdeologyComparisonPanelProps {
   userScores: Record<string, number>;
+  /** Possessive label e.g. "Your" (default) | "Alice's" | "Their" */
+  posLabel?: string;
+  /** Object label e.g. "you" (default) | "Alice" | "them" */
+  objLabel?: string;
 }
 
 export default function IdeologyComparisonPanel({
   userScores,
+  posLabel = "Your",
+  objLabel = "you",
 }: IdeologyComparisonPanelProps) {
   const [selected, setSelected] = useState<string[]>([]);
 
@@ -52,7 +58,7 @@ export default function IdeologyComparisonPanel({
         </h3>
         <p className="text-xs text-[rgba(10,10,10,0.55)]">
           These are rough archetypes, not rigid labels. Select any to see their
-          shape alongside yours — colour encoding is the same: dark wedge =
+          shape alongside {posLabel === "Your" ? "yours" : posLabel === "Their" ? "theirs" : posLabel} — colour encoding is the same: dark wedge =
           conservative lean, light wedge = progressive lean.
         </p>
       </div>
@@ -84,7 +90,7 @@ export default function IdeologyComparisonPanel({
           {/* ── User's shape — reference card ── */}
           <div className="bg-[#E5E0D2] border border-[rgba(10,10,10,0.12)] rounded-2xl p-4 flex flex-col items-center text-center">
             <p className="text-[10px] font-semibold text-[var(--color-accent)] uppercase tracking-widest mb-2">
-              Your Shape
+              {posLabel} Shape
             </p>
             <div className="mb-2">
               <PoligonShape scores={userScores} size={120} />
@@ -124,7 +130,7 @@ export default function IdeologyComparisonPanel({
                   <span className="font-semibold" style={{ color: ideology.color }}>
                     {overlap}%
                   </span>{" "}
-                  overlap with you
+                  overlap with {objLabel}
                 </p>
                 <div className="mb-2">
                   <PoligonShape scores={ideology.scores} size={120} />
@@ -153,7 +159,7 @@ export default function IdeologyComparisonPanel({
 
       {selected.length === 0 && (
         <p className="text-sm text-[rgba(10,10,10,0.45)] text-center py-4">
-          Select one or more ideologies above to see their shape compared with yours.
+          Select one or more ideologies above to see their shape compared with {posLabel === "Your" ? "yours" : posLabel === "Their" ? "theirs" : posLabel}.
         </p>
       )}
     </div>

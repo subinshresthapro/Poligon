@@ -7,6 +7,8 @@ import { useState } from "react";
 
 interface CategoryBreakdownProps {
   categoryScores: CategoryScore[];
+  /** Possessive label for the position copy. Default "Your". Pass "Alice's" or "Their" for shared views. */
+  posLabel?: string;
 }
 
 function ScoreBar({ score }: { score: number }) {
@@ -36,7 +38,7 @@ function ScoreBar({ score }: { score: number }) {
   );
 }
 
-export default function CategoryBreakdown({ categoryScores }: CategoryBreakdownProps) {
+export default function CategoryBreakdown({ categoryScores, posLabel = "Your" }: CategoryBreakdownProps) {
   const [expanded, setExpanded] = useState<string | null>(null);
 
   return (
@@ -88,7 +90,7 @@ export default function CategoryBreakdown({ categoryScores }: CategoryBreakdownP
                   </span>
                 </div>
                 <div className="mt-3 text-xs text-[rgba(10,10,10,0.55)]">
-                  <span className="font-medium text-[#0A0A0A]">Your position:</span>{" "}
+                  <span className="font-medium text-[#0A0A0A]">{posLabel} position:</span>{" "}
                   <LeanBadge score={cs.score} size="sm" />{" "}
                   with <strong>{convictionPercent(cs.score)}% conviction</strong>
                   {leanLabel(cs.score) !== "Mixed" ? (

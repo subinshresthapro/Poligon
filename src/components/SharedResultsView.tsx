@@ -41,10 +41,12 @@ export default function SharedResultsView({ scores, displayName }: Props) {
   }, []);
 
   const name = displayName ?? null;
-  // Possessive: "Alice's" or "Their"
+  // Possessive adjective: "Alice's" or "Their"
   const possessive = name ? `${name}'s` : "Their";
-  // Subject: "Alice" or "this person"
+  // Display subject (prose): "Alice" or "this person"
   const subject = name ?? "this person";
+  // Object pronoun (for "overlap with ___"): "Alice" or "them"
+  const objLabel = name ?? "them";
 
   const categoryScores = scoresToCategoryScores(scores);
   const avg = shapeScore(scores);
@@ -287,15 +289,8 @@ export default function SharedResultsView({ scores, displayName }: Props) {
               </div>
             </div>
 
-            {/* CTA: take quiz or view own results */}
-            {ownScores ? (
-              <Link
-                href="/results"
-                className="block text-center text-sm text-[var(--color-accent)] hover:text-[var(--color-accent-deep)] font-medium border border-[rgba(10,10,10,0.12)] rounded-xl py-2.5 bg-[#F1EEE5] transition-colors"
-              >
-                ← View my Poligon
-              </Link>
-            ) : (
+            {/* CTA: take quiz nudge when viewer hasn't taken it yet */}
+            {!ownScores && (
               <Link
                 href="/quiz"
                 className="block text-center text-sm font-semibold bg-[var(--color-accent)] hover:bg-[var(--color-accent-deep)] text-white rounded-xl py-2.5 transition-colors"
@@ -324,8 +319,12 @@ export default function SharedResultsView({ scores, displayName }: Props) {
             ))}
           </div>
           <div className="p-6">
-            {tab === "breakdown" && <CategoryBreakdown categoryScores={categoryScores} />}
-            {tab === "compare" && <IdeologyComparisonPanel userScores={scores} />}
+            {tab === "breakdown" && (
+              <CategoryBreakdown categoryScores={categoryScores} posLabel={possessive} />
+            )}
+            {tab === "compare" && (
+              <IdeologyComparisonPanel userScores={scores} posLabel={possessive} objLabel={objLabel} />
+            )}
           </div>
         </div>
 
