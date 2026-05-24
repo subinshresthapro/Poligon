@@ -4,6 +4,12 @@ export interface PoliticianProfile {
   title: string;
   party: string;
   country: string;
+  /** US state code (e.g. "CA") — only set for state-level politicians. */
+  state?: string;
+  /** Role priority for surface ordering: governor first, then senator, then representative. */
+  role?: "governor" | "senator" | "representative";
+  /** Lower = more senior senator (used to break ties when two senators exist for a state). */
+  seniority?: number;
   description: string;
   /** Scores estimated from published voting records, policy platforms,
    *  and publicly stated positions. Values from -1 (strong opposition)

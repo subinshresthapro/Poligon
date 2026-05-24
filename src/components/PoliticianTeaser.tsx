@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { hasSavedScores } from "@/lib/storage";
 import { POLITICIANS } from "@/data/politicians";
+import { useGeoState } from "@/hooks/useGeoState";
+import { getLocalPoliticians } from "@/data/statePoliticians";
 
 const PARTY_COLOR: Record<string, string> = {
   "Democrat": "#2563eb",
@@ -18,6 +20,8 @@ function partyColor(party: string) {
 
 export default function PoliticianTeaser() {
   const [unlocked, setUnlocked] = useState(false);
+  const { stateCode } = useGeoState();
+  const localPoliticians = stateCode ? getLocalPoliticians(stateCode) : [];
 
   useEffect(() => {
     if (hasSavedScores()) setUnlocked(true);
@@ -65,7 +69,12 @@ export default function PoliticianTeaser() {
               <p className="text-sm font-semibold text-[var(--color-accent-deep)] leading-snug">
                 Real politician shapes are below ↓
               </p>
-              <p className="text-xs text-[var(--color-accent)] mt-0.5 truncate">
+              {localPoliticians.length > 0 && (
+                <p className="text-xs text-[var(--color-accent)] mt-0.5 truncate">
+                  📍 {localPoliticians.map((p) => p.name).join(" · ")}
+                </p>
+              )}
+              <p className="text-xs text-[rgba(10,10,10,0.45)] mt-0.5 truncate">
                 Sanders · AOC · Obama · Romney · Ron Paul · Trump
               </p>
             </>
@@ -74,9 +83,16 @@ export default function PoliticianTeaser() {
               <p className="text-sm font-semibold text-[#0A0A0A] leading-snug">
                 🔒 Real politician shapes are below — take the quiz to unlock
               </p>
-              <p className="text-xs text-[rgba(10,10,10,0.45)] mt-0.5 truncate">
-                Sanders · AOC · Obama · Romney · Ron Paul · Trump
-              </p>
+              {localPoliticians.length > 0 && (
+                <p className="text-xs text-[rgba(10,10,10,0.45)] mt-0.5 truncate">
+                  📍 {localPoliticians.map((p) => p.name).join(" · ")} + national figures
+                </p>
+              )}
+              {localPoliticians.length === 0 && (
+                <p className="text-xs text-[rgba(10,10,10,0.45)] mt-0.5 truncate">
+                  Sanders · AOC · Obama · Romney · Ron Paul · Trump
+                </p>
+              )}
             </>
           )}
         </div>

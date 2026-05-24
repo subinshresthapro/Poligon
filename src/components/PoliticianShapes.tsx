@@ -7,6 +7,7 @@ import { shapeScore, convictionPercent } from "@/lib/scoring";
 import LeanBadge from "@/components/LeanBadge";
 import { hasSavedScores } from "@/lib/storage";
 import PoligonShape from "./PoligonShape";
+import LocalPoliticianShapes from "./LocalPoliticianShapes";
 
 const PARTY_COLOR: Record<string, string> = {
   "Democrat": "#2563eb",
@@ -34,6 +35,9 @@ export default function PoliticianShapes() {
       <section id="politicians-section" className="py-16 bg-[#F1EEE5] border-t border-[rgba(10,10,10,0.12)]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="text-center">
+            {/* Local politicians teaser — shown if we have geo data for the user's state */}
+            <LocalPoliticianShapes locked />
+
             <div className="inline-flex items-center justify-center w-16 h-16 bg-[rgba(10,10,10,0.06)] rounded-2xl text-3xl mb-4">
               🔒
             </div>
@@ -44,7 +48,7 @@ export default function PoliticianShapes() {
               See the shapes of real politicians
             </h2>
             <p className="text-[rgba(10,10,10,0.55)] text-sm max-w-md mx-auto mb-6 leading-relaxed">
-              We&apos;ve estimated political shapes for 6 well-known politicians based on their
+              We&apos;ve estimated political shapes for well-known politicians based on their
               public voting records and stated positions. Take the quiz first to unlock — and
               see how your shape compares.
             </p>
@@ -74,12 +78,15 @@ export default function PoliticianShapes() {
   return (
     <section id="politicians-section" className="py-16 bg-[#F1EEE5] border-t border-[rgba(10,10,10,0.12)]">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        {/* Local politicians — shown above national figures if geo data available */}
+        <LocalPoliticianShapes />
+
         <div className="text-center mb-4">
           <h2
             className="text-2xl font-bold text-[#0A0A0A] mb-2"
             style={{ fontFamily: "var(--font-outfit)" }}
           >
-            Real politician shapes
+            National figures
           </h2>
           <p className="text-[rgba(10,10,10,0.55)] text-sm max-w-xl mx-auto">
             Estimated from publicly available voting records, policy platforms, and political

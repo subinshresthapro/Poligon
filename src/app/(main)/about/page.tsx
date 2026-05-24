@@ -542,6 +542,89 @@ export default function AboutPage() {
             </div>
           </div>
 
+          {/* Step 5 — How we score public figures */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+            <div>
+              <div className="inline-flex items-center gap-2 bg-white/10 rounded-full px-3 py-1 text-xs font-semibold text-[rgba(241,238,229,0.70)] uppercase tracking-widest mb-4">
+                Step 5: Public figure scores
+              </div>
+              <h3
+                className="text-xl sm:text-2xl font-bold text-white mb-4"
+                style={{ fontFamily: "var(--font-outfit)" }}
+              >
+                How we estimate politician shapes.
+              </h3>
+              <p className="text-[rgba(241,238,229,0.65)] leading-relaxed mb-5">
+                For each public figure, we score all 10 dimensions using the same scale you
+                answer on — from −1 (strongly traditional) to +1 (strongly reform). The
+                estimates draw on multiple public sources and are cross-checked wherever
+                possible.
+              </p>
+              <div className="space-y-3">
+                {[
+                  {
+                    icon: "🗳️",
+                    label: "Voting record",
+                    desc: "GovTrack and VoteSmart aggregate voting history across hundreds of bills per legislator, giving a reliable signal on most dimensions.",
+                  },
+                  {
+                    icon: "📋",
+                    label: "Sponsored legislation & platforms",
+                    desc: "Bills a politician introduces or co-sponsors reveal priorities more clearly than floor votes, where party pressure can distort the signal.",
+                  },
+                  {
+                    icon: "📐",
+                    label: "DW-NOMINATE",
+                    desc: "UCLA's multi-dimensional scoring of every US Congress member since 1789 provides a validated baseline for federal legislators.",
+                  },
+                  {
+                    icon: "🗞️",
+                    label: "Published statements & policy documents",
+                    desc: "Official position papers, campaign platforms, and major speeches — especially for governors and state officials where DW-NOMINATE data is sparse.",
+                  },
+                ].map((item) => (
+                  <div key={item.label} className="flex gap-3 items-start text-xs">
+                    <span className="text-base flex-shrink-0 mt-0.5">{item.icon}</span>
+                    <div>
+                      <span className="text-white font-semibold">{item.label} — </span>
+                      <span className="text-[rgba(241,238,229,0.60)]">{item.desc}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <div className="bg-amber-900/30 border border-amber-400/30 rounded-2xl p-5">
+                <p className="text-amber-300 text-xs font-semibold uppercase tracking-widest mb-2">
+                  Important disclaimer
+                </p>
+                <p className="text-[rgba(241,238,229,0.70)] text-sm leading-relaxed mb-3">
+                  These scores are <strong className="text-white">approximations for educational purposes only</strong>.
+                  A politician&apos;s position on any issue is nuanced, changes over time, and cannot
+                  be perfectly captured by a single number. Votes are influenced by party pressure,
+                  constituency, and tactical considerations that go beyond stated beliefs.
+                </p>
+                <p className="text-[rgba(241,238,229,0.70)] text-sm leading-relaxed">
+                  Poligon does not endorse any politician or political position. The scores exist
+                  purely to give you a rough comparison shape — not a verdict.
+                </p>
+              </div>
+
+              <div className="bg-white/[0.04] border border-white/10 rounded-2xl p-5">
+                <p className="text-[rgba(241,238,229,0.40)] text-xs uppercase tracking-widest mb-2">
+                  State politicians
+                </p>
+                <p className="text-[rgba(241,238,229,0.70)] text-sm leading-relaxed">
+                  For governors and state-level senators, DW-NOMINATE data is often unavailable
+                  or incomplete. We rely more heavily on signed legislation, state voting records,
+                  policy platforms, and cross-referenced news coverage. State-level estimates
+                  carry a wider margin of uncertainty than those for long-serving federal legislators.
+                </p>
+              </div>
+            </div>
+          </div>
+
           {/* Sources grid */}
           <div className="border-t border-white/10 pt-10">
             <p className="text-[rgba(241,238,229,0.40)] text-xs uppercase tracking-widest text-center mb-6">
