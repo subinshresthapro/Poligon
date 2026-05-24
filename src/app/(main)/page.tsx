@@ -3,12 +3,24 @@ import IdeologyGallery from "@/components/IdeologyGallery";
 import ScoreLegend from "@/components/ScoreLegend";
 import PoligonShape from "@/components/PoligonShape";
 import CompareShape from "@/components/CompareShape";
+import ComparisonCarousel from "@/components/ComparisonCarousel";
 
-// Sample scores for the homepage preview (broadly Reform Progressive)
-const PREVIEW_SCORES: Record<string, number> = {
-  immigration: 0.25, government: 0.75, economy: 0.88, healthcare: 0.75,
-  education: 0.25, environment: 0.63, civilLiberties: 0.70, foreignPolicy: 0.45,
-  technology: 0.65, social: 0.55,
+// ── Hero polygon: asymmetric mixed-conviction profile ──────────────────────
+// Strong reform on healthcare, environment, economy, tech
+// Moderate on immigration, education, foreignPolicy
+// Traditional lean on government, civilLiberties, social
+// Creates a distinctive, visually interesting shape that isn't "all one color"
+const HERO_SCORES: Record<string, number> = {
+  immigration: 0.35,
+  government: -0.65,
+  economy: 0.80,
+  healthcare: 0.95,
+  education: 0.40,
+  environment: 0.85,
+  civilLiberties: -0.50,
+  foreignPolicy: 0.20,
+  technology: 0.72,
+  social: -0.55,
 };
 
 // Comparison preview: Reform Progressive vs National Conservative
@@ -28,132 +40,102 @@ export default function LandingPage() {
     <>
       {/* ── Hero ──────────────────────────────────────────────────────── */}
       <section className="bg-[#0A0A0A] text-white py-20 sm:py-28 px-4 sm:px-6 relative overflow-hidden">
-        {/* Subtle dot-grid background */}
-        <div
-          className="absolute inset-0 opacity-[0.04]"
-          style={{
-            backgroundImage: "radial-gradient(circle, var(--color-accent) 1px, transparent 1px)",
-            backgroundSize: "32px 32px",
-          }}
-        />
+        <div className="max-w-5xl mx-auto relative">
+          {/* Mobile: single centered column  |  Desktop: text left, polygon right */}
+          <div className="flex flex-col items-center lg:flex-row lg:items-center lg:gap-16">
 
-        {/* Decorative polygon — top right */}
-        <div className="absolute right-0 top-0 bottom-0 w-1/2 pointer-events-none hidden lg:block overflow-hidden opacity-20">
-          <svg
-            viewBox="0 0 400 400"
-            className="absolute right-[-60px] top-1/2 -translate-y-1/2 w-[440px] h-[440px]"
-            aria-hidden="true"
-          >
-            <polygon points="200,30 335,115 335,285 200,370 65,285 65,115" fill="none" stroke="var(--color-accent)" strokeWidth="1" />
-            <polygon points="200,70 305,135 305,265 200,330 95,265 95,135" fill="none" stroke="var(--color-secondary)" strokeWidth="0.5" />
-            <polygon points="200,110 275,155 275,245 200,290 125,245 125,155" fill="none" stroke="rgba(255,255,255,0.18)" strokeWidth="0.5" />
-            {/* Dimension-coloured slices */}
-            {[
-              ["200,200","200,30","335,115","#E8782E"],
-              ["200,200","335,115","335,285","#8FA82E"],
-              ["200,200","335,285","200,370","#D4A53C"],
-              ["200,200","200,370","65,285","#B8385E"],
-              ["200,200","65,285","65,115","#8B4FCB"],
-              ["200,200","65,115","200,30","#3AA361"],
-            ].map(([origin, p1, p2, color], i) => (
-              <path
-                key={i}
-                d={`M ${origin} L ${p1} L ${p2} Z`}
-                fill={color as string}
-                fillOpacity={0.3}
-              />
-            ))}
-          </svg>
-        </div>
+            {/* ── Text column ─────────────────────────────────────────── */}
+            <div className="flex flex-col items-center text-center lg:items-start lg:text-left lg:flex-1">
 
-        <div className="max-w-4xl mx-auto text-center relative">
-          {/* Brand label */}
-          <div className="inline-flex items-center gap-2 mb-6">
-            <svg width="22" height="22" viewBox="0 0 28 28" aria-hidden="true">
-              <polygon points="14,7 21,10 20,18 13,21 7,17 9,10" fill="var(--color-accent)" />
-              <polygon
-                points="14,2 25,8 25,20 14,26 3,20 3,8"
-                fill="none"
-                stroke="#FFFFFF"
-                strokeWidth="1.6"
-                strokeLinejoin="miter"
-              />
-            </svg>
-            <span className="text-[var(--color-accent)] font-semibold text-sm tracking-widest uppercase">
-              Poligon · Polygon for Politics
-            </span>
-          </div>
-
-          {/* THE MAIN MESSAGE */}
-          <h1
-            className="text-4xl sm:text-6xl font-bold leading-tight mb-4"
-            style={{ fontFamily: "var(--font-outfit)", letterSpacing: "-0.035em" }}
-          >
-            Your views aren&apos;t{" "}
-            <em
-              style={{
-                fontFamily: "var(--font-instrument-serif), Georgia, serif",
-                fontStyle: "italic",
-                fontWeight: 400,
-                color: "var(--color-secondary)",
-              }}
-            >
-              one-
-            </em>
-            <span className="bg-[var(--color-accent)] text-white px-2">dimensional.</span>
-          </h1>
-
-          {/* Tagline */}
-          <p
-            className="text-xl sm:text-2xl text-[rgba(241,238,229,0.75)] font-medium mb-4"
-            style={{ fontFamily: "var(--font-outfit)" }}
-          >
-            The Shape of Your Politics
-          </p>
-
-          <p className="text-base text-[rgba(241,238,229,0.55)] max-w-2xl mx-auto mb-10 leading-relaxed">
-            Most tools put you on a line: left or right. We map your views across{" "}
-            <strong className="text-white">10 different dimensions</strong>, creating a
-            coloured polygon that&apos;s uniquely yours: your political identity at a glance.
-          </p>
-
-          {/* Stats */}
-          <div className="flex flex-wrap justify-center gap-8 mb-10 text-sm">
-            {[
-              { value: "10", label: "dimensions" },
-              { value: "40", label: "questions" },
-              { value: "~5 min", label: "to complete" },
-            ].map(({ value, label }) => (
-              <div key={label} className="text-center">
-                <div
-                  className="text-2xl font-bold text-[var(--color-accent)]"
+              {/* Glass pill badge */}
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/[0.12] bg-white/[0.07] backdrop-blur-sm mb-7">
+                <span
+                  className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                  style={{ background: "var(--color-accent)" }}
+                />
+                <span
+                  className="text-[10px] text-white/55 uppercase tracking-widest font-medium"
                   style={{ fontFamily: "var(--font-outfit)" }}
                 >
-                  {value}
-                </div>
-                <div className="text-[rgba(241,238,229,0.45)] text-xs uppercase tracking-wide">
-                  {label}
-                </div>
+                  Polygon for Politics
+                </span>
               </div>
-            ))}
-          </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/quiz"
-              className="bg-[var(--color-accent)] hover:bg-[var(--color-accent-deep)] text-white font-semibold px-8 py-3.5 rounded-xl text-base transition-colors"
-            >
-              Discover My Shape →
-            </Link>
-            <Link
-              href="/profiles"
-              className="bg-white/10 hover:bg-white/20 text-white font-semibold px-8 py-3.5 rounded-xl text-base transition-colors border border-white/20"
-            >
-              See Example Profiles
-            </Link>
+              {/* Polygon — mobile only, sits between badge and tagline */}
+              <div className="lg:hidden mb-6">
+                <PoligonShape scores={HERO_SCORES} size={220} variant="abstract" />
+              </div>
+
+              {/* Tagline — small caption above the headline */}
+              <p
+                className="text-sm text-white/45 mb-3 tracking-wide"
+                style={{ fontFamily: "var(--font-outfit)" }}
+              >
+                The Shape of Your Politics
+              </p>
+
+              {/* Main headline */}
+              <h1
+                className="text-4xl sm:text-5xl lg:text-[3.25rem] font-bold leading-tight mb-5"
+                style={{ fontFamily: "var(--font-outfit)", letterSpacing: "-0.03em" }}
+              >
+                Your views aren&apos;t{" "}
+                <em
+                  style={{
+                    fontFamily: "var(--font-instrument-serif), Georgia, serif",
+                    fontStyle: "italic",
+                    fontWeight: 400,
+                    color: "var(--color-secondary)",
+                  }}
+                >
+                  one-
+                </em>
+                <br />
+                <span
+                  className="text-white px-2 py-0.5 rounded-sm inline-block"
+                  style={{ background: "var(--color-accent)" }}
+                >
+                  dimensional.
+                </span>
+              </h1>
+
+              {/* Body copy */}
+              <p
+                className="text-[15px] text-white/55 max-w-sm mb-8 leading-relaxed"
+                style={{ fontFamily: "var(--font-outfit)" }}
+              >
+                40 questions. Your views mapped across 10 dimensions — not a
+                left/right label.
+              </p>
+
+              {/* Primary CTA */}
+              <Link
+                href="/quiz"
+                className="block w-full sm:w-auto text-center bg-[var(--color-accent)] hover:bg-[var(--color-accent-deep)] text-white font-semibold px-8 py-3.5 rounded-full text-base transition-colors mb-3"
+              >
+                Discover My Shape
+              </Link>
+
+              {/* Micro-copy */}
+              <p
+                className="text-xs text-white/30"
+                style={{ fontFamily: "var(--font-outfit)" }}
+              >
+                Takes about 5 minutes
+              </p>
+            </div>
+
+            {/* ── Polygon column — desktop only ───────────────────────── */}
+            <div className="hidden lg:flex lg:flex-shrink-0 lg:items-center lg:justify-center">
+              <PoligonShape scores={HERO_SCORES} size={310} variant="abstract" />
+            </div>
+
           </div>
         </div>
       </section>
+
+      {/* ── Comparison carousel ("They agree more than you think") ───── */}
+      <ComparisonCarousel />
 
       {/* ── How it works ─────────────────────────────────────────────── */}
       <section className="py-16 bg-[#F1EEE5]">
@@ -223,7 +205,7 @@ export default function LandingPage() {
                 Your shape will look something like this
               </div>
               <div className="flex items-center justify-center">
-                <PoligonShape scores={PREVIEW_SCORES} size={200} />
+                <PoligonShape scores={HERO_SCORES} size={200} />
               </div>
               <p className="text-xs text-[rgba(10,10,10,0.55)] mt-2 mb-4">
                 Each person&apos;s shape is unique. Take the quiz to see yours.
