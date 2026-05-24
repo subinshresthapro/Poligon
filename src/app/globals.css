@@ -59,3 +59,7 @@ body {
 
 .recharts-responsive-container { overflow: visible !important; }
 html { scroll-behavior: smooth; }
+
+/* Hide scrollbar for the About sub-nav tab strip */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
