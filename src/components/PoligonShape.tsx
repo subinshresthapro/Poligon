@@ -217,8 +217,8 @@ export default function PoligonShape({
           );
         })}
 
-      {/* Legend — abstract variant only */}
-      {variant === "abstract" && (
+      {/* Legend — abstract variant only, large sizes only (avoids overflow on thumbnails) */}
+      {variant === "abstract" && size >= 280 && (
         <text
           x={cx}
           y={size - 6}
