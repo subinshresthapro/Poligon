@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { iframeSnippet, jsSnippet } from "@/lib/embed";
 import { exportPoligonPNG } from "@/components/PoliticalRadarChart";
+import { encodeScores } from "@/lib/scoring";
 
 interface ShareExportPanelProps {
   scores: Record<string, number>;
@@ -20,8 +21,9 @@ export default function ShareExportPanel({ scores, name }: ShareExportPanelProps
     typeof window !== "undefined" ? window.location.origin : "https://your-domain.com";
   const data = btoa(JSON.stringify({ name, scores }));
   const shareUrl = `${origin}/embed?data=${encodeURIComponent(data)}`;
-  const resultsUrl =
-    typeof window !== "undefined" ? window.location.href : "";
+  // Always build from scores so it works whether the page was loaded from
+  // localStorage or from a URL — never just mirror window.location.href.
+  const resultsUrl = `${origin}/results?scores=${encodeScores(scores)}`;
 
   const iframe = iframeSnippet(shareUrl, name);
   const js = jsSnippet(shareUrl);
