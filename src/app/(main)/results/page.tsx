@@ -13,6 +13,11 @@ import {
 } from "@/lib/scoring";
 import LeanBadge from "@/components/LeanBadge";
 import { loadScores } from "@/lib/storage";
+import {
+  saveSavedPoligon,
+  findSavedPoligon,
+  type SavedPoligon,
+} from "@/lib/sharedPoligons";
 import PoligonShape, { DIMENSION_COLORS } from "@/components/PoligonShape";
 import { getSegmentColor } from "@/lib/colorUtils";
 import PoliticalRadarChart from "@/components/PoliticalRadarChart";
@@ -32,6 +37,11 @@ function ResultsContent() {
   const [isViewingShared, setIsViewingShared] = useState(false);
   const [compareCopied, setCompareCopied] = useState(false);
   const [radarVariant, setRadarVariant] = useState<"abstract" | "chart">("abstract");
+  // Save-to-collection state
+  const [isSharedUrl, setIsSharedUrl] = useState(false);
+  const [savedEntry, setSavedEntry] = useState<SavedPoligon | null>(null);
+  const [saveName, setSaveName] = useState("");
+  const [saveSkipped, setSaveSkipped] = useState(false);
 
   useEffect(() => {
     const encoded = searchParams.get("scores");
@@ -49,11 +59,17 @@ function ResultsContent() {
           );
           if (isDifferent) {
             setIsViewingShared(true);
+            setIsSharedUrl(true);
           }
           // Same scores = own results page (or their own page refresh) — no banner
+        } else {
+          // No existing scores = fresh visitor viewing a shared link.
+          // Show the results in-memory only; do NOT save to localStorage.
+          setIsSharedUrl(true);
         }
-        // No existing scores = fresh visitor viewing a shared link.
-        // Show the results in-memory only; do NOT save to localStorage.
+        // Check if already saved to collection
+        const alreadySaved = findSavedPoligon(decoded);
+        if (alreadySaved) setSavedEntry(alreadySaved);
       } else {
         router.replace("/quiz");
       }
@@ -76,6 +92,16 @@ function ResultsContent() {
     setCompareCopied(true);
     setTimeout(() => setCompareCopied(false), 2500);
   }, [scores]);
+
+  const handleSaveToCollection = useCallback(() => {
+    if (!scores || !saveName.trim()) return;
+    const entry = saveSavedPoligon({
+      name: saveName.trim(),
+      scores,
+      sourceUrl: typeof window !== "undefined" ? window.location.href : "",
+    });
+    setSavedEntry(entry);
+  }, [scores, saveName]);
 
   const handleDownloadPoligon = useCallback(async () => {
     if (!scores) return;
@@ -141,6 +167,61 @@ function ResultsContent() {
               className="text-amber-600 hover:text-amber-800 font-semibold underline underline-offset-2 text-xs ml-4 flex-shrink-0 whitespace-nowrap"
             >
               View my shape →
+            </Link>
+          </div>
+        )}
+
+        {/* Save-to-collection prompt — shown when viewing any shared URL */}
+        {isSharedUrl && !saveSkipped && !savedEntry && (
+          <div className="mb-4 bg-[#F1EEE5] border border-[rgba(10,10,10,0.12)] rounded-2xl px-5 py-4">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-semibold text-[#0A0A0A] leading-snug">
+                  💾 Save this shape to your collection?
+                </p>
+                <p className="text-xs text-[rgba(10,10,10,0.50)] mt-0.5">
+                  Give it a name so you remember whose it is.
+                </p>
+              </div>
+              <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap">
+                <input
+                  value={saveName}
+                  onChange={(e) => setSaveName(e.target.value)}
+                  placeholder="e.g. Alice, My sister…"
+                  className="text-sm border border-[rgba(10,10,10,0.18)] rounded-lg px-3 py-1.5 bg-white outline-none focus:border-[var(--color-accent)] w-44 min-w-0"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && saveName.trim()) handleSaveToCollection();
+                  }}
+                />
+                <button
+                  onClick={handleSaveToCollection}
+                  disabled={!saveName.trim()}
+                  className="px-4 py-1.5 bg-[var(--color-accent)] hover:bg-[var(--color-accent-deep)] text-white text-sm font-semibold rounded-lg transition-colors disabled:opacity-40 flex-shrink-0"
+                >
+                  Save
+                </button>
+                <button
+                  onClick={() => setSaveSkipped(true)}
+                  className="text-xs text-[rgba(10,10,10,0.40)] hover:text-[rgba(10,10,10,0.65)] transition-colors flex-shrink-0"
+                >
+                  Skip
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Saved confirmation */}
+        {isSharedUrl && savedEntry && (
+          <div className="mb-4 flex items-center justify-between bg-emerald-50 border border-emerald-200 rounded-xl px-4 py-3 text-sm">
+            <span className="text-emerald-700">
+              ✓ Saved as <strong>{savedEntry.name}</strong>
+            </span>
+            <Link
+              href="/shared"
+              className="text-emerald-600 hover:text-emerald-800 font-semibold underline underline-offset-2 text-xs ml-4 flex-shrink-0 whitespace-nowrap"
+            >
+              View collection →
             </Link>
           </div>
         )}
