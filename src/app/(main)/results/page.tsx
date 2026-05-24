@@ -25,6 +25,7 @@ import CategoryBreakdown from "@/components/CategoryBreakdown";
 import IdeologyComparisonPanel from "@/components/IdeologyComparisonPanel";
 import ShareExportPanel from "@/components/ShareExportPanel";
 import ScoreLegend from "@/components/ScoreLegend";
+import SharedResultsView from "@/components/SharedResultsView";
 import { findArchetype } from "@/lib/archetypes";
 import { CATEGORIES } from "@/data/questions";
 
@@ -122,11 +123,95 @@ function ResultsContent() {
   if (!scores) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <p className="text-[rgba(10,10,10,0.45)] text-sm">Loading your shape…</p>
+        <p className="text-[rgba(10,10,10,0.45)] text-sm">Loading shape…</p>
       </div>
     );
   }
 
+  // ── Shared-URL view ────────────────────────────────────────────────────────
+  // When viewing someone else's results, render an entirely different layout
+  // that removes all "Your/My" language and share/embed actions, and replaces
+  // them with a "Compare with mine" section.
+  if (isSharedUrl) {
+    const sharedBanners = (
+      <div className="max-w-5xl mx-auto pt-8 px-4 sm:px-6">
+        {/* Header banner */}
+        <div className="mb-4 flex flex-col sm:flex-row sm:items-center gap-3 bg-[#F1EEE5] border border-[rgba(10,10,10,0.12)] rounded-2xl px-5 py-4">
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-semibold text-[#0A0A0A] leading-snug">
+              {savedEntry
+                ? `📌 ${savedEntry.name}'s Poligon — saved to your collection`
+                : "👀 Someone's Poligon was shared with you"}
+            </p>
+            <p className="text-xs text-[rgba(10,10,10,0.50)] mt-0.5">
+              {savedEntry
+                ? "This is their political shape, not yours."
+                : "Give it a name to save it to your collection."}
+            </p>
+          </div>
+          <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap">
+            {/* Save prompt — only when not yet saved */}
+            {!savedEntry && !saveSkipped && (
+              <>
+                <input
+                  value={saveName}
+                  onChange={(e) => setSaveName(e.target.value)}
+                  placeholder="e.g. Alice, My sister…"
+                  className="text-sm border border-[rgba(10,10,10,0.18)] rounded-lg px-3 py-1.5 bg-white outline-none focus:border-[var(--color-accent)] w-40 min-w-0"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && saveName.trim()) handleSaveToCollection();
+                  }}
+                />
+                <button
+                  onClick={handleSaveToCollection}
+                  disabled={!saveName.trim()}
+                  className="px-4 py-1.5 bg-[var(--color-accent)] hover:bg-[var(--color-accent-deep)] text-white text-sm font-semibold rounded-lg transition-colors disabled:opacity-40 flex-shrink-0"
+                >
+                  Save
+                </button>
+                <button
+                  onClick={() => setSaveSkipped(true)}
+                  className="text-xs text-[rgba(10,10,10,0.40)] hover:text-[rgba(10,10,10,0.65)] transition-colors flex-shrink-0"
+                >
+                  Skip
+                </button>
+              </>
+            )}
+            {/* View collection — once saved */}
+            {savedEntry && (
+              <Link
+                href="/shared"
+                className="text-sm font-semibold text-[var(--color-accent)] hover:text-[var(--color-accent-deep)] transition-colors whitespace-nowrap"
+              >
+                View collection →
+              </Link>
+            )}
+            {/* View my own shape — only when viewer has own scores */}
+            {isViewingShared && (
+              <Link
+                href="/results"
+                className="text-sm font-medium text-[rgba(10,10,10,0.55)] hover:text-[#0A0A0A] transition-colors whitespace-nowrap"
+              >
+                My Poligon →
+              </Link>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+
+    return (
+      <>
+        {sharedBanners}
+        <SharedResultsView
+          scores={scores}
+          displayName={savedEntry?.name ?? null}
+        />
+      </>
+    );
+  }
+
+  // ── Own results view ───────────────────────────────────────────────────────
   const categoryScores = scoresToCategoryScores(scores);
   const avg = shapeScore(scores);
   const archetype = findArchetype(scores);
@@ -152,76 +237,6 @@ function ResultsContent() {
               className="text-emerald-600 hover:text-emerald-800 font-semibold underline underline-offset-2 text-xs ml-4 flex-shrink-0"
             >
               Edit answers
-            </Link>
-          </div>
-        )}
-
-        {/* Shared-link banner — shown when viewing someone else's results URL */}
-        {isViewingShared && (
-          <div className="mb-4 flex items-center justify-between bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 text-sm">
-            <span className="text-amber-700">
-              👀 You&apos;re viewing someone else&apos;s shape. Your own shape is saved separately.
-            </span>
-            <Link
-              href="/results"
-              className="text-amber-600 hover:text-amber-800 font-semibold underline underline-offset-2 text-xs ml-4 flex-shrink-0 whitespace-nowrap"
-            >
-              View my shape →
-            </Link>
-          </div>
-        )}
-
-        {/* Save-to-collection prompt — shown when viewing any shared URL */}
-        {isSharedUrl && !saveSkipped && !savedEntry && (
-          <div className="mb-4 bg-[#F1EEE5] border border-[rgba(10,10,10,0.12)] rounded-2xl px-5 py-4">
-            <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-[#0A0A0A] leading-snug">
-                  💾 Save this shape to your collection?
-                </p>
-                <p className="text-xs text-[rgba(10,10,10,0.50)] mt-0.5">
-                  Give it a name so you remember whose it is.
-                </p>
-              </div>
-              <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap">
-                <input
-                  value={saveName}
-                  onChange={(e) => setSaveName(e.target.value)}
-                  placeholder="e.g. Alice, My sister…"
-                  className="text-sm border border-[rgba(10,10,10,0.18)] rounded-lg px-3 py-1.5 bg-white outline-none focus:border-[var(--color-accent)] w-44 min-w-0"
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" && saveName.trim()) handleSaveToCollection();
-                  }}
-                />
-                <button
-                  onClick={handleSaveToCollection}
-                  disabled={!saveName.trim()}
-                  className="px-4 py-1.5 bg-[var(--color-accent)] hover:bg-[var(--color-accent-deep)] text-white text-sm font-semibold rounded-lg transition-colors disabled:opacity-40 flex-shrink-0"
-                >
-                  Save
-                </button>
-                <button
-                  onClick={() => setSaveSkipped(true)}
-                  className="text-xs text-[rgba(10,10,10,0.40)] hover:text-[rgba(10,10,10,0.65)] transition-colors flex-shrink-0"
-                >
-                  Skip
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Saved confirmation */}
-        {isSharedUrl && savedEntry && (
-          <div className="mb-4 flex items-center justify-between bg-emerald-50 border border-emerald-200 rounded-xl px-4 py-3 text-sm">
-            <span className="text-emerald-700">
-              ✓ Saved as <strong>{savedEntry.name}</strong>
-            </span>
-            <Link
-              href="/shared"
-              className="text-emerald-600 hover:text-emerald-800 font-semibold underline underline-offset-2 text-xs ml-4 flex-shrink-0 whitespace-nowrap"
-            >
-              View collection →
             </Link>
           </div>
         )}
