@@ -55,6 +55,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
             <div className="flex items-center gap-4 text-xs text-[rgba(10,10,10,0.55)]">
               <Link href="/profiles" className="hover:text-[var(--color-accent)] transition-colors">Profiles</Link>
               <Link href="/about" className="hover:text-[var(--color-accent)] transition-colors">About</Link>
+              <Link href="/shared" className="hover:text-[var(--color-accent)] transition-colors">Shared with me</Link>
               <Link href="/quiz" className="hover:text-[var(--color-accent)] transition-colors">Take Quiz</Link>
               <Link href="/embed" className="hover:text-[var(--color-accent)] transition-colors">Embed</Link>
             </div>

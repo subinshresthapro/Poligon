@@ -5,22 +5,10 @@ import { CATEGORIES } from "@/data/questions";
 import { IDEOLOGIES } from "@/data/ideologies";
 import { findArchetype } from "@/lib/archetypes";
 import PoligonShape from "@/components/PoligonShape";
+import { computeAgreement } from "@/lib/sharedPoligons";
 
 interface IdeologyComparisonPanelProps {
   userScores: Record<string, number>;
-}
-
-/** Returns 0–100 overlap between two score maps. */
-function computeOverlap(
-  a: Record<string, number>,
-  b: Record<string, number>
-): number {
-  const ids = CATEGORIES.map((c) => c.id);
-  // Each score is in [-1, +1], so max diff is 2. Dividing by 2 normalises to [0, 1].
-  const avgAbsDiff =
-    ids.reduce((sum, id) => sum + Math.abs((a[id] ?? 0) - (b[id] ?? 0)) / 2, 0) /
-    ids.length;
-  return Math.round((1 - avgAbsDiff) * 100);
 }
 
 export default function IdeologyComparisonPanel({
@@ -119,7 +107,7 @@ export default function IdeologyComparisonPanel({
 
           {/* ── One card per selected ideology ── */}
           {selectedIdeologies.map((ideology) => {
-            const overlap = computeOverlap(userScores, ideology.scores);
+            const overlap = computeAgreement(userScores, ideology.scores);
             return (
               <div
                 key={ideology.id}

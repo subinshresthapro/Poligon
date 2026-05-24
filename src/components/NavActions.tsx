@@ -4,14 +4,20 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { hasSavedScores } from "@/lib/storage";
+import { loadSavedPoligons } from "@/lib/sharedPoligons";
 
 export default function NavActions() {
   const [hasSaved, setHasSaved] = useState(false);
+  const [sharedCount, setSharedCount] = useState(0);
   const pathname = usePathname();
 
   useEffect(() => {
     setHasSaved(hasSavedScores());
-    const onFocus = () => setHasSaved(hasSavedScores());
+    setSharedCount(loadSavedPoligons().length);
+    const onFocus = () => {
+      setHasSaved(hasSavedScores());
+      setSharedCount(loadSavedPoligons().length);
+    };
     window.addEventListener("focus", onFocus);
     return () => window.removeEventListener("focus", onFocus);
   }, []);
@@ -45,6 +51,24 @@ export default function NavActions() {
       >
         About
       </Link>
+
+      {/* Shared with me — only shown when collection has entries */}
+      {sharedCount > 0 && (
+        <Link
+          href="/shared"
+          className={`relative text-sm font-medium px-2 py-1.5 sm:px-3 rounded-lg transition-colors ${
+            isActive("/shared")
+              ? "text-[#0A0A0A] bg-[#E5E0D2]"
+              : "text-[rgba(10,10,10,0.55)] hover:text-[#0A0A0A] hover:bg-[#E5E0D2]"
+          }`}
+        >
+          Shared
+          <span className="absolute -top-1 -right-1 min-w-[16px] h-4 flex items-center justify-center rounded-full text-[9px] font-bold text-white px-1"
+            style={{ background: "var(--color-accent)" }}>
+            {sharedCount}
+          </span>
+        </Link>
+      )}
 
       {/* Edit answers — desktop only, muted, only shown when quiz is complete */}
       {hasSaved && (
