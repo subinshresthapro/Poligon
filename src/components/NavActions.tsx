@@ -19,6 +19,17 @@ export default function NavActions() {
   const [aboutOpen, setAboutOpen] = useState(false);
   const pathname = usePathname();
   const aboutRef = useRef<HTMLDivElement>(null);
+  // Delayed close so the cursor can cross the gap between the button and
+  // the dropdown panel without the menu collapsing mid-travel.
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const openAbout = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    setAboutOpen(true);
+  };
+  const scheduleClose = () => {
+    closeTimer.current = setTimeout(() => setAboutOpen(false), 120);
+  };
 
   useEffect(() => {
     setHasSaved(hasSavedScores());
@@ -71,11 +82,11 @@ export default function NavActions() {
       <div
         ref={aboutRef}
         className="relative"
-        onMouseEnter={() => setAboutOpen(true)}
-        onMouseLeave={() => setAboutOpen(false)}
+        onMouseEnter={openAbout}
+        onMouseLeave={scheduleClose}
       >
         <button
-          onClick={() => setAboutOpen((v) => !v)}
+          onClick={() => { if (closeTimer.current) clearTimeout(closeTimer.current); setAboutOpen((v) => !v); }}
           aria-expanded={aboutOpen}
           aria-haspopup="true"
           className={`flex items-center gap-1 text-sm font-medium px-2 py-1.5 sm:px-3 rounded-lg transition-colors ${
