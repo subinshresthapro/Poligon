@@ -47,28 +47,34 @@ export default function LandingPage() {
             {/* ── Text column ─────────────────────────────────────────── */}
             <div className="flex flex-col items-center text-center lg:items-start lg:text-left lg:flex-1">
 
-              {/* Glass pill badge */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/[0.12] bg-white/[0.07] backdrop-blur-sm mb-7">
+              {/* Brand badge — mobile only (desktop nav already shows the tagline) */}
+              <div className="lg:hidden inline-flex items-center gap-2 mb-7">
+                <svg width="20" height="20" viewBox="0 0 28 28" aria-hidden="true">
+                  <polygon points="14,7 21,10 20,18 13,21 7,17 9,10" fill="var(--color-accent)" />
+                  <polygon
+                    points="14,2 25,8 25,20 14,26 3,20 3,8"
+                    fill="none"
+                    stroke="#FFFFFF"
+                    strokeWidth="1.6"
+                    strokeLinejoin="miter"
+                  />
+                </svg>
                 <span
-                  className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-                  style={{ background: "var(--color-accent)" }}
-                />
-                <span
-                  className="text-[10px] text-white/55 uppercase tracking-widest font-medium"
+                  className="text-[var(--color-accent)] font-semibold text-sm tracking-widest uppercase"
                   style={{ fontFamily: "var(--font-outfit)" }}
                 >
-                  Polygon for Politics
+                  Poligon · Polygon for Politics
                 </span>
               </div>
 
               {/* Polygon — mobile only, sits between badge and tagline */}
-              <div className="lg:hidden mb-6">
+              <div className="lg:hidden mb-5">
                 <PoligonShape scores={HERO_SCORES} size={220} variant="abstract" />
               </div>
 
-              {/* Tagline — small caption above the headline */}
+              {/* Tagline — mobile only (desktop: under polygon in right column) */}
               <p
-                className="text-sm text-white/45 mb-3 tracking-wide"
+                className="lg:hidden text-xl text-white/60 font-medium mb-4"
                 style={{ fontFamily: "var(--font-outfit)" }}
               >
                 The Shape of Your Politics
@@ -104,30 +110,58 @@ export default function LandingPage() {
                 className="text-[15px] text-white/55 max-w-sm mb-8 leading-relaxed"
                 style={{ fontFamily: "var(--font-outfit)" }}
               >
-                40 questions. Your views mapped across 10 dimensions — not a
-                left/right label.
+                See your political identity, as a colored polygon that&apos;s
+                uniquely yours — not a left/right label.
               </p>
 
-              {/* Primary CTA */}
-              <Link
-                href="/quiz"
-                className="block w-full sm:w-auto text-center bg-[var(--color-accent)] hover:bg-[var(--color-accent-deep)] text-white font-semibold px-8 py-3.5 rounded-full text-base transition-colors mb-3"
-              >
-                Discover My Shape
-              </Link>
+              {/* Stats */}
+              <div className="flex flex-wrap justify-center lg:justify-start gap-8 mb-8 text-sm">
+                {[
+                  { value: "10", label: "dimensions" },
+                  { value: "40", label: "questions" },
+                  { value: "~5 min", label: "to complete" },
+                ].map(({ value, label }) => (
+                  <div key={label} className="text-center">
+                    <div
+                      className="text-2xl font-bold text-[var(--color-accent)]"
+                      style={{ fontFamily: "var(--font-outfit)" }}
+                    >
+                      {value}
+                    </div>
+                    <div className="text-[rgba(241,238,229,0.45)] text-xs uppercase tracking-wide">
+                      {label}
+                    </div>
+                  </div>
+                ))}
+              </div>
 
-              {/* Micro-copy */}
-              <p
-                className="text-xs text-white/30"
-                style={{ fontFamily: "var(--font-outfit)" }}
-              >
-                Takes about 5 minutes
-              </p>
+              {/* CTA buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+                <Link
+                  href="/quiz"
+                  className="bg-[var(--color-accent)] hover:bg-[var(--color-accent-deep)] text-white font-semibold px-8 py-3.5 rounded-xl text-base transition-colors text-center"
+                >
+                  Discover My Shape →
+                </Link>
+                <Link
+                  href="/profiles"
+                  className="bg-white/10 hover:bg-white/20 text-white font-semibold px-8 py-3.5 rounded-xl text-base transition-colors border border-white/20 text-center"
+                >
+                  See Example Profiles
+                </Link>
+              </div>
             </div>
 
             {/* ── Polygon column — desktop only ───────────────────────── */}
-            <div className="hidden lg:flex lg:flex-shrink-0 lg:items-center lg:justify-center">
+            <div className="hidden lg:flex lg:flex-col lg:flex-shrink-0 lg:items-center lg:justify-center lg:gap-5">
               <PoligonShape scores={HERO_SCORES} size={310} variant="abstract" />
+              {/* Tagline under polygon — associates the label with the shape */}
+              <p
+                className="text-base text-white/55 font-medium text-center"
+                style={{ fontFamily: "var(--font-outfit)" }}
+              >
+                The Shape of Your Politics
+              </p>
             </div>
 
           </div>
