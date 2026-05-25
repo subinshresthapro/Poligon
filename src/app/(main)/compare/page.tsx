@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { decodeScores, encodeScores } from "@/lib/scoring";
@@ -172,7 +172,114 @@ function CompareContent() {
         : "Quite different shapes — which makes for a richer conversation.";
 
     return (
-      <div className="min-h-screen bg-[#E5E0D2]">
+      <ReadyComparison
+        myScores={myScores}
+        friendScores={friendScores}
+        friendName={friendName}
+        myArchetype={myArchetype}
+        friendArchetype={friendArchetype}
+        agreementPct={agreementPct}
+        alignedCount={alignedCount}
+        agreeColor={agreeColor}
+        agreeNote={agreeNote}
+        diffs={diffs}
+        copyMyLink={copyMyLink}
+        copied={copied}
+      />
+    );
+  }
+
+  return null;
+}
+
+// ── Animated comparison component ────────────────────────────────────────────
+interface ReadyComparisonProps {
+  myScores: Record<string, number>;
+  friendScores: Record<string, number>;
+  friendName: string;
+  myArchetype: { name: string; emoji: string };
+  friendArchetype: { name: string; emoji: string };
+  agreementPct: number;
+  alignedCount: number;
+  agreeColor: string;
+  agreeNote: string;
+  diffs: number[];
+  copyMyLink: () => void;
+  copied: boolean;
+}
+
+function ReadyComparison({
+  myScores, friendScores, friendName,
+  myArchetype, friendArchetype,
+  agreementPct, alignedCount, agreeColor, agreeNote,
+  diffs, copyMyLink, copied,
+}: ReadyComparisonProps) {
+  const [viewMode, setViewMode] = useState<"sidebyside" | "overlay">("sidebyside");
+  const [animating, setAnimating] = useState(false);
+  // "split" = polygons at 25%/75%; "merged" = both at 50%
+  const [polyPosition, setPolyPosition] = useState<"split" | "merged">("split");
+  const [polyOpacity, setPolyOpacity] = useState(1);
+  const [overlayOpacity, setOverlayOpacity] = useState(0);
+  const [transitionOn, setTransitionOn] = useState(true);
+  const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
+
+  // Clean up on unmount
+  useEffect(() => () => { timers.current.forEach(clearTimeout); }, []);
+
+  const schedule = (fn: () => void, ms: number) => {
+    const t = setTimeout(fn, ms);
+    timers.current.push(t);
+  };
+
+  const toggleView = () => {
+    if (animating) return;
+    setAnimating(true);
+    timers.current.forEach(clearTimeout);
+    timers.current = [];
+
+    if (viewMode === "sidebyside") {
+      // MERGE: slide polygons to center → fade in overlay
+      setPolyPosition("merged");                              // CSS transition begins
+      schedule(() => {
+        setPolyOpacity(0);
+        setOverlayOpacity(1);
+        setViewMode("overlay");
+      }, 380);
+      // Reset split position instantly (no transition) for next time
+      schedule(() => {
+        setTransitionOn(false);
+        setPolyPosition("split");
+        setTimeout(() => setTransitionOn(true), 30);
+        setAnimating(false);
+      }, 700);
+    } else {
+      // SPLIT: fade out overlay → appear at center → slide outward
+      setOverlayOpacity(0);
+      schedule(() => {
+        // Instant-place at center without transition, then enable transition
+        setTransitionOn(false);
+        setPolyPosition("merged");
+        setPolyOpacity(0);
+        setTimeout(() => {
+          setTransitionOn(true);
+          setViewMode("sidebyside");
+          setPolyOpacity(1);
+          // Start sliding outward one frame later
+          setTimeout(() => setPolyPosition("split"), 30);
+        }, 30);
+      }, 250);
+      schedule(() => setAnimating(false), 800);
+    }
+  };
+
+  const isOverlay = viewMode === "overlay";
+  const isSplit = viewMode === "sidebyside";
+
+  // Polygon size in the animated stage
+  const POLY_SIZE = 160;
+
+  return (
+    <div className="min-h-screen bg-[#E5E0D2]">
         {/* Hero */}
         <section className="bg-[#0A0A0A] text-white py-14 sm:py-18 px-4 sm:px-6">
           <div className="max-w-2xl mx-auto text-center">
@@ -209,9 +316,7 @@ function CompareContent() {
                   </p>
                   <p className="text-xs text-[rgba(10,10,10,0.55)] mt-0.5">{agreeNote}</p>
                 </div>
-                <div
-                  className="flex-shrink-0 bg-white border border-[rgba(10,10,10,0.10)] rounded-xl px-4 py-2.5 text-center"
-                >
+                <div className="flex-shrink-0 bg-white border border-[rgba(10,10,10,0.10)] rounded-xl px-4 py-2.5 text-center">
                   <p
                     className="text-2xl font-bold"
                     style={{ color: agreeColor, fontFamily: "var(--font-jetbrains-mono), monospace" }}
@@ -224,25 +329,131 @@ function CompareContent() {
                 </div>
               </div>
 
-              {/* Overlaid polygon */}
-              <div className="flex flex-col items-center py-8 px-4 bg-[#E5E0D2]">
-                <CompareShape scoresA={myScores} scoresB={friendScores} size={260} />
+              {/* ── Animated polygon stage ── */}
+              <div className="bg-[#E5E0D2] px-4 pt-8 pb-4">
+                {/* Stage: fixed height container with absolute-positioned elements */}
+                <div className="relative w-full" style={{ height: 220 }}>
 
-                {/* Legend */}
-                <div className="flex flex-wrap justify-center items-center gap-5 mt-5">
+                  {/* Left polygon (You) */}
+                  <div
+                    className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2"
+                    style={{
+                      left: polyPosition === "split" ? "25%" : "50%",
+                      opacity: polyOpacity,
+                      transition: transitionOn
+                        ? "left 380ms ease-in-out, opacity 200ms ease-in-out"
+                        : "none",
+                      zIndex: 1,
+                    }}
+                  >
+                    <PoligonShape scores={myScores} size={POLY_SIZE} variant="abstract" />
+                  </div>
+
+                  {/* Right polygon (Friend) */}
+                  <div
+                    className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2"
+                    style={{
+                      left: polyPosition === "split" ? "75%" : "50%",
+                      opacity: polyOpacity,
+                      transition: transitionOn
+                        ? "left 380ms ease-in-out, opacity 200ms ease-in-out"
+                        : "none",
+                      zIndex: 1,
+                    }}
+                  >
+                    <PoligonShape scores={friendScores} size={POLY_SIZE} variant="abstract" />
+                  </div>
+
+                  {/* "vs" divider — fades out as polygons merge */}
+                  <div
+                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[rgba(10,10,10,0.28)] text-sm font-medium pointer-events-none select-none"
+                    style={{
+                      opacity: isSplit && polyPosition === "split" ? 1 : 0,
+                      transition: "opacity 200ms ease-in-out",
+                      zIndex: 2,
+                    }}
+                  >
+                    vs
+                  </div>
+
+                  {/* Overlay (CompareShape) — fades in when merged */}
+                  <div
+                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+                    style={{
+                      opacity: overlayOpacity,
+                      transition: "opacity 280ms ease-in-out",
+                      zIndex: 3,
+                    }}
+                  >
+                    <CompareShape scoresA={myScores} scoresB={friendScores} size={220} />
+                  </div>
+                </div>
+
+                {/* Side-by-side name labels — visible only in sidebyside mode */}
+                <div
+                  className="flex justify-between px-2 mt-2"
+                  style={{
+                    opacity: isSplit ? 1 : 0,
+                    transition: "opacity 200ms ease-in-out",
+                  }}
+                >
+                  <div className="text-center" style={{ width: "40%" }}>
+                    <p className="text-xs font-semibold text-[#0A0A0A]">You</p>
+                    <p className="text-[10px] text-[rgba(10,10,10,0.45)]">{myArchetype.emoji} {myArchetype.name}</p>
+                  </div>
+                  <div className="text-center" style={{ width: "40%", marginLeft: "auto" }}>
+                    <p className="text-xs font-semibold text-[#0A0A0A]">{friendName}</p>
+                    <p className="text-[10px] text-[rgba(10,10,10,0.45)]">{friendArchetype.emoji} {friendArchetype.name}</p>
+                  </div>
+                </div>
+
+                {/* Overlay legend — visible only in overlay mode */}
+                <div
+                  className="flex flex-wrap justify-center items-center gap-5 mt-3"
+                  style={{
+                    opacity: isOverlay ? 1 : 0,
+                    transition: "opacity 200ms ease-in-out",
+                  }}
+                >
                   {[
                     { color: COLOR_A, label: "You", archetype: myArchetype.name },
                     { color: COLOR_B, label: friendName, archetype: friendArchetype.name },
                   ].map(({ color, label, archetype }) => (
                     <div key={label} className="flex items-center gap-2">
-                      <span
-                        className="w-3.5 h-3.5 rounded-sm flex-shrink-0"
-                        style={{ background: color }}
-                      />
+                      <span className="w-3.5 h-3.5 rounded-sm flex-shrink-0" style={{ background: color }} />
                       <span className="text-sm font-semibold text-[#0A0A0A]">{label}</span>
                       <span className="text-xs text-[rgba(10,10,10,0.45)]">· {archetype}</span>
                     </div>
                   ))}
+                </div>
+
+                {/* Toggle button */}
+                <div className="flex justify-center mt-5 mb-1">
+                  <button
+                    onClick={toggleView}
+                    disabled={animating}
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-[rgba(10,10,10,0.15)] bg-white hover:bg-[#F1EEE5] text-sm font-medium text-[rgba(10,10,10,0.70)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+                  >
+                    {isOverlay ? (
+                      <>
+                        {/* Split icon */}
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                          <rect x="1" y="4" width="6" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.4"/>
+                          <rect x="9" y="4" width="6" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.4"/>
+                        </svg>
+                        View side by side
+                      </>
+                    ) : (
+                      <>
+                        {/* Merge icon */}
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                          <rect x="1" y="4" width="6" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.4"/>
+                          <rect x="5" y="4" width="6" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.4" opacity="0.5"/>
+                        </svg>
+                        View as overlay
+                      </>
+                    )}
+                  </button>
                 </div>
               </div>
             </div>
@@ -333,9 +544,6 @@ function CompareContent() {
         </div>
       </div>
     );
-  }
-
-  return null;
 }
 
 export default function ComparePage() {
