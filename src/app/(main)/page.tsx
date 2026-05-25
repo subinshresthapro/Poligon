@@ -39,7 +39,7 @@ export default function LandingPage() {
   return (
     <>
       {/* ── Hero ──────────────────────────────────────────────────────── */}
-      <section className="bg-[#0A0A0A] text-white py-20 sm:py-28 px-4 sm:px-6 relative overflow-hidden">
+      <section className="bg-[#0A0A0A] text-white pt-10 pb-20 sm:pt-12 sm:pb-28 px-4 sm:px-6 relative overflow-hidden">
         <div className="max-w-5xl mx-auto relative">
           {/* Mobile: single centered column  |  Desktop: text left, polygon right */}
           <div className="flex flex-col items-center lg:flex-row lg:items-center lg:gap-16">
@@ -110,8 +110,8 @@ export default function LandingPage() {
                 className="text-[15px] text-white/55 max-w-sm mb-8 leading-relaxed"
                 style={{ fontFamily: "var(--font-outfit)" }}
               >
-                See your political identity, as a colored polygon that&apos;s
-                uniquely yours — not a left/right label.
+                See your political identity, as a multi-colored polygon that&apos;s
+                uniquely yours - not a left/right label.
               </p>
 
               {/* Stats */}
