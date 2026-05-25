@@ -20,10 +20,16 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
             </svg>
             <div className="leading-none">
               <span
-                className="text-xl font-bold tracking-tight text-[#0A0A0A] group-hover:text-[var(--color-accent)] transition-colors"
+                className="text-xl font-bold tracking-tight text-[#0A0A0A] group-hover:text-[var(--color-accent)] transition-colors block"
                 style={{ fontFamily: "var(--font-outfit)" }}
               >
                 Poligon
+              </span>
+              <span
+                className="hidden sm:block text-[9px] text-[rgba(10,10,10,0.40)] tracking-wider uppercase mt-0.5"
+                style={{ fontFamily: "var(--font-outfit)" }}
+              >
+                Polygon for Politics
               </span>
             </div>
           </Link>

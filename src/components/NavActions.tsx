@@ -171,20 +171,6 @@ export default function NavActions() {
         </Link>
       )}
 
-      {/* Edit answers — desktop only, muted, only shown when quiz is complete */}
-      {hasSaved && (
-        <Link
-          href="/quiz"
-          className={`hidden sm:block text-xs px-2.5 py-1.5 rounded-lg transition-colors ${
-            isActive("/quiz")
-              ? "text-[rgba(10,10,10,0.65)] bg-[#E5E0D2]"
-              : "text-[rgba(10,10,10,0.38)] hover:text-[rgba(10,10,10,0.60)] hover:bg-[#E5E0D2]"
-          }`}
-        >
-          Edit answers
-        </Link>
-      )}
-
       {/* Primary CTA — "My Poligon" when quiz taken, "Take the Quiz" when not */}
       {hasSaved ? (
         <Link
