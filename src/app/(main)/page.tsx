@@ -183,23 +183,66 @@ export default function LandingPage() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
             {[
               {
-                icon: "📝",
+                icon: (
+                  // 3 rows × 4 dots — a Likert-scale answer grid
+                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                    {/* Row 1 — 2nd dot selected */}
+                    <circle cx="4"     cy="8"  r="2.2" fill="rgba(10,10,10,0.15)"/>
+                    <circle cx="10.67" cy="8"  r="2.2" fill="var(--color-accent)"/>
+                    <circle cx="17.33" cy="8"  r="2.2" fill="rgba(10,10,10,0.15)"/>
+                    <circle cx="24"    cy="8"  r="2.2" fill="rgba(10,10,10,0.15)"/>
+                    {/* Row 2 — 4th dot selected */}
+                    <circle cx="4"     cy="15" r="2.2" fill="rgba(10,10,10,0.15)"/>
+                    <circle cx="10.67" cy="15" r="2.2" fill="rgba(10,10,10,0.15)"/>
+                    <circle cx="17.33" cy="15" r="2.2" fill="rgba(10,10,10,0.15)"/>
+                    <circle cx="24"    cy="15" r="2.2" fill="var(--color-accent)"/>
+                    {/* Row 3 — 3rd dot selected */}
+                    <circle cx="4"     cy="22" r="2.2" fill="rgba(10,10,10,0.15)"/>
+                    <circle cx="10.67" cy="22" r="2.2" fill="rgba(10,10,10,0.15)"/>
+                    <circle cx="17.33" cy="22" r="2.2" fill="var(--color-accent)"/>
+                    <circle cx="24"    cy="22" r="2.2" fill="rgba(10,10,10,0.15)"/>
+                  </svg>
+                ),
                 title: "Answer 40 questions",
                 desc: "Rate how much you agree or disagree with statements across 10 topics: things like the economy, healthcare, environment, and personal freedoms.",
               },
               {
-                icon: "⬡",
+                icon: (
+                  // Mini irregular polygon — 6 coloured wedge segments
+                  <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true">
+                    <polygon points="14,14 14,5    19.2,11"   fill="#E8782E"/>
+                    <polygon points="14,14 19.2,11  22.66,19"  fill="#8FA82E"/>
+                    <polygon points="14,14 22.66,19 14,21.5"  fill="#D4A53C"/>
+                    <polygon points="14,14 14,21.5  7.07,18"   fill="#B8385E"/>
+                    <polygon points="14,14 7.07,18  9.24,11.25" fill="#4257C9"/>
+                    <polygon points="14,14 9.24,11.25 14,5"   fill="#2EA39C"/>
+                  </svg>
+                ),
                 title: "See your unique shape",
                 desc: "Each topic becomes one spoke on a coloured polygon. Your answers determine how far each point extends, creating a shape that's yours alone.",
               },
               {
-                icon: "🔗",
+                icon: (
+                  // Two overlapping hexagons — you (accent) on left, friend (orange) on right
+                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                    <polygon
+                      points="9,7 15.06,10.5 15.06,17.5 9,21 2.94,17.5 2.94,10.5"
+                      fill="#5560C8" fillOpacity="0.18"
+                      stroke="#5560C8" strokeWidth="1.5" strokeLinejoin="round"
+                    />
+                    <polygon
+                      points="19,7 25.06,10.5 25.06,17.5 19,21 12.94,17.5 12.94,10.5"
+                      fill="#E8782E" fillOpacity="0.18"
+                      stroke="#E8782E" strokeWidth="1.5" strokeLinejoin="round"
+                    />
+                  </svg>
+                ),
                 title: "Compare with a friend",
                 desc: "Share your compare link. When a friend takes the quiz and opens it, both polygons appear overlaid. Political difference as geometry, not warfare.",
               },
             ].map(({ icon, title, desc }) => (
               <div key={title} className="text-center">
-                <div className="w-14 h-14 bg-[#E5E0D2] rounded-2xl flex items-center justify-center text-2xl mx-auto mb-4">
+                <div className="w-14 h-14 bg-[#E5E0D2] rounded-2xl flex items-center justify-center mx-auto mb-4">
                   {icon}
                 </div>
                 <h3 className="font-semibold text-[#0A0A0A] mb-2">{title}</h3>
