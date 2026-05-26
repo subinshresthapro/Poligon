@@ -35,7 +35,6 @@ function ResultsContent() {
   const [tab, setTab] = useState<"breakdown" | "compare" | "share">("breakdown");
   const [scores, setScores] = useState<Record<string, number> | null>(null);
   const [fromStorage, setFromStorage] = useState(false);
-  const [isViewingShared, setIsViewingShared] = useState(false);
   const [compareCopied, setCompareCopied] = useState(false);
   const [radarVariant, setRadarVariant] = useState<"abstract" | "chart">("abstract");
   // Save-to-collection state
@@ -50,6 +49,7 @@ function ResultsContent() {
       const decoded = decodeScores(encoded);
       if (decoded) {
         setScores(decoded);
+        setFromStorage(false);
         // Results page NEVER writes to localStorage — the quiz page already calls
         // saveScores() before navigating here.  Writing here would corrupt a
         // visitor's own data when they open a shared link.
@@ -58,19 +58,15 @@ function ResultsContent() {
           const isDifferent = Object.keys(decoded).some(
             (k) => Math.abs((decoded[k] ?? 0) - (existing[k] ?? 0)) > 0.01
           );
-          if (isDifferent) {
-            setIsViewingShared(true);
-            setIsSharedUrl(true);
-          }
+          setIsSharedUrl(isDifferent);
+          setSavedEntry(isDifferent ? findSavedPoligon(decoded) : null);
           // Same scores = own results page (or their own page refresh) — no banner
         } else {
           // No existing scores = fresh visitor viewing a shared link.
           // Show the results in-memory only; do NOT save to localStorage.
           setIsSharedUrl(true);
+          setSavedEntry(findSavedPoligon(decoded));
         }
-        // Check if already saved to collection
-        const alreadySaved = findSavedPoligon(decoded);
-        if (alreadySaved) setSavedEntry(alreadySaved);
       } else {
         router.replace("/quiz");
       }
@@ -79,6 +75,8 @@ function ResultsContent() {
       if (saved) {
         setScores(saved);
         setFromStorage(true);
+        setIsSharedUrl(false);
+        setSavedEntry(null);
       } else {
         router.replace("/quiz");
       }
