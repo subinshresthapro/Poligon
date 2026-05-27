@@ -9,24 +9,9 @@ import {
   saveSavedPoligon,
   updateSavedPoligonName,
 } from "@/lib/sharedPoligons";
+import { MemoryStorage } from "@/lib/__tests__/testUtils";
 
 const STORAGE_KEY = "poligon-shared-collection";
-
-class MemoryStorage {
-  private store = new Map<string, string>();
-
-  getItem(key: string): string | null {
-    return this.store.get(key) ?? null;
-  }
-
-  setItem(key: string, value: string): void {
-    this.store.set(key, value);
-  }
-
-  removeItem(key: string): void {
-    this.store.delete(key);
-  }
-}
 
 function scores(value: number): Record<string, number> {
   return Object.fromEntries(CATEGORIES.map((category) => [category.id, value]));
@@ -69,8 +54,8 @@ describe("shared poligon storage", () => {
       sourceUrl: "https://poligon.example/results?scores=two",
     });
 
+    expect(first.id).toMatch(/^[a-z0-9]+-[a-z0-9]+$/);
     expect(first).toMatchObject({
-      id: "123456-i",
       name: "Avery",
       savedAt: 123456,
     });

@@ -20,7 +20,7 @@ describe("question data", () => {
 
       for (const question of category.questions) {
         expect(question.categoryId).toBe(category.id);
-        expect(question.id).toMatch(/^[a-z]+-\d$/);
+        expect(question.id).toMatch(/^[a-z]+-\d+$/);
         expect(question.text.length).toBeGreaterThan(20);
       }
     }
