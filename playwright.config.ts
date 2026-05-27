@@ -9,6 +9,7 @@ export default defineConfig({
   testDir: "./tests/ui",
   fullyParallel: true,
   reporter: "list",
+  retries: process.env.CI ? 2 : 0,
   use: {
     baseURL,
     screenshot: "only-on-failure",

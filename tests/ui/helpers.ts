@@ -1,29 +1,26 @@
 import { expect, type Page } from "@playwright/test";
 
-export const CATEGORY_IDS = [
-  "immigration",
-  "government",
-  "economy",
-  "healthcare",
-  "education",
-  "environment",
-  "civilLiberties",
-  "foreignPolicy",
-  "technology",
-  "social",
-] as const;
+import { CATEGORIES } from "@/data/questions";
+import { encodeScores } from "@/lib/scoring";
+
+export { encodeScores };
+
+export const CATEGORY_IDS = CATEGORIES.map((category) => category.id);
+
+type AnswerName =
+  | "Strongly Disagree"
+  | "Somewhat Disagree"
+  | "Neutral / Mixed"
+  | "Somewhat Agree"
+  | "Strongly Agree";
 
 export function scoreMap(value: number): Record<string, number> {
   return Object.fromEntries(CATEGORY_IDS.map((id) => [id, value]));
 }
 
-export function encodeScores(scores: Record<string, number>): string {
-  return Buffer.from(JSON.stringify(scores), "utf8").toString("base64");
-}
-
 export async function answerVisibleCategory(
   page: Page,
-  answerName: "Strongly Agree" | "Neutral / Mixed" = "Strongly Agree"
+  answerName: AnswerName = "Strongly Agree"
 ) {
   for (let index = 1; index <= 4; index += 1) {
     await page.getByRole("button", { name: `Q${index} ${answerName}` }).click();
@@ -32,7 +29,7 @@ export async function answerVisibleCategory(
 
 export async function completeQuiz(
   page: Page,
-  answerName: "Strongly Agree" | "Neutral / Mixed" = "Strongly Agree"
+  answerName: AnswerName = "Strongly Agree"
 ) {
   await page.goto("/quiz");
   await expect(page.getByRole("heading", { name: "Border Openness" })).toBeVisible();
