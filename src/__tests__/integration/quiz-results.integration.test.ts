@@ -9,19 +9,7 @@ import {
   scoresToCategoryScores,
   shapeScore,
 } from "@/lib/scoring";
-import { Answers, ScoreValue } from "@/types";
-
-function answersForAxis(score: 1 | -1 | 0): Answers {
-  return Object.fromEntries(
-    CATEGORIES.flatMap((category) =>
-      category.questions.map((question) => {
-        if (score === 0) return [question.id, 0];
-        const value = question.reverseScore ? -2 * score : 2 * score;
-        return [question.id, value as ScoreValue];
-      })
-    )
-  );
-}
+import { answersForAxis } from "@/lib/__tests__/testUtils";
 
 describe("quiz to results workflow", () => {
   it("turns a completed quiz into restorable result data", () => {
@@ -50,10 +38,9 @@ describe("quiz to results workflow", () => {
   });
 
   it("preserves archetype identity through the result serialization boundary", () => {
-    const sourceArchetype = ARCHETYPES.find(
-      (archetype) => archetype.id === "social-architect"
-    );
-    if (!sourceArchetype) throw new Error("Missing expected archetype fixture");
+    // Use the first archetype — the test only needs any defined archetype to
+    // survive the encode → decode round-trip, not a specific one.
+    const sourceArchetype = ARCHETYPES[0];
 
     const restoredScores = decodeScores(encodeScores(sourceArchetype.scores));
     const restoredArchetype = findArchetype(restoredScores ?? {});

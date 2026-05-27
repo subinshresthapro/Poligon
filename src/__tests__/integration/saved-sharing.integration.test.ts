@@ -9,27 +9,17 @@ import {
   loadSavedPoligons,
   saveSavedPoligon,
 } from "@/lib/sharedPoligons";
-import { answersToScores } from "@/lib/scoring";
+import { answersToScores, encodeScores } from "@/lib/scoring";
 import { loadAnswers, loadScores, saveAnswers, saveScores } from "@/lib/storage";
 import { Answers, ScoreValue } from "@/types";
+import { MemoryStorage } from "@/lib/__tests__/testUtils";
 
-class MemoryStorage {
-  private store = new Map<string, string>();
-
-  getItem(key: string): string | null {
-    return this.store.get(key) ?? null;
-  }
-
-  setItem(key: string, value: string): void {
-    this.store.set(key, value);
-  }
-
-  removeItem(key: string): void {
-    this.store.delete(key);
-  }
-}
-
-function mixedCompletedAnswers(): Answers {
+/**
+ * Produces a complete answer set with alternating reform/traditional values
+ * across categories and question positions. Exact scores are not meaningful
+ * here — only self-consistency within the pipeline matters.
+ */
+function arbitraryCompletedAnswers(): Answers {
   return Object.fromEntries(
     CATEGORIES.flatMap((category, categoryIndex) =>
       category.questions.map((question, questionIndex) => {
@@ -60,7 +50,7 @@ describe("saved sharing workflow", () => {
   });
 
   it("persists quiz answers, scores, shared collection entries, and embed payloads together", () => {
-    const answers = mixedCompletedAnswers();
+    const answers = arbitraryCompletedAnswers();
 
     saveAnswers(answers);
     const scores = answersToScores(loadAnswers() ?? {});
@@ -69,7 +59,7 @@ describe("saved sharing workflow", () => {
     const saved = saveSavedPoligon({
       name: "Avery",
       scores: loadScores() ?? {},
-      sourceUrl: `https://poligon.example/results?scores=${btoa(JSON.stringify(scores))}`,
+      sourceUrl: `https://poligon.example/results?scores=${encodeScores(scores)}`,
     });
     const embedUrl = buildEmbedUrl("https://poligon.example", saved.scores, saved.name);
 
