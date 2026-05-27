@@ -8,22 +8,7 @@ import {
   saveAnswers,
   saveScores,
 } from "@/lib/storage";
-
-class MemoryStorage {
-  private store = new Map<string, string>();
-
-  getItem(key: string): string | null {
-    return this.store.get(key) ?? null;
-  }
-
-  setItem(key: string, value: string): void {
-    this.store.set(key, value);
-  }
-
-  removeItem(key: string): void {
-    this.store.delete(key);
-  }
-}
+import { MemoryStorage } from "@/lib/__tests__/testUtils";
 
 describe("quiz storage", () => {
   let storage: MemoryStorage;
@@ -46,14 +31,21 @@ describe("quiz storage", () => {
     expect(loadAnswers()).toEqual(answers);
   });
 
-  it("saves, detects, loads, and clears scores", () => {
+  it("reports no saved scores before any save", () => {
+    expect(hasSavedScores()).toBe(false);
+  });
+
+  it("saves and loads scores", () => {
     const scores = { immigration: 0.5, economy: -0.25 };
 
-    expect(hasSavedScores()).toBe(false);
     saveScores(scores);
 
     expect(hasSavedScores()).toBe(true);
     expect(loadScores()).toEqual(scores);
+  });
+
+  it("clearSaved removes saved scores", () => {
+    saveScores({ immigration: 0.5 });
 
     clearSaved();
 

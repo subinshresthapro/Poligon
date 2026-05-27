@@ -53,7 +53,8 @@ describe("calculateCategoryScores", () => {
 
   it("averages only answered questions and reverses conservative-framed answers", () => {
     const firstCategory = CATEGORIES[0];
-    const [progressiveQuestion, conservativeQuestion] = firstCategory.questions;
+    const progressiveQuestion = firstCategory.questions.find((q) => !q.reverseScore)!;
+    const conservativeQuestion = firstCategory.questions.find((q) => q.reverseScore)!;
     const scores = calculateCategoryScores({
       [progressiveQuestion.id]: 2,
       [conservativeQuestion.id]: 2,
@@ -110,14 +111,18 @@ describe("scoring labels and transforms", () => {
     expect(decodeScores("not valid base64 json")).toBeNull();
   });
 
-  it("converts answers to plain score records and records back to category scores", () => {
+  it("converts all-reform answers to a plain score record keyed by category id", () => {
     const scoreRecord = answersToScores(answersForAxis(1));
-    const categoryScores = scoresToCategoryScores({ immigration: 0.4 });
 
     expect(Object.keys(scoreRecord).sort()).toEqual(
       CATEGORIES.map((category) => category.id).sort()
     );
     expect(Object.values(scoreRecord).every((score) => score === 1)).toBe(true);
+  });
+
+  it("converts a partial score record back to per-category scores defaulting missing axes to zero", () => {
+    const categoryScores = scoresToCategoryScores({ immigration: 0.4 });
+
     expect(categoryScores.find((score) => score.categoryId === "immigration")?.score).toBe(0.4);
     expect(categoryScores.find((score) => score.categoryId === "government")?.score).toBe(0);
   });
