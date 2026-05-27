@@ -81,6 +81,7 @@ export default function QuestionCard({
           return (
             <button
               key={opt.value}
+              aria-label={`Q${index + 1} ${opt.label}`}
               onClick={() => onChange(questionId, opt.value)}
               className={`flex flex-col items-center justify-center py-3 px-2 rounded-xl border-2 text-xs font-medium transition-all leading-tight text-center ${
                 isSelected
@@ -101,6 +102,7 @@ export default function QuestionCard({
           return (
             <button
               key={opt.value}
+              aria-label={`Q${index + 1} ${opt.label}`}
               onClick={() => onChange(questionId, opt.value)}
               className={`flex items-center justify-center py-2.5 px-4 rounded-xl border-2 text-sm font-medium transition-all ${
                 isSelected
