@@ -1,4 +1,5 @@
 import Link from "next/link";
+import DonationNudge from "@/components/DonationNudge";
 import IdeologyGallery from "@/components/IdeologyGallery";
 import ScoreLegend from "@/components/ScoreLegend";
 import PoligonShape from "@/components/PoligonShape";
@@ -368,6 +369,13 @@ export default function LandingPage() {
 
       {/* ── Archetype / Ideology gallery ─────────────────────────────── */}
       <IdeologyGallery />
+
+      {/* ── Donation nudge ───────────────────────────────────────────── */}
+      <section className="bg-[#F1EEE5] px-4 sm:px-6 py-10">
+        <div className="max-w-5xl mx-auto">
+          <DonationNudge copy="Independent, non-partisan, built for everyone. Help us keep it that way." />
+        </div>
+      </section>
 
       {/* ── Embed CTA ────────────────────────────────────────────────── */}
       <section className="py-16 bg-[#0A0A0A] text-white">

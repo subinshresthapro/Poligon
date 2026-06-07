@@ -1,6 +1,7 @@
 import Link from "next/link";
 import PoligonShape from "@/components/PoligonShape";
 import AboutSubNav from "@/components/AboutSubNav";
+import DonationNudge from "@/components/DonationNudge";
 
 export const metadata = {
   title: "What is Poligon",
@@ -220,6 +221,12 @@ export default function AboutPage() {
               independence is exactly the point.
             </p>
           </div>
+
+          {/* ── Donation nudge ──────────────────────────────────────────── */}
+          <DonationNudge
+            copy="If you think politics deserves more than a left-right line, help us draw a better picture."
+            className="mb-10"
+          />
 
           {/* ── CTA ─────────────────────────────────────────────────────── */}
           <div className="text-center">

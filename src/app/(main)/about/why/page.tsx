@@ -1,6 +1,7 @@
 import Link from "next/link";
 import AboutSubNav from "@/components/AboutSubNav";
 import WhyPanels from "@/components/WhyPanels";
+import DonationNudge from "@/components/DonationNudge";
 
 export const metadata = {
   title: "Why We Built It",
@@ -169,6 +170,13 @@ export default function WhyPage() {
       {/* ── Staggered panels ──────────────────────────────────────────────── */}
       <section className="py-16 sm:py-20 px-4 sm:px-6">
         <WhyPanels panels={PANELS} />
+      </section>
+
+      {/* ── Donation nudge ────────────────────────────────────────────────── */}
+      <section className="px-4 sm:px-6 pb-8">
+        <div className="max-w-[900px] mx-auto">
+          <DonationNudge copy="If you believe the divide can be bridged, help us build the bridge." />
+        </div>
       </section>
 
       {/* ── Footer CTA ────────────────────────────────────────────────────── */}

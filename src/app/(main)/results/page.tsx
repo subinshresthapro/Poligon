@@ -25,7 +25,7 @@ import CategoryBreakdown from "@/components/CategoryBreakdown";
 import IdeologyComparisonPanel from "@/components/IdeologyComparisonPanel";
 import ShareExportPanel from "@/components/ShareExportPanel";
 import ScoreLegend from "@/components/ScoreLegend";
-import DonationSection from "@/components/DonationSection";
+import DonationNudge from "@/components/DonationNudge";
 import SharedResultsView from "@/components/SharedResultsView";
 import { findArchetype } from "@/lib/archetypes";
 import { CATEGORIES } from "@/data/questions";
@@ -306,10 +306,11 @@ function ResultsContent() {
           </div>
         </div>
 
-        {/* ── Donation ask ─────────────────────────────────────────────────── */}
-        <div className="mb-6">
-          <DonationSection compact />
-        </div>
+        {/* ── Donation nudge ───────────────────────────────────────────────── */}
+        <DonationNudge
+          copy="If this changed how you see your own politics, help someone else see theirs."
+          className="mb-6"
+        />
 
         {/* ── Compare with a Friend + Share card ─────────────────────────── */}
         <div className="bg-[#0A0A0A] text-white rounded-2xl shadow-sm overflow-hidden mb-6">
