@@ -25,6 +25,7 @@ import CategoryBreakdown from "@/components/CategoryBreakdown";
 import IdeologyComparisonPanel from "@/components/IdeologyComparisonPanel";
 import ShareExportPanel from "@/components/ShareExportPanel";
 import ScoreLegend from "@/components/ScoreLegend";
+import DonationSection from "@/components/DonationSection";
 import SharedResultsView from "@/components/SharedResultsView";
 import { findArchetype } from "@/lib/archetypes";
 import { CATEGORIES } from "@/data/questions";
@@ -499,6 +500,11 @@ function ResultsContent() {
               ↩ Edit My Answers
             </Link>
           </div>
+        </div>
+
+        {/* ── Donation ask ─────────────────────────────────────────────────── */}
+        <div className="mb-6">
+          <DonationSection compact />
         </div>
 
         {/* ── Tabs ─────────────────────────────────────────────────────────── */}
