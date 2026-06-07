@@ -306,6 +306,11 @@ function ResultsContent() {
           </div>
         </div>
 
+        {/* ── Donation ask ─────────────────────────────────────────────────── */}
+        <div className="mb-6">
+          <DonationSection compact />
+        </div>
+
         {/* ── Compare with a Friend + Share card ─────────────────────────── */}
         <div className="bg-[#0A0A0A] text-white rounded-2xl shadow-sm overflow-hidden mb-6">
           <div className="flex flex-col sm:flex-row items-center gap-5 px-6 py-5">
@@ -500,11 +505,6 @@ function ResultsContent() {
               ↩ Edit My Answers
             </Link>
           </div>
-        </div>
-
-        {/* ── Donation ask ─────────────────────────────────────────────────── */}
-        <div className="mb-6">
-          <DonationSection compact />
         </div>
 
         {/* ── Tabs ─────────────────────────────────────────────────────────── */}
