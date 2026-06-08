@@ -9,9 +9,12 @@ const SUPPORTER_COUNT = 47;
 
 interface DonationSectionProps {
   compact?: boolean;
+  copy?: string;
 }
 
-export default function DonationSection({ compact = false }: DonationSectionProps) {
+const DEFAULT_COPY = "If this helped you see your politics differently, help someone else do the same.";
+
+export default function DonationSection({ compact = false, copy = DEFAULT_COPY }: DonationSectionProps) {
   if (compact) {
     return (
       <div className="bg-[#F1EEE5] border border-[rgba(10,10,10,0.12)] rounded-2xl shadow-sm p-5 sm:p-6">
@@ -29,7 +32,7 @@ export default function DonationSection({ compact = false }: DonationSectionProp
               Keep Poligon free & independent
             </p>
             <p className="font-bold text-[#0A0A0A] text-sm" style={{ fontFamily: "var(--font-outfit)" }}>
-              If this helped you see your politics differently, help someone else do the same.
+              {copy}
             </p>
             <p className="text-[rgba(10,10,10,0.50)] text-xs mt-1 leading-relaxed">
               No ads. No investors. {SUPPORTER_COUNT} people keep the lights on. Join them?
@@ -47,7 +50,7 @@ export default function DonationSection({ compact = false }: DonationSectionProp
               <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-white flex-shrink-0" aria-hidden="true">
                 <path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/>
               </svg>
-              $3 / month
+              $2 / month
             </a>
             <a
               href={STRIPE_ONETIME}
@@ -55,7 +58,7 @@ export default function DonationSection({ compact = false }: DonationSectionProp
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-1.5 border border-[rgba(10,10,10,0.18)] text-[rgba(10,10,10,0.70)] hover:text-[#0A0A0A] hover:border-[rgba(10,10,10,0.35)] font-medium text-sm px-4 py-2.5 rounded-xl transition-colors whitespace-nowrap bg-white"
             >
-              $10 one-time gift
+              Even $5 helps
             </a>
           </div>
         </div>
@@ -78,7 +81,7 @@ export default function DonationSection({ compact = false }: DonationSectionProp
           </svg>
         </div>
         <div>
-          <p className="text-xl font-bold" style={{ fontFamily: "var(--font-outfit)" }}>$3 / month</p>
+          <p className="text-xl font-bold" style={{ fontFamily: "var(--font-outfit)" }}>$2 / month</p>
           <p className="text-white/75 text-sm mt-1 leading-snug">
             Recurring support — keeps Poligon ad-free and independent, every month.
           </p>
@@ -100,9 +103,9 @@ export default function DonationSection({ compact = false }: DonationSectionProp
           </svg>
         </div>
         <div>
-          <p className="text-xl font-bold" style={{ fontFamily: "var(--font-outfit)" }}>$10 one-time</p>
+          <p className="text-xl font-bold" style={{ fontFamily: "var(--font-outfit)" }}>One-time gift</p>
           <p className="text-[rgba(10,10,10,0.55)] text-sm mt-1 leading-snug">
-            A one-off gift — appreciated just as much, no strings attached.
+            Even $5 makes a difference — one-off, no strings attached.
           </p>
         </div>
         <span className="mt-auto text-xs font-semibold text-[rgba(10,10,10,0.45)] bg-[rgba(10,10,10,0.06)] rounded-full px-3 py-1">

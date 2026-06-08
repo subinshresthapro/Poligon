@@ -1,5 +1,5 @@
 import Link from "next/link";
-import DonationNudge from "@/components/DonationNudge";
+import DonationSection from "@/components/DonationSection";
 import IdeologyGallery from "@/components/IdeologyGallery";
 import ScoreLegend from "@/components/ScoreLegend";
 import PoligonShape from "@/components/PoligonShape";
@@ -370,10 +370,10 @@ export default function LandingPage() {
       {/* ── Archetype / Ideology gallery ─────────────────────────────── */}
       <IdeologyGallery />
 
-      {/* ── Donation nudge ───────────────────────────────────────────── */}
+      {/* ── Donation card ────────────────────────────────────────────── */}
       <section className="bg-[#F1EEE5] px-4 sm:px-6 py-10">
         <div className="max-w-5xl mx-auto">
-          <DonationNudge copy="Independent, non-partisan, built for everyone. Help us keep it that way." />
+          <DonationSection compact copy="Independent, non-partisan, built for everyone. Help us keep it that way." />
         </div>
       </section>
 

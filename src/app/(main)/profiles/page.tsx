@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import DonationNudge from "@/components/DonationNudge";
+import DonationSection from "@/components/DonationSection";
 import { SAMPLE_PROFILES } from "@/data/profiles";
 import { shapeScore, convictionPercent } from "@/lib/scoring";
 import LeanBadge from "@/components/LeanBadge";
@@ -85,10 +85,10 @@ export default function ProfilesPage() {
         </div>
       </div>
 
-      {/* ── Donation nudge ─────────────────────────────────────────────────── */}
+      {/* ── Donation card ──────────────────────────────────────────────────── */}
       <div className="px-4 sm:px-6 pb-4">
         <div className="max-w-6xl mx-auto">
-          <DonationNudge copy="If you liked seeing their shape, help more people discover their own." />
+          <DonationSection compact copy="If you liked seeing their shape, help more people discover their own." />
         </div>
       </div>
 

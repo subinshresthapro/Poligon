@@ -1,7 +1,7 @@
 import Link from "next/link";
 import PoligonShape from "@/components/PoligonShape";
 import AboutSubNav from "@/components/AboutSubNav";
-import DonationNudge from "@/components/DonationNudge";
+import DonationSection from "@/components/DonationSection";
 
 export const metadata = {
   title: "What is Poligon",
@@ -222,11 +222,10 @@ export default function AboutPage() {
             </p>
           </div>
 
-          {/* ── Donation nudge ──────────────────────────────────────────── */}
-          <DonationNudge
-            copy="If you think politics deserves more than a left-right line, help us draw a better picture."
-            className="mb-10"
-          />
+          {/* ── Donation card ───────────────────────────────────────────── */}
+          <div className="mb-10">
+            <DonationSection compact copy="If you think politics deserves more than a left-right line, help us draw a better picture." />
+          </div>
 
           {/* ── CTA ─────────────────────────────────────────────────────── */}
           <div className="text-center">

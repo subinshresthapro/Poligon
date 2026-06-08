@@ -1,7 +1,7 @@
 import Link from "next/link";
 import AboutSubNav from "@/components/AboutSubNav";
 import WhyPanels from "@/components/WhyPanels";
-import DonationNudge from "@/components/DonationNudge";
+import DonationSection from "@/components/DonationSection";
 
 export const metadata = {
   title: "Why We Built It",
@@ -172,10 +172,10 @@ export default function WhyPage() {
         <WhyPanels panels={PANELS} />
       </section>
 
-      {/* ── Donation nudge ────────────────────────────────────────────────── */}
+      {/* ── Donation card ─────────────────────────────────────────────────── */}
       <section className="px-4 sm:px-6 pb-8">
         <div className="max-w-[900px] mx-auto">
-          <DonationNudge copy="If you believe the divide can be bridged, help us build the bridge." />
+          <DonationSection compact copy="If you believe the divide can be bridged, help us build the bridge." />
         </div>
       </section>
 
