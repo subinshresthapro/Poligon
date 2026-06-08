@@ -64,6 +64,12 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
               <Link href="/shared" className="hover:text-[var(--color-accent)] transition-colors">Shared with me</Link>
               <Link href="/quiz" className="hover:text-[var(--color-accent)] transition-colors">Take Quiz</Link>
               <Link href="/embed" className="hover:text-[var(--color-accent)] transition-colors">Embed</Link>
+              <Link
+                href="/support"
+                className="font-semibold text-[var(--color-accent)] hover:text-[var(--color-accent-deep)] transition-colors"
+              >
+                Support ♥
+              </Link>
             </div>
           </div>
         </div>

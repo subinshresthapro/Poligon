@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import DonationSection from "@/components/DonationSection";
 import { SAMPLE_PROFILES } from "@/data/profiles";
 import { shapeScore, convictionPercent } from "@/lib/scoring";
 import LeanBadge from "@/components/LeanBadge";
@@ -81,6 +82,13 @@ export default function ProfilesPage() {
               Take the Quiz →
             </Link>
           </div>
+        </div>
+      </div>
+
+      {/* ── Donation card ──────────────────────────────────────────────────── */}
+      <div className="px-4 sm:px-6 pb-4">
+        <div className="max-w-6xl mx-auto">
+          <DonationSection compact copy="If you liked seeing their shape, help more people discover their own." />
         </div>
       </div>
 
