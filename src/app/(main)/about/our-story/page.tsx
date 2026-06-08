@@ -1,5 +1,6 @@
 import Link from "next/link";
 import AboutSubNav from "@/components/AboutSubNav";
+import DonationSection from "@/components/DonationSection";
 
 export const metadata = {
   title: "Our Story",
@@ -137,6 +138,9 @@ export default function OurStoryPage() {
               Take the Quiz →
             </Link>
           </div>
+
+          {/* ── Donation card ─────────────────────────────────────────────── */}
+          <DonationSection compact copy="No party, no campaign, no corporate interest — just citizens. Help keep it that way." />
 
         </div>
       </section>

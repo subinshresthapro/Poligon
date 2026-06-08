@@ -1,5 +1,6 @@
 import Link from "next/link";
 import AboutSubNav from "@/components/AboutSubNav";
+import DonationSection from "@/components/DonationSection";
 
 export const metadata = {
   title: "How It Works",
@@ -665,7 +666,7 @@ export default function HowItWorksPage() {
 
       {/* ── CTA ───────────────────────────────────────────────────────────── */}
       <div className="py-16 px-4 sm:px-6 bg-[#F1EEE5]">
-        <div className="max-w-2xl mx-auto text-center">
+        <div className="max-w-2xl mx-auto text-center mb-12">
           <p className="text-[rgba(10,10,10,0.55)] text-sm mb-5">
             Ready to see your shape?
           </p>
@@ -675,6 +676,9 @@ export default function HowItWorksPage() {
           >
             Take the Quiz →
           </Link>
+        </div>
+        <div className="max-w-3xl mx-auto">
+          <DonationSection compact copy="Glad the methodology is honest? Help keep the project free and independent." />
         </div>
       </div>
 

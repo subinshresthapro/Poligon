@@ -4,6 +4,7 @@ import { Suspense, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { decodeScores, encodeScores } from "@/lib/scoring";
+import DonationSection from "@/components/DonationSection";
 import { loadScores } from "@/lib/storage";
 import CompareShape, { COLOR_A, COLOR_B } from "@/components/CompareShape";
 import PoligonShape from "@/components/PoligonShape";
@@ -539,6 +540,9 @@ function ReadyComparison({
                 {copied ? "✓ Copied!" : "🔗 Copy my compare link"}
               </button>
             </div>
+
+            {/* ── Donation card ── */}
+            <DonationSection compact copy="Saw the geometry of your difference? Help someone else have this conversation." />
 
           </div>
         </div>

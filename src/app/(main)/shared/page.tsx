@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import PoligonShape from "@/components/PoligonShape";
+import DonationSection from "@/components/DonationSection";
 import {
   loadSavedPoligons,
   removeSavedPoligon,
@@ -239,6 +240,11 @@ export default function SharedPage() {
             ))}
           </div>
         )}
+
+        {/* ── Donation card ─────────────────────────────────────────────────── */}
+        <div className="mt-10">
+          <DonationSection compact copy="Comparing shapes with people you know? Help more people find their own." />
+        </div>
       </div>
     </div>
   );
